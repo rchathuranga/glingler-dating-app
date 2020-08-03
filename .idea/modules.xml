@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/glingler-api-manager/glingler-api-manager.iml" filepath="$PROJECT_DIR$/glingler-api-manager/glingler-api-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/glingler-dating-app.iml" filepath="$PROJECT_DIR$/glingler-dating-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/glingler-user-web-app/glingler-user-web-app.iml" filepath="$PROJECT_DIR$/glingler-user-web-app/glingler-user-web-app.iml" />
+    </modules>
+  </component>
+</project>
