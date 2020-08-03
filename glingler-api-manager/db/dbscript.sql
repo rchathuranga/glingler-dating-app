@@ -37,7 +37,7 @@ create table user_types
     status         varchar(10) null
 );
 
-create table user
+create table commonUser
 (
     user_id             int auto_increment
         primary key,
@@ -74,7 +74,7 @@ create table profile
     created_time timestamp    null,
     status       varchar(10)  null,
     constraint profile_user_user_id_fk
-        foreign key (user_id) references user (user_id)
+        foreign key (user_id) references commonUser (user_id)
             on update cascade on delete cascade
 );
 
@@ -180,5 +180,5 @@ create index story_status_status_code_fk
     on story (status);
 
 create index user_status_status_code_fk
-    on user (status);
+    on commonUser (status);
 
