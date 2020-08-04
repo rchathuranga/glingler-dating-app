@@ -1,13 +1,11 @@
 package lk.ijse.glingler.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
+@Table(name = "chat")
 public class Chat {
     private int chatId;
     private String message;

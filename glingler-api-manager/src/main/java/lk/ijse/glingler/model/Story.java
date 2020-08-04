@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
+@Table(name = "story")
 public class Story {
     private int storyId;
     private String imgUrl;

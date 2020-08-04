@@ -10,14 +10,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -26,17 +25,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserResponseBean getUserDetails() throws Exception {
         CommonUser one = userRepository.getOne(1);
 
-        System.out.println();
-        System.out.println("user : " + one);
-        System.out.println();
-
         UserDTO dto = new UserDTO();
         dto.setUserId(one.getUserId());
         dto.setUsername(one.getUsername());
 
         UserResponseBean responseBean = new UserResponseBean();
         responseBean.setUser(dto);
-        System.out.println(responseBean);
         return responseBean;
     }
 

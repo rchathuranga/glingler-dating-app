@@ -9,13 +9,14 @@ import lk.ijse.glingler.util.SysConfig;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Calendar;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
 
-    public String createToken(String userName) {
+    public String createToken(String userName,String appType, HttpServletResponse response) {
         //get the current time
         Date today = new Date();
         // add token expiration time /days- hours- minits or seconds
@@ -23,7 +24,7 @@ public class JwtUtil {
         //set current date
         instance.setTime(today);
         //add 10 minits to the current time
-        instance.add(Calendar.MINUTE, 1);
+        instance.add(Calendar.MINUTE, 10);
         //token expire time
         Date exTime = instance.getTime();
 
@@ -32,13 +33,18 @@ public class JwtUtil {
 
         //create a token
         String compact = Jwts.builder()
-                .setIssuer("sanu")
+                .setIssuer(SysConfig.GLINGLER_JWT_TOKEN_ISSUER)
                 .setSubject(userName)
                 .setIssuedAt(today)
                 .setExpiration(exTime)
-                .claim("anything", "Hello There").
+                .claim("appType", appType).
                         signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
+
+        if(response!=null){
+            response.setHeader("Token", compact);
+        }
+
         return compact;
     }
 
@@ -64,4 +70,9 @@ public class JwtUtil {
 
     }
 
+    public String getUserName(String jwt) {
+        jwt=jwt.split(" ")[1];
+        SecretKey secretKey = Keys.hmacShaKeyFor(SysConfig.JWT_SECRET.getBytes());
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(jwt).getBody().getSubject();
+    }
 }

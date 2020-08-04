@@ -1,13 +1,11 @@
 package lk.ijse.glingler.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
+@Table(name = "profile")
 public class Profile {
     private int profileId;
     private String firstName;
@@ -25,7 +23,6 @@ public class Profile {
     public int getProfileId() {
         return profileId;
     }
-
     public void setProfileId(int profileId) {
         this.profileId = profileId;
     }
@@ -35,7 +32,6 @@ public class Profile {
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -45,7 +41,6 @@ public class Profile {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -55,7 +50,6 @@ public class Profile {
     public String getBio() {
         return bio;
     }
-
     public void setBio(String bio) {
         this.bio = bio;
     }
@@ -65,7 +59,6 @@ public class Profile {
     public String getSex() {
         return sex;
     }
-
     public void setSex(String sex) {
         this.sex = sex;
     }
@@ -75,7 +68,6 @@ public class Profile {
     public Integer getAge() {
         return age;
     }
-
     public void setAge(Integer age) {
         this.age = age;
     }
@@ -85,7 +77,6 @@ public class Profile {
     public Timestamp getBirthday() {
         return birthday;
     }
-
     public void setBirthday(Timestamp birthday) {
         this.birthday = birthday;
     }
@@ -95,7 +86,6 @@ public class Profile {
     public String getImageUrl() {
         return imageUrl;
     }
-
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
@@ -105,7 +95,6 @@ public class Profile {
     public Timestamp getCreatedTime() {
         return createdTime;
     }
-
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
@@ -115,7 +104,6 @@ public class Profile {
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -140,5 +128,21 @@ public class Profile {
     @Override
     public int hashCode() {
         return Objects.hash(profileId, firstName, lastName, bio, sex, age, birthday, imageUrl, createdTime, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "profileId=" + profileId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", bio='" + bio + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age=" + age +
+                ", birthday=" + birthday +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", createdTime=" + createdTime +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

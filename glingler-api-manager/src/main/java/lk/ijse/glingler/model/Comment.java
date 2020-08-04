@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
+@Table(name = "comment")
 public class Comment {
     private int commentId;
     private String comment;

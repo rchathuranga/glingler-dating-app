@@ -1,7 +1,6 @@
 package lk.ijse.glingler.security;
 
 import lk.ijse.glingler.filters.AuthenticationFilter;
-import lk.ijse.glingler.util.SysConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Not authenticate below requests
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/" + SysConfig.APP_TYPE_ADMIN + "/sign-in").permitAll()
-                .antMatchers("/api/v1/" + SysConfig.APP_TYPE_USER + "/sign-in").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/v1/auth/sign-in").permitAll()
+                .anyRequest().permitAll()
                 .and()
 //                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -41,7 +39,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();//  - Add Custom Password Encoder to Ignore Password Encode
         return new CustomPasswordEncoder();
     }
 
