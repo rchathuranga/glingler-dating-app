@@ -17,6 +17,7 @@ public class Profile {
     private String imageUrl;
     private Timestamp createdTime;
     private String status;
+    private CommonUser commonUser;
 
     @Id
     @Column(name = "profile_id", nullable = false)
@@ -106,6 +107,15 @@ public class Profile {
     }
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    public CommonUser getCommonUser() {
+        return commonUser;
+    }
+    public void setCommonUser(CommonUser commonUser) {
+        this.commonUser = commonUser;
     }
 
     @Override

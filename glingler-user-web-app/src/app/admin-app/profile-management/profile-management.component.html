@@ -1,0 +1,34 @@
+<p>profile-management works!</p>
+<section id="container">
+  <section id="header">
+    <!--  todo add search profiles, view reported profiles -->
+  </section>
+  <mat-divider></mat-divider>
+  <section id="content">
+    <div class="spinner-container" *ngIf="profiles.length==0">
+      <mat-progress-spinner
+        class="spinner" [diameter]="40"
+        [color]="'primary'"
+        [mode]="'indeterminate'">
+      </mat-progress-spinner>
+    </div>
+
+    <article class="profile-container">
+      <mat-grid-list cols="4" rowHeight="0.75:1.0">
+        <div *ngFor="let i of profiles">
+          <mat-grid-tile>
+            <div class="profile-card">
+              <div class="profile-card-header"><h3>Ravindu</h3></div>
+            </div>
+          </mat-grid-tile>
+        </div>
+      </mat-grid-list>
+    </article>
+
+  </section>
+
+  <section id="footer" *ngIf="profiles.length!=0">
+
+  </section>
+
+</section>

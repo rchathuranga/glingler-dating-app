@@ -1,0 +1,39 @@
+<section id="header">
+  <mat-toolbar id="mat-header" color="primary">
+    <button mat-button (click)="drawer.toggle()">
+      <mat-icon mat-list-icon>menu</mat-icon>
+    </button>
+    <button mat-button style="font-size: 20px">Admin Panel</button>
+    <button mat-button>Profiles</button>
+    <button mat-button>Analytics</button>
+
+    <div class="btn-logout">
+      <button mat-button routerLink="/login">
+        <mat-icon mat-list-icon>exit_to_app</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+</section>
+
+<mat-drawer-container class="content-container">
+  <mat-drawer #drawer class="nav-bar" mode="side" [opened]="true">
+
+    <mat-selection-list #adminConList [multiple]="false">
+
+      <mat-list-option *ngFor="let content of adminContentList" [value]="content.desc" routerLink="{{content.urlPath}}" routerLinkActive="router-active">
+        <mat-icon mat-list-icon>{{content.icon}}</mat-icon>
+        <div *ngIf="drawer.opened">{{content.desc}}</div>
+        <mat-divider></mat-divider>
+      </mat-list-option>
+
+    </mat-selection-list>
+  </mat-drawer>
+
+  <mat-drawer-content class="content">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+
+</mat-drawer-container>
+
+
+<section class="footer"></section>

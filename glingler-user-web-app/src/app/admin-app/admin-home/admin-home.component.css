@@ -1,0 +1,66 @@
+body{
+  background: black;
+}
+
+.content-container{
+  display: flex;
+  height: calc(100vh - 84px);
+}
+
+.nav-bar{
+  width: 20%;
+  height: auto;
+}
+
+.content{
+  width: 100%;
+  height: auto;
+}
+
+.footer{
+  width: 100%;
+  height: 20px;
+  background: black;
+}
+
+mat-drawer:not(.mat-drawer-opened) {
+  transform: none !important;
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  /*transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);*/
+
+  visibility: visible !important;
+  width: 60px !important;
+  overflow: hidden;
+}
+
+mat-drawer-content:not(.mat-drawer-opened) {
+  margin-left: 60px;
+}
+
+mat-drawer:not(.mat-drawer-opened) .mat-icon{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.btn-logout{
+  width: max-content;
+  height: max-content;
+  position: absolute;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+}
+
+#mat-header{
+  position: relative;
+}
+
+.router-active{
+  background: #3f51b5;
+  color: white;
+}
