@@ -12,6 +12,8 @@ export class AdminHomeComponent implements OnInit {
   @ViewChild('sidenav')
   navBar: MatDrawer;
 
+  count = 12;
+
   adminContentList: any = [
     {
       icon: 'dashboard',
@@ -46,5 +48,10 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+
+  notClick() {
+    this.count++;
+  }
 }
 

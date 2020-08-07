@@ -4,10 +4,18 @@
       <mat-icon mat-list-icon>menu</mat-icon>
     </button>
     <button mat-button style="font-size: 20px">Admin Panel</button>
-    <button mat-button>Profiles</button>
+    <button mat-button (click)="notClick()">Profiles</button>
     <button mat-button>Analytics</button>
 
     <div class="btn-logout">
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon matBadge="{{count}}" matBadgeSize="small" matBadgeColor="warn" mat-list-icon>notifications</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item>Notification 1</button>
+        <button mat-menu-item>Notification 2</button>
+      </mat-menu>
+
       <button mat-button routerLink="/login">
         <mat-icon mat-list-icon>exit_to_app</mat-icon>
       </button>

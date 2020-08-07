@@ -4,7 +4,9 @@ body{
 
 .content-container{
   display: flex;
-  height: calc(100vh - 84px);
+  /*todo set footer \ line 24 */
+  /*height: calc(100vh - 84px);*/
+  height: calc(100vh - 64px);
 }
 
 .nav-bar{
@@ -19,7 +21,7 @@ body{
 
 .footer{
   width: 100%;
-  height: 20px;
+  /*height: 20px;*/
   background: black;
 }
 
