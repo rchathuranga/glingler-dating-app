@@ -1,7 +1,7 @@
 <section id="header">
   <mat-toolbar id="mat-header" color="primary">
     <h3>Glingler Login Form</h3>
-    <div class="btn-signup">
+    <div class="btn-sign-up">
     <button color="accent" mat-button routerLink="/sign-up">Sign Up</button>
     </div>
   </mat-toolbar>
@@ -17,12 +17,12 @@
       <mat-card-title>Login Form</mat-card-title>
     </mat-card-header>
 
-    <form action="" [formGroup]="form">
+    <form [formGroup]="form">
     <mat-card-content>
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Username</mat-label>
-        <input matInput placeholder="example@company.com" name="username">
+        <input matInput formControlName="username" placeholder="example@company.com" name="username" autocomplete="none">
         <mat-icon matSuffix>person</mat-icon>
       </mat-form-field>
 
@@ -30,7 +30,7 @@
 
       <mat-form-field appearance="outline" class="example-full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" name="password">
+        <input matInput formControlName="password" type="password" name="password">
         <mat-icon matSuffix>lock</mat-icon>
       </mat-form-field>
 

@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'application',
-    loadChildren: () => import('./application/main-app/main-app.module').then(module => module.MainAppModule)
+    loadChildren: () => import('./application/application.module').then(module => module.ApplicationModule)
   },
   {
     path: 'admin',

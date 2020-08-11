@@ -14,12 +14,13 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
+import {MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,9 +32,11 @@ import {MatInputModule} from '@angular/material/input';
     MatCardModule,
     MatIconModule,
     MatListModule,
-    MatInputModule
+    MatInputModule,
+    MatRippleModule
   ],
   providers: [AuthenticateService],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

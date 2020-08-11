@@ -23,9 +23,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log(this.form.value);
-    const b = true; // this.authService.authenticate(this.form.value);
+    const b = this.form.value.username === 'admin';
     if (b) {
       this.router.navigate(['admin']);
+    } else {
+      this.router.navigate(['application']);
     }
   }
 }
