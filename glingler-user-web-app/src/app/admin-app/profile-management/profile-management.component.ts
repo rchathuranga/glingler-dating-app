@@ -10,6 +10,8 @@ export class ProfileManagementComponent implements OnInit {
 
   profiles: Profile[] = [];
 
+
+
   constructor() {
   }
 
@@ -18,8 +20,8 @@ export class ProfileManagementComponent implements OnInit {
       19, '2001-11-12', '', '12:12:43', 34, 'ACT');
 
     this.profiles.push(prof);
-    this.profiles.push(prof);
-    this.profiles.push(prof);
+    // this.profiles.push(prof);
+    // this.profiles.push(prof);
   }
 
 

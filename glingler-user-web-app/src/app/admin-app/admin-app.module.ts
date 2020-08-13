@@ -15,6 +15,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [AdminHomeComponent, AnalyticsComponent, DashboardComponent, ProfileManagementComponent],
@@ -31,6 +32,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatGridListModule,
     MatBadgeModule,
     MatMenuModule,
+    MatProgressBarModule,
   ]
 })
 export class AdminAppModule { }

@@ -1,0 +1,98 @@
+#wrapper{
+  background-color: #f4f4f4;
+}
+
+#header{
+  width: 100%;
+  height: 330px;
+  background: transparent;
+  position: relative;
+}
+
+.dash-card-container{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  width: 90%;
+  height: 100%;
+  display: flex;
+  place-items: center;
+  justify-content: space-between;
+}
+
+.dash-card{
+  margin: 0 5px;
+  height: 270px;
+  width: 230px;
+  background: #fff;
+}
+
+.dash-card-header{
+  width: 100%;
+  height: 30%;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.dash-card-header i{
+  font-size: 30px;
+  color: #297eeb;
+  /*color: #ffc505;*/
+}
+
+.dash-card-body{
+  width: 100%;
+  height: 30%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  align-content: center;
+}
+
+.mat-display-1{
+  font-size: 30px;
+  margin: 0;
+  font-weight: bolder;
+}
+
+.dash-detail{
+  height: max-content;
+  margin: 0;
+  font-size: 14px;
+  color: #9E9E9E;
+}
+
+.dash-card-footer{
+  width: 100%;
+  height: 40%;
+  /*background-color: red;*/
+  display: grid;
+  place-items: center;
+}
+
+.dash-card-foot {
+  width: 100%;
+  height: max-content;
+  background-color: #fff;
+  padding: 15px;
+}
+
+.dash-card-foot >div{
+  width: 80%;
+  margin: 0 auto;
+
+  display: grid;
+  place-items: center;
+}
+
+.dash-card-foot-progress {
+  width: 65% !important;
+}
+
+
