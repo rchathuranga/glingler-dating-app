@@ -1,4 +1,4 @@
-package lk.ijse.glingler.service;
+package lk.ijse.glingler.api.service;
 
 import lk.ijse.glingler.dto.UserResponseBean;
 import org.springframework.security.core.userdetails.UserDetailsService;

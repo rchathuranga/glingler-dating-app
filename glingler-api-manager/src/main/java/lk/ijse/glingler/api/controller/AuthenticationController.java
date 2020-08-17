@@ -1,9 +1,9 @@
-package lk.ijse.glingler.controller;
+package lk.ijse.glingler.api.controller;
 
 import lk.ijse.glingler.dto.SignInRequestBean;
 import lk.ijse.glingler.dto.SignInResponseBean;
 import lk.ijse.glingler.security.JwtUtil;
-import lk.ijse.glingler.service.UserService;
+import lk.ijse.glingler.api.service.UserService;
 import lk.ijse.glingler.util.ResponseCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

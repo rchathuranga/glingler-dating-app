@@ -1,1 +1,99 @@
-<p>sign-up works!</p>
+<section id="container">
+
+  <section class="img-area">
+    <img alt="" height="100%" src="../../assets/img/undraw_chasing_love_3v98.svg">
+  </section>
+
+  <section class="signup-content">
+
+    <article class="sign-header">
+      <h1 class="sign-logo mat-display-1">glingler</h1>
+      <h4 class="sign-text mat-body">Create a glingler Account</h4>
+    </article>
+
+    <mat-divider></mat-divider>
+
+    <form #form=ngForm ngForm>
+
+      <article class="sign-body">
+        <div class="profile-pic">
+          <p class="pic-header">Upload a profile picture</p>
+          <div class="img-wrapper-container">
+            <div class="img-wrapper">
+              <i class="fas fa-upload"></i>
+              <!--              <input type="file" class="pro-input" (change)="uploadProfilePicture($event)" accept=".png,.jpg" name="" id="">-->
+            </div>
+          </div>
+        </div>
+
+        <div class="name-wrapper">
+
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>First Name</mat-label>
+            <input matInput name="firstName" ngModel placeholder="">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint *ngIf="false">Hint</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Last Name</mat-label>
+            <input #test=ngModel matInput name="lastName" ngModel placeholder="">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint *ngIf="false">Hint</mat-hint>
+          </mat-form-field>
+
+
+        </div>
+
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>E-mail</mat-label>
+          <input matInput name="email" ngModel placeholder="">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-hint *ngIf="false">Hint</mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Gender</mat-label>
+          <mat-select name="gender" ngModel>
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+          <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Choose a date</mat-label>
+          <input matInput name="birthday" ngModel>
+          <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
+          <!--          <mat-datepicker #picker></mat-datepicker>-->
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Enter your password</mat-label>
+          <input [type]="passwordHide ? 'password' : 'text'" matInput name="password" ngModel>
+          <button (click)="passwordHide = !passwordHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordHide" mat-icon-button
+                  matSuffix>
+            <mat-icon>{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+
+      </article>
+      <article class="sign-footer">
+        <button (click)="btnCreateAccount(form)" class="btn-create-account" color="accent" mat-raised-button>Create
+          Account
+        </button>
+        <a routerLink="/login">I already have an account?</a>
+      </article>
+
+
+    </form>
+
+  </section>
+
+</section>

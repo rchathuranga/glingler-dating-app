@@ -5,10 +5,10 @@
             [ %X{REQUEST_ID}%X{UNAME} ] [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1}:%L - %msg%n
         </Property>
         <Property name="BASE_URL">
-            /opt/epic-sure/logs/
+            /3rd Project/glingler/logs/
         </Property>
         <Property name="FILE_PATTERN">
-            /opt/epic-sure/logs/
+            /3rd Project/glingler/logs/
         </Property>
     </Properties>
     <Appenders>

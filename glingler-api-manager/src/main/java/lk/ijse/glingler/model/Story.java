@@ -14,6 +14,7 @@ public class Story {
     private Profile profileByProfileId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "story_id", nullable = false)
     public int getStoryId() {
         return storyId;

@@ -1,7 +1,7 @@
 package lk.ijse.glingler.filters;
 
 import lk.ijse.glingler.security.JwtUtil;
-import lk.ijse.glingler.service.UserService;
+import lk.ijse.glingler.api.service.UserService;
 import lk.ijse.glingler.util.SysConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -2,7 +2,7 @@ package lk.ijse.glingler.adapter;
 
 import lk.ijse.glingler.dto.ExceptionResponseBean;
 import lk.ijse.glingler.security.JwtUtil;
-import lk.ijse.glingler.service.UserService;
+import lk.ijse.glingler.api.service.UserService;
 import lk.ijse.glingler.util.ResponseCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

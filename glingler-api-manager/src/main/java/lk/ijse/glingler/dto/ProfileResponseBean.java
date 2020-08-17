@@ -7,7 +7,8 @@ import java.util.List;
 @Data
 public class ProfileResponseBean extends AbstractResponseBean{
 
-    List<ProfileDTO> data;
+    private int userId;
+    private List<ProfileDTO> data;
 
     @Override
     public String toString() {

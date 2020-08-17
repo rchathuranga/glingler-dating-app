@@ -20,6 +20,7 @@ public class Profile {
     private CommonUser commonUser;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profile_id", nullable = false)
     public int getProfileId() {
         return profileId;

@@ -14,11 +14,11 @@ public class Comment {
     private Activity activityByActivityId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", nullable = false)
     public int getCommentId() {
         return commentId;
     }
-
     public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
@@ -28,7 +28,6 @@ public class Comment {
     public String getComment() {
         return comment;
     }
-
     public void setComment(String comment) {
         this.comment = comment;
     }
@@ -38,7 +37,6 @@ public class Comment {
     public Timestamp getCreatedTime() {
         return createdTime;
     }
-
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
@@ -48,7 +46,6 @@ public class Comment {
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -74,8 +71,18 @@ public class Comment {
     public Activity getActivityByActivityId() {
         return activityByActivityId;
     }
-
     public void setActivityByActivityId(Activity activityByActivityId) {
         this.activityByActivityId = activityByActivityId;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentId=" + commentId +
+                ", comment='" + comment + '\'' +
+                ", createdTime=" + createdTime +
+                ", status='" + status + '\'' +
+                ", activityByActivityId=" + activityByActivityId +
+                '}';
     }
 }

@@ -1,10 +1,10 @@
-package lk.ijse.glingler.service.impl;
+package lk.ijse.glingler.api.service.impl;
 
 import lk.ijse.glingler.dto.UserDTO;
 import lk.ijse.glingler.dto.UserResponseBean;
 import lk.ijse.glingler.model.CommonUser;
-import lk.ijse.glingler.repository.UserRepository;
-import lk.ijse.glingler.service.UserService;
+import lk.ijse.glingler.api.repository.UserRepository;
+import lk.ijse.glingler.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         CommonUser commonUser = userRepository.getUserByUsername(s);
         System.out.println("commonUser : " + commonUser);
         if (commonUser != null) {
-            if (commonUser.getStatus().equalsIgnoreCase("ACT")) {
+            if (commonUser.getPasswordStatus().equalsIgnoreCase("ACT")) {
                 authority = new SimpleGrantedAuthority("ROLE_ADMIN");
                 return new User(commonUser.getUsername(), commonUser.getPassword(), Collections.singletonList(authority));
             } else {

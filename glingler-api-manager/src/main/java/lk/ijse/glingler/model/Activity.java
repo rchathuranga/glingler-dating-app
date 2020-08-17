@@ -15,11 +15,11 @@ public class Activity {
     private String status;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "activity_id", nullable = false)
     public int getActivityId() {
         return activityId;
     }
-
     public void setActivityId(int activityId) {
         this.activityId = activityId;
     }
@@ -29,7 +29,6 @@ public class Activity {
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
@@ -39,7 +38,6 @@ public class Activity {
     public String getImgUrl() {
         return imgUrl;
     }
-
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
@@ -49,7 +47,6 @@ public class Activity {
     public Integer getReactCount() {
         return reactCount;
     }
-
     public void setReactCount(Integer reactCount) {
         this.reactCount = reactCount;
     }
@@ -59,7 +56,6 @@ public class Activity {
     public Timestamp getCreatedTime() {
         return createdTime;
     }
-
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
@@ -69,7 +65,6 @@ public class Activity {
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -90,5 +85,17 @@ public class Activity {
     @Override
     public int hashCode() {
         return Objects.hash(activityId, content, imgUrl, reactCount, createdTime, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "activityId=" + activityId +
+                ", content='" + content + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", reactCount=" + reactCount +
+                ", createdTime=" + createdTime +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

@@ -12,11 +12,11 @@ public class Chat {
     private Timestamp createdTime;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_id", nullable = false)
     public int getChatId() {
         return chatId;
     }
-
     public void setChatId(int chatId) {
         this.chatId = chatId;
     }
@@ -26,7 +26,6 @@ public class Chat {
     public String getMessage() {
         return message;
     }
-
     public void setMessage(String message) {
         this.message = message;
     }
@@ -36,7 +35,6 @@ public class Chat {
     public Timestamp getCreatedTime() {
         return createdTime;
     }
-
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
@@ -54,5 +52,14 @@ public class Chat {
     @Override
     public int hashCode() {
         return Objects.hash(chatId, message, createdTime);
+    }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "chatId=" + chatId +
+                ", message='" + message + '\'' +
+                ", createdTime=" + createdTime +
+                '}';
     }
 }

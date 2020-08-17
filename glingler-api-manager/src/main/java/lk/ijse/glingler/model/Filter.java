@@ -10,7 +10,7 @@ public class Filter {
     private int filterId;
     private Integer age;
     private String interestedOn;
-    private Integer ageRangaStart;
+    private Integer ageRangeStart;
     private Integer ageRangeEnd;
     private BigDecimal distance;
     private String locationLongitude;
@@ -18,11 +18,11 @@ public class Filter {
     private String locationDesc;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "filter_id", nullable = false)
     public int getFilterId() {
         return filterId;
     }
-
     public void setFilterId(int filterId) {
         this.filterId = filterId;
     }
@@ -32,7 +32,6 @@ public class Filter {
     public Integer getAge() {
         return age;
     }
-
     public void setAge(Integer age) {
         this.age = age;
     }
@@ -42,19 +41,17 @@ public class Filter {
     public String getInterestedOn() {
         return interestedOn;
     }
-
     public void setInterestedOn(String interestedOn) {
         this.interestedOn = interestedOn;
     }
 
     @Basic
-    @Column(name = "age_ranga_start", nullable = true)
-    public Integer getAgeRangaStart() {
-        return ageRangaStart;
+    @Column(name = "age_range_start", nullable = true)
+    public Integer getAgeRangeStart() {
+        return ageRangeStart;
     }
-
-    public void setAgeRangaStart(Integer ageRangaStart) {
-        this.ageRangaStart = ageRangaStart;
+    public void setAgeRangeStart(Integer ageRangeStart) {
+        this.ageRangeStart = ageRangeStart;
     }
 
     @Basic
@@ -62,7 +59,6 @@ public class Filter {
     public Integer getAgeRangeEnd() {
         return ageRangeEnd;
     }
-
     public void setAgeRangeEnd(Integer ageRangeEnd) {
         this.ageRangeEnd = ageRangeEnd;
     }
@@ -72,7 +68,6 @@ public class Filter {
     public BigDecimal getDistance() {
         return distance;
     }
-
     public void setDistance(BigDecimal distance) {
         this.distance = distance;
     }
@@ -82,7 +77,6 @@ public class Filter {
     public String getLocationLongitude() {
         return locationLongitude;
     }
-
     public void setLocationLongitude(String locationLongitude) {
         this.locationLongitude = locationLongitude;
     }
@@ -92,7 +86,6 @@ public class Filter {
     public String getLocationLatitude() {
         return locationLatitude;
     }
-
     public void setLocationLatitude(String locationLatitude) {
         this.locationLatitude = locationLatitude;
     }
@@ -102,7 +95,6 @@ public class Filter {
     public String getLocationDesc() {
         return locationDesc;
     }
-
     public void setLocationDesc(String locationDesc) {
         this.locationDesc = locationDesc;
     }
@@ -115,7 +107,7 @@ public class Filter {
         return filterId == filter.filterId &&
                 Objects.equals(age, filter.age) &&
                 Objects.equals(interestedOn, filter.interestedOn) &&
-                Objects.equals(ageRangaStart, filter.ageRangaStart) &&
+                Objects.equals(ageRangeStart, filter.ageRangeStart) &&
                 Objects.equals(ageRangeEnd, filter.ageRangeEnd) &&
                 Objects.equals(distance, filter.distance) &&
                 Objects.equals(locationLongitude, filter.locationLongitude) &&
@@ -125,6 +117,21 @@ public class Filter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(filterId, age, interestedOn, ageRangaStart, ageRangeEnd, distance, locationLongitude, locationLatitude, locationDesc);
+        return Objects.hash(filterId, age, interestedOn, ageRangeStart, ageRangeEnd, distance, locationLongitude, locationLatitude, locationDesc);
+    }
+
+    @Override
+    public String toString() {
+        return "Filter{" +
+                "filterId=" + filterId +
+                ", age=" + age +
+                ", interestedOn='" + interestedOn + '\'' +
+                ", ageRangeStart=" + ageRangeStart +
+                ", ageRangeEnd=" + ageRangeEnd +
+                ", distance=" + distance +
+                ", locationLongitude='" + locationLongitude + '\'' +
+                ", locationLatitude='" + locationLatitude + '\'' +
+                ", locationDesc='" + locationDesc + '\'' +
+                '}';
     }
 }

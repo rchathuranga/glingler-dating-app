@@ -1,4 +1,4 @@
-package lk.ijse.glingler.repository;
+package lk.ijse.glingler.api.repository;
 
 import lk.ijse.glingler.model.CommonUser;
 import org.springframework.data.jpa.repository.JpaRepository;

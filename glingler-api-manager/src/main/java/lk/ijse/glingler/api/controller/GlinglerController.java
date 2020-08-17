@@ -1,4 +1,4 @@
-package lk.ijse.glingler.controller;
+package lk.ijse.glingler.api.controller;
 
 import lk.ijse.glingler.util.SysConfig;
 import org.springframework.beans.factory.annotation.Value;
