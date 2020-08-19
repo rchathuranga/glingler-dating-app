@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MainAppComponent} from './main-app/main-app.component';
 import {UserFeedComponent} from './user-feed/user-feed.component';
+import {ChatComponent} from './chat/chat.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'feed',
         component: UserFeedComponent,
+      },
+      {
+        path: 'chat',
+        component: ChatComponent,
       }
     ]
   }

@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
+import {AuthGuard} from './guard/auth.guard';
 
 
 const routes: Routes = [
@@ -20,16 +21,18 @@ const routes: Routes = [
   },
   {
     path: 'application',
-    loadChildren: () => import('./application/application.module').then(module => module.ApplicationModule)
+    loadChildren: () => import('./application/application.module').then(module => module.ApplicationModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin-app/admin-app.module').then(module => module.AdminAppModule)
+    loadChildren: () => import('./admin-app/admin-app.module').then(module => module.AdminAppModule),
+    canActivate: [AuthGuard]
   },
-  {
-    path: '**',
-    redirectTo: 'login'
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: 'login'
+  // }
 ];
 
 @NgModule({

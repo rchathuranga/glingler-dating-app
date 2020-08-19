@@ -2,6 +2,7 @@ package lk.ijse.glingler.api.controller;
 
 import lk.ijse.glingler.dto.SignInRequestBean;
 import lk.ijse.glingler.dto.SignInResponseBean;
+import lk.ijse.glingler.dto.UserResponseBean;
 import lk.ijse.glingler.security.JwtUtil;
 import lk.ijse.glingler.api.service.UserService;
 import lk.ijse.glingler.util.ResponseCode;
@@ -39,6 +40,8 @@ public class AuthenticationController {
         try {
             authenticate(requestBean.getUsername(), requestBean.getPassword());
             responseBean.setToken(jwtUtil.createToken(requestBean.getUsername(),"user",null));
+            UserResponseBean byUserName = userService.getUserDetailByUserName(requestBean.getUsername());
+            responseBean.setUserId(byUserName.getUser().getUserId());
         } catch (BadCredentialsException bce) {
 
             responseBean.setResponseCode(ResponseCode.FAILED);

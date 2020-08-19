@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
+import {AuthenticateService} from '../../service/authenticate/authenticate.service';
 
 export interface ExampleTab {
   label: string;
@@ -13,7 +14,8 @@ export interface ExampleTab {
 })
 export class MainAppComponent implements OnInit {
   asyncTabs: Observable<ExampleTab[]>;
-  constructor() {
+
+  constructor(private authService: AuthenticateService) {
 
     this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
       setTimeout(() => {
@@ -27,5 +29,9 @@ export class MainAppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, NgForm} from '@angular/forms';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {Router} from '@angular/router';
+import {ProfileService} from '../service/profile/profile.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,20 +15,38 @@ export class SignUpComponent implements OnInit {
 
   passwordHide = true;
 
-  constructor(private formBuilder: FormBuilder, private afStorage: AngularFireStorage, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private afStorage: AngularFireStorage,
+              private router: Router,
+              private profileService: ProfileService) {
   }
 
   ngOnInit(): void {
   }
 
   btnCreateAccount(form: NgForm) {
-    console.log(form.value);
-    // this.uploadProfilePicture();
+    const username = form.value.email.split('@')[0];
+    const data = {
+      ...form.value,
+      username,
+      imageUrl: 'http'
+    };
 
-    // callbackend
+    this.profileService.createUserProfile(data).subscribe(
+      res => {
+        console.log(res);
+
+        if (res.responseCode === 1000) {
+          this.router.navigate(['/application']);
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
 
     if (true) {
-      this.router.navigate(['application']);
+      // this.router.navigate(['application']);
     }
   }
 

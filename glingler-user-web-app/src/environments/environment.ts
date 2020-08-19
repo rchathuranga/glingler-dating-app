@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  glingler_api_base_url: 'http://localhost:4201/api/v1/',
   production: false
 };
 

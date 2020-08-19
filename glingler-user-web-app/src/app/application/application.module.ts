@@ -17,10 +17,11 @@ import {MatInputModule} from '@angular/material/input';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
-  declarations: [MainAppComponent, UserFeedComponent],
+  declarations: [MainAppComponent, UserFeedComponent, ChatComponent],
   imports: [
     RouterModule,
     CommonModule,

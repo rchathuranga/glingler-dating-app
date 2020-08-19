@@ -19,7 +19,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthGuard} from './guard/auth.guard';
+import {TokenInterceptor} from './interceptor/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,11 @@ import {HttpClientModule} from '@angular/common/http';
     MatSelectModule,
     FormsModule,
   ],
-  providers: [AuthenticateService],
+  providers: [AuthenticateService, AuthGuard, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   exports: [],
   bootstrap: [AppComponent]
 })

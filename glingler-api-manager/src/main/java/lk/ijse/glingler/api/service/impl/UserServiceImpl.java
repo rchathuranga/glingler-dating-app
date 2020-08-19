@@ -35,6 +35,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserResponseBean getUserDetailByUserName(String username) throws Exception {
+        UserResponseBean responseBean = new UserResponseBean();
+        CommonUser byUsername = userRepository.getUserByUsername(username);
+        System.out.println();
+        System.out.println(byUsername);
+        System.out.println();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(byUsername.getUserId());
+        responseBean.setUser(userDTO);
+        return responseBean;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         GrantedAuthority authority = null;
 

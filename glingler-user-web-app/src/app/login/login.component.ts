@@ -23,13 +23,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log(this.form.value);
-    const authenticated = this.authService.authenticate(this.form.value);
-    const b = this.form.value.username === 'admin';
-    console.log(authenticated);
-    if (!authenticated) {
-      this.router.navigate(['admin']);
-    } else {
-      this.router.navigate(['application']);
-    }
+    this.authService.authenticate(this.form.value);
   }
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            [ %X{REQUEST_ID}%X{UNAME} ] [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1}:%L - %msg%n
+        </Property>
+        <Property name="BASE_URL">
+            /glingler/logs/
+        </Property>
+        <Property name="FILE_PATTERN">
+            /glingler/logs/
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+
+        <RollingFile name="debugLog-api" fileName="${BASE_URL}DEBUG.DMP"
+                     filePattern="${FILE_PATTERN}debug-%d{yyyy-MM-dd_hh:mm}-%i.DMP">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingFile>
+
+        <!--api info log file-->
+        <RollingFile name="infoLog-api" fileName="${BASE_URL}INFO.DMP"
+                     filePattern="${FILE_PATTERN}info-%d{yyyy-MM-dd_hh:mm}-%i.DMP">
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingFile>
+
+        <RollingFile name="errorLog-api" fileName="${BASE_URL}ERROR.DMP"
+                     filePattern="${FILE_PATTERN}error-%d{yyyy-MM-dd_hh-mm}-%i.DMP">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingFile>
+
+
+    </Appenders>
+    <Loggers>
+        <Logger name="lk.ijse.glingler" additivity="false">
+            <AppenderRef ref="debugLog-api"/>
+            <AppenderRef ref="infoLog-api"/>
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
+
+        <Root level="debug">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="debugLog-api"/>
+            <AppenderRef ref="infoLog-api"/>
+        </Root>
+
+    </Loggers>
+</Configuration>

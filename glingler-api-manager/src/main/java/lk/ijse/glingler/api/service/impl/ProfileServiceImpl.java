@@ -45,7 +45,7 @@ public class ProfileServiceImpl implements ProfileService {
         user.setUserId(userId);
 
         LOGGER.debug("Getting Profile Details By UserId");
-        Profile userProfile = profileRepository.getProfileByCommonUserAndStatus(user, StatusCode.STATUS_ACTIVE);
+        Profile userProfile = profileRepository.getProfileByCommonUserAndStatus(user, SysConfig.STATUS_PROFILE_NEW);
 
         if (userProfile != null) {
             LOGGER.debug("Loading Profile Data to DTOs");

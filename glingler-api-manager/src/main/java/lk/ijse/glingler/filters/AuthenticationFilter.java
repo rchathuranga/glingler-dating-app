@@ -56,6 +56,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 String userName = jwtUtil.getUserName(requestTokenHeader);
                 jwtUtil.createToken(userName, SysConfig.APP_TYPE_USER, response);
                 springAuthentication(request, userName);
+                request.setAttribute("username",userName);
             }
         }
         filterChain.doFilter(request, response);

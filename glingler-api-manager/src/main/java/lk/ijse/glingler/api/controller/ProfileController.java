@@ -7,14 +7,17 @@ import lk.ijse.glingler.util.ResponseCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/v1/{appType}/profile")
+@CrossOrigin
 public class ProfileController {
 
     private final Logger LOGGER = LogManager.getLogger(ProfileController.class.getName());
@@ -43,12 +46,12 @@ public class ProfileController {
     }
 
     @GetMapping(value = "/{userId}")
-    public ResponseEntity<ProfileResponseBean> getUserProfile(@PathVariable("appType") String appType, @PathVariable("userId") String userId) {
+    public ResponseEntity<ProfileResponseBean> getUserProfile(@PathVariable("appType") String appType, @PathVariable("userId") Integer userId) {
         LOGGER.debug("Enter to Get User Profile Details Process by - {} : {}", userId, appType);
         ProfileResponseBean responseBean = new ProfileResponseBean();
 
         try {
-            responseBean = profileService.getUserProfileDetails(Integer.parseInt(userId));
+            responseBean = profileService.getUserProfileDetails(userId);
         } catch (Exception e) {
 
             e.printStackTrace();
