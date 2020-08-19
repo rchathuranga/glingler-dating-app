@@ -12,10 +12,11 @@ public class Filter {
     private String interestedOn;
     private Integer ageRangeStart;
     private Integer ageRangeEnd;
-    private BigDecimal distance;
+    private Double distance;
     private String locationLongitude;
     private String locationLatitude;
     private String locationDesc;
+    private Profile profile;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,10 +66,10 @@ public class Filter {
 
     @Basic
     @Column(name = "distance", nullable = true, precision = 5)
-    public BigDecimal getDistance() {
+    public Double getDistance() {
         return distance;
     }
-    public void setDistance(BigDecimal distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
@@ -97,6 +98,15 @@ public class Filter {
     }
     public void setLocationDesc(String locationDesc) {
         this.locationDesc = locationDesc;
+    }
+
+    @OneToOne
+    @JoinColumn(name ="profile_id", referencedColumnName = "profile_id")
+    public Profile getProfile() {
+        return profile;
+    }
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     @Override

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Profile} from '../../dto/profile';
+import {ProfileDTO} from '../../dto/profile-d-t-o';
 
 @Component({
   selector: 'app-profile-management',
@@ -8,7 +8,7 @@ import {Profile} from '../../dto/profile';
 })
 export class ProfileManagementComponent implements OnInit {
 
-  profiles: Profile[] = [];
+  profiles: ProfileDTO[] = [];
 
 
 
@@ -16,7 +16,7 @@ export class ProfileManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const prof: Profile = new Profile(1, 'Ravindu', 'Chathuranga', '', 'Male',
+    const prof: ProfileDTO = new ProfileDTO(1, 'Ravindu', 'Chathuranga', '', 'Male',
       19, '2001-11-12', '', '12:12:43', 34, 'ACT');
 
     this.profiles.push(prof);

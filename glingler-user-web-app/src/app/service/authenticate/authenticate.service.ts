@@ -9,9 +9,9 @@ import {UserDTO} from '../../dto/user-dto';
   providedIn: 'root'
 })
 export class AuthenticateService {
-  TOKEN_KEY = 'TOKEN';
   baseUrl = environment.glingler_api_base_url;
-  private USER_DATA = 'USER';
+  TOKEN_KEY = environment.glingler_token_key;
+  USER_DATA = environment.glingler_user_data;
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -19,22 +19,8 @@ export class AuthenticateService {
   authenticate(user: { username, password }) {
     this.http.post<ResponseDTO>(this.baseUrl + 'auth/sign-in', user).subscribe(
       res => {
-        this.http.get<ResponseDTO>(this.baseUrl + 'user//user/user').subscribe(
-          gRes => {
-            localStorage.setItem(this.TOKEN_KEY, res.token);
-            console.log(gRes);
-            if (gRes.data.length > 0) {
-              const userData: UserDTO = gRes.data[0];
-              localStorage.setItem(this.USER_DATA, userData.status);
-              this.router.navigate(['/application']);
-            }
-          },
-          gErr => {
-            console.log(gErr);
-            this.logout();
-          }
-        );
-        this.router.navigate(['/admin']);
+        localStorage.setItem(this.TOKEN_KEY, res.token)
+        this.router.navigate(['/' + res.router]);
       },
       err => {
         console.log(err);

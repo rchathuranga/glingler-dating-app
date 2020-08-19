@@ -21,18 +21,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public UserResponseBean getUserDetails() throws Exception {
-        CommonUser one = userRepository.getOne(1);
-
-        UserDTO dto = new UserDTO();
-        dto.setUserId(one.getUserId());
-        dto.setUsername(one.getUsername());
-
-        UserResponseBean responseBean = new UserResponseBean();
-        responseBean.setUser(dto);
-        return responseBean;
-    }
 
     @Override
     public UserResponseBean getUserDetailByUserName(String username) throws Exception {

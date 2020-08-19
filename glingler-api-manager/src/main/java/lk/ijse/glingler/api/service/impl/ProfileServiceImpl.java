@@ -1,10 +1,12 @@
 package lk.ijse.glingler.api.service.impl;
 
+import lk.ijse.glingler.api.repository.FilterRepository;
 import lk.ijse.glingler.api.repository.ProfileRepository;
 import lk.ijse.glingler.dto.ProfileDTO;
 import lk.ijse.glingler.dto.ProfileRequestBean;
 import lk.ijse.glingler.dto.ProfileResponseBean;
 import lk.ijse.glingler.model.CommonUser;
+import lk.ijse.glingler.model.Filter;
 import lk.ijse.glingler.model.Profile;
 import lk.ijse.glingler.api.repository.UserRepository;
 import lk.ijse.glingler.api.service.ProfileService;
@@ -19,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,16 +40,18 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FilterRepository filterRepository;
+
     @Override
-    public ProfileResponseBean getUserProfileDetails(int userId) throws Exception {
-        LOGGER.debug("Enter to Get User Profile Details By UserId - {} in Profile Service", userId);
+    public ProfileResponseBean getUserProfileDetails(String username) throws Exception {
+        LOGGER.debug("Enter to Get User Profile Details By UserId - {} in Profile Service", username);
         ProfileResponseBean responseBean = new ProfileResponseBean();
 
-        CommonUser user = new CommonUser();
-        user.setUserId(userId);
+        CommonUser commonUser = userRepository.getUserByUsername(username);
 
         LOGGER.debug("Getting Profile Details By UserId");
-        Profile userProfile = profileRepository.getProfileByCommonUserAndStatus(user, SysConfig.STATUS_PROFILE_NEW);
+        Profile userProfile = profileRepository.getProfileByCommonUserAndStatus(commonUser, StatusCode.STATUS_PROFILE_NEW);
 
         if (userProfile != null) {
             LOGGER.debug("Loading Profile Data to DTOs");
@@ -100,9 +106,9 @@ public class ProfileServiceImpl implements ProfileService {
         CommonUser commonUser = new CommonUser();
         commonUser.setEmail(profileRequestBean.getEmail());
         commonUser.setPassword(profileRequestBean.getPassword());
-        commonUser.setPasswordStatus(SysConfig.STATUS_PASSWORD_ACTIVE);
+        commonUser.setPasswordStatus(StatusCode.STATUS_PASSWORD_ACTIVE);
         commonUser.setUsername(profileRequestBean.getUsername());
-        commonUser.setStatus(SysConfig.STATUS_USER_INITIATE);
+        commonUser.setStatus(StatusCode.STATUS_USER_INITIATE);
 
         LOGGER.debug("Saving User Details | User : {}",commonUser);
         commonUser = userRepository.saveAndFlush(commonUser);
@@ -114,20 +120,35 @@ public class ProfileServiceImpl implements ProfileService {
             Profile profile = new Profile();
             profile.setFirstName(profileRequestBean.getFirstName());
             profile.setLastName(profileRequestBean.getLastName());
+            profile.setBio("");
             profile.setSex(profileRequestBean.getGender());
+//            profile.setBirthday(profileRequestBean.);
             profile.setImageUrl(profileRequestBean.getImageUrl());
-            profile.setFirstName(profileRequestBean.getFirstName());
-            profile.setFirstName(profileRequestBean.getFirstName());
-            profile.setStatus(SysConfig.STATUS_PROFILE_NEW);
+
             profile.setCommonUser(commonUser);
+            profile.setCreatedTime(new Timestamp(System.currentTimeMillis()));
+            profile.setStatus(StatusCode.STATUS_PROFILE_NEW);
 
             LOGGER.debug("Saving Profile Details | Profile : {}",profile);
             profile = profileRepository.save(profile);
-            System.out.println();
-            System.out.println("profile : "+profile);
-            System.out.println();
 
             if (null != profile) {
+
+                Filter filter = new Filter();
+                filter.setProfile(profile);
+                filter.setAge(18);
+                filter.setInterestedOn(SysConfig.USER_LOOKING_FOR_MEN);
+                filter.setLocationLatitude("3245345");
+                filter.setLocationLongitude("3245345");
+                filter.setAgeRangeStart(18);
+                filter.setAgeRangeEnd(45);
+                filter.setDistance(0.0);
+
+                LOGGER.debug("Saving Profile Filter Details | Filter : {}",filter);
+                Filter save = filterRepository.save(filter);
+                System.out.println();
+                System.out.println("filter id : "+save.getFilterId());
+                System.out.println();
 
                 LOGGER.debug("Process Creating Profile Success");
                 responseBean.setUserId(commonUser.getUserId());

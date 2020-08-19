@@ -13,6 +13,10 @@ export class ProfileService {
   }
 
   createUserProfile(userDetails) {
-    return this.http.post<ResponseDTO>(this.baseUrl + 'user/profile/createProfile', userDetails);
+    return this.http.post<ResponseDTO>(this.baseUrl + 'user/profile', userDetails);
+  }
+
+  getProfileData(){
+    return this.http.get<ResponseDTO>(this.baseUrl + 'user/profile');
   }
 }

@@ -11,5 +11,5 @@ public class ProfileDTO {
     private String sex;
     private int age;
     private String birthDay;
-    private String profilePicUrl;
+    private String imageUrl;
 }

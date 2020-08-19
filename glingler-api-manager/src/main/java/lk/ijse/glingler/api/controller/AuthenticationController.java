@@ -42,6 +42,8 @@ public class AuthenticationController {
             responseBean.setToken(jwtUtil.createToken(requestBean.getUsername(),"user",null));
             UserResponseBean byUserName = userService.getUserDetailByUserName(requestBean.getUsername());
             responseBean.setUserId(byUserName.getUser().getUserId());
+            responseBean.setRouter("application");
+
         } catch (BadCredentialsException bce) {
 
             responseBean.setResponseCode(ResponseCode.FAILED);

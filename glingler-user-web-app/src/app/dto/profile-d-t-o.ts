@@ -1,4 +1,4 @@
-export class Profile {
+export class ProfileDTO {
   constructor(
     public profileId,
     public firstName,

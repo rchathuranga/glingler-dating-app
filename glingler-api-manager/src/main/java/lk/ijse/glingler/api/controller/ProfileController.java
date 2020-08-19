@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,10 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @GetMapping
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
+    /*@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfileResponseBean> getProfileDetails(@PathVariable("appType") String appType) {
         LOGGER.debug("Enter to Get Profile Details Process : {}", appType);
         ProfileResponseBean responseBean = new ProfileResponseBean();
@@ -43,15 +47,16 @@ public class ProfileController {
 
         LOGGER.debug("Process Getting Profile Details Finished");
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
-    }
+    }*/
 
-    @GetMapping(value = "/{userId}")
-    public ResponseEntity<ProfileResponseBean> getUserProfile(@PathVariable("appType") String appType, @PathVariable("userId") Integer userId) {
-        LOGGER.debug("Enter to Get User Profile Details Process by - {} : {}", userId, appType);
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileResponseBean> getProfileDetailsByUserId(@PathVariable("appType") String appType) {
+        String username = httpServletRequest.getAttribute("username").toString();
+        LOGGER.debug("Enter to Get User Profile Details Process by - {} : {}", username, appType);
         ProfileResponseBean responseBean = new ProfileResponseBean();
 
         try {
-            responseBean = profileService.getUserProfileDetails(userId);
+            responseBean = profileService.getUserProfileDetails(username);
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -66,8 +71,8 @@ public class ProfileController {
     }
 
 
-    @PostMapping(value = "/createProfile")
-    public ResponseEntity<ProfileResponseBean> createProfile(@PathVariable("appType") String appType, @RequestBody ProfileRequestBean profileRequestBean){
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileResponseBean> createProfile(@PathVariable("appType") String appType, @RequestBody ProfileRequestBean profileRequestBean) {
         LOGGER.debug("Enter to Create User Profile Process : {}", appType);
         ProfileResponseBean responseBean = new ProfileResponseBean();
 
