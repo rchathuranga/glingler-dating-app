@@ -19,6 +19,7 @@ export class UserFeedComponent implements OnInit {
   age = '19';
   lookingFor = 'Girls';
   location = 'Horana, Pokunuwita';
+  matchCount = 0;
 
   constructor(private profileService: ProfileService) {
 
@@ -31,7 +32,10 @@ export class UserFeedComponent implements OnInit {
           this.firstName = data.firstName;
           this.lastName = data.lastName;
           this.bio = data.bio;
+          this.lookingFor = data.lookingFor;
+          this.location = data.location;
           this.age = data.age;
+          this.matchCount = data.matchCount;
 
         }
       },

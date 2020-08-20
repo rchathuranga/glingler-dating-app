@@ -16,10 +16,10 @@ export class ProfileManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const prof: ProfileDTO = new ProfileDTO(1, 'Ravindu', 'Chathuranga', '', 'Male',
-      19, '2001-11-12', '', '12:12:43', 34, 'ACT');
+    // const prof: ProfileDTO = new ProfileDTO(1, 'Ravindu', 'Chathuranga', '', 'Male',
+    //   19, '2001-11-12', '', '12:12:43', 34, 'ACT');
 
-    this.profiles.push(prof);
+    // this.profiles.push(prof);
     // this.profiles.push(prof);
     // this.profiles.push(prof);
   }

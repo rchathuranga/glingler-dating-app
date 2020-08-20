@@ -3,6 +3,7 @@ package lk.ijse.glingler.api.controller;
 import lk.ijse.glingler.dto.ProfileRequestBean;
 import lk.ijse.glingler.dto.ProfileResponseBean;
 import lk.ijse.glingler.api.service.ProfileService;
+import lk.ijse.glingler.security.JwtUtil;
 import lk.ijse.glingler.util.ResponseCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +26,9 @@ public class ProfileController {
 
     @Autowired
     private ProfileService profileService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     private HttpServletRequest httpServletRequest;
@@ -78,6 +82,8 @@ public class ProfileController {
 
         try {
             responseBean = profileService.createProfile(profileRequestBean);
+            responseBean.setToken(jwtUtil.createToken(profileRequestBean.getUsername(),appType,null));
+            responseBean.setRouter("application");
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.debug("Creating User Profile Failed - {}", e.getMessage());
@@ -86,6 +92,22 @@ public class ProfileController {
         }
 
         LOGGER.debug("Process Create User Profile Finished");
+        return new ResponseEntity<>(responseBean, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "update-filters", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileResponseBean> updateFilterDetails(@PathVariable("appType") String appType, @RequestBody ProfileRequestBean profileRequestBean){
+        String username = httpServletRequest.getAttribute("username").toString();
+        LOGGER.debug("Enter to Update Profile Filters Process : {}", appType);
+        ProfileResponseBean responseBean = new ProfileResponseBean();
+        try {
+            responseBean = profileService.updateFilterDetails(username, profileRequestBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.debug("Updating Profile Filters Failed - {}", e.getMessage());
+            responseBean.setResponseCode(ResponseCode.EXCEPTION);
+            responseBean.setResponseError("Exception throws while processing Update Profile Filters");
+        }
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 }

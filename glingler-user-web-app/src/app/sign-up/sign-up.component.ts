@@ -3,6 +3,8 @@ import {FormBuilder, NgForm} from '@angular/forms';
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 import {Router} from '@angular/router';
 import {ProfileService} from '../service/profile/profile.service';
+import {finalize} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,7 +15,11 @@ export class SignUpComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
+  imageUrl: string | ArrayBuffer = 'https://classeventie.classiebit.com//upload/users/images/1537003256339.png';
+  imageFile: File;
+
   passwordHide = true;
+  profileImgHide = true;
 
   constructor(private formBuilder: FormBuilder,
               private afStorage: AngularFireStorage,
@@ -24,12 +30,30 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  btnCreateAccount(form: NgForm) {
-    const username = form.value.email.split('@')[0];
+  async btnCreateAccount(form: NgForm) {
+
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref('user/' + id);
+    this.task = this.ref.put(this.imageFile);
+
+    await this.task.snapshotChanges().pipe(
+      finalize(() => {
+        this.ref.getDownloadURL().subscribe(url => {
+          this.imageUrl = url;
+        });
+      })
+    ).subscribe();
+    this.createUserAccount(form.value, this.imageUrl);
+
+  }
+
+  private createUserAccount(value, imageUrl) {
+    const username = value.email.split('@')[0];
+    console.log('image', imageUrl);
     const data = {
-      ...form.value,
+      ...value,
       username,
-      imageUrl: 'http'
+      imageUrl
     };
 
     this.profileService.createUserProfile(data).subscribe(
@@ -37,24 +61,28 @@ export class SignUpComponent implements OnInit {
         console.log(res);
 
         if (res.responseCode === 1000) {
-          this.router.navigate(['/application']);
+          localStorage.setItem(environment.glingler_token_key, res.token);
+          this.router.navigate(['/' + res.router]);
         }
       },
       err => {
         console.log(err);
       }
     );
-
-    if (true) {
-      // this.router.navigate(['application']);
-    }
   }
 
 
-  uploadProfilePicture(event: Event) {
-    /*const id = Math.random().toString(36).substring(2);
-    this.ref = this.afStorage.ref('user/' + id);
-    this.task = this.ref.put(event.target.files[0]);*/
+  fileInputChangeEvent(event: Event) {
+    this.profileImgHide = false;
+    const target: any = event.target;
+    const file: File = target.files[0];
+    this.imageFile = file;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imageUrl = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
 }

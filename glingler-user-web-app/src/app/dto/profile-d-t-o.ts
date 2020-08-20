@@ -10,7 +10,12 @@ export class ProfileDTO {
     public imageUrl,
     public createdTime,
     public userId,
-    public status
+    public ageRangeStart,
+    public ageRangeEnd,
+    public location,
+    public lookingFor,
+    public status,
+    public matchCount,
   ) {
   }
 }

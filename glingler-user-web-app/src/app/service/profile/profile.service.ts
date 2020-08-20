@@ -12,11 +12,34 @@ export class ProfileService {
   constructor(private http: HttpClient) {
   }
 
+  async getLocationData(userDetails) {
+    if (navigator.geolocation) {
+      console.log('it is supported');
+      await navigator.geolocation.getCurrentPosition(position => {
+        console.log(position);
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
+
+        userDetails = {
+          ...{longitude: position.coords.longitude},
+          latitude: position.coords.latitude
+        };
+      });
+    } else {
+      console.log('geo location is not supported');
+    }
+    return userDetails;
+  }
+
   createUserProfile(userDetails) {
+    this.getLocationData(userDetails).then(r => userDetails = r);
+    console.log('user details profile service 36', userDetails);
+
     return this.http.post<ResponseDTO>(this.baseUrl + 'user/profile', userDetails);
   }
 
-  getProfileData(){
+
+  getProfileData() {
     return this.http.get<ResponseDTO>(this.baseUrl + 'user/profile');
   }
 }

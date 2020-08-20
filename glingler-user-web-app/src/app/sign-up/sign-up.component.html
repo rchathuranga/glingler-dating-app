@@ -19,10 +19,12 @@
         <div class="profile-pic">
           <p class="pic-header">Upload a profile picture</p>
           <div class="img-wrapper-container">
-            <div class="img-wrapper">
-              <i class="fas fa-upload"></i>
-              <!--              <input type="file" class="pro-input" (change)="uploadProfilePicture($event)" accept=".png,.jpg" name="" id="">-->
-            </div>
+            <label for="file" class="img-wrapper">
+              <i *ngIf="profileImgHide" class="fas fa-upload"></i>
+              <img *ngIf="!profileImgHide" src="{{imageUrl}}" alt="" width="100%">
+            </label>
+            <input type="file" id="file" style="display: none" (change)="fileInputChangeEvent($event)"
+                   accept=".png,.jpg" name="">
           </div>
         </div>
 
@@ -76,7 +78,8 @@
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Enter your password</mat-label>
           <input [type]="passwordHide ? 'password' : 'text'" matInput name="password" ngModel>
-          <button (click)="passwordHide = !passwordHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordHide" mat-icon-button
+          <button (click)="passwordHide = !passwordHide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="passwordHide" mat-icon-button
                   matSuffix>
             <mat-icon>{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>

@@ -8,25 +8,44 @@ import java.util.Objects;
 @Table(name = "match")
 public class Match {
     private int matchId;
+    private int profileId;
+    private int matchProfileId;
     private String status;
     private Timestamp createTime;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "match_id", nullable = false)
     public int getMatchId() {
         return matchId;
     }
-
     public void setMatchId(int matchId) {
         this.matchId = matchId;
     }
 
     @Basic
-    @Column(name = "status", nullable = true, length = 10)
+    @Column(name = "profile_id", nullable = true, length = 10)
+    public int getProfileId() {
+        return profileId;
+    }
+    public void setProfileId(int profileId) {
+        this.profileId = profileId;
+    }
+
+    @Basic
+    @Column(name = "match_profile_id", nullable = true)
+    public int getMatchProfileId() {
+        return matchProfileId;
+    }
+    public void setMatchProfileId(int matchProfileId) {
+        this.matchProfileId = matchProfileId;
+    }
+
+    @Basic
+    @Column(name = "status", nullable = true)
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -36,7 +55,6 @@ public class Match {
     public Timestamp getCreateTime() {
         return createTime;
     }
-
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
@@ -55,4 +73,5 @@ public class Match {
     public int hashCode() {
         return Objects.hash(matchId, status, createTime);
     }
+
 }

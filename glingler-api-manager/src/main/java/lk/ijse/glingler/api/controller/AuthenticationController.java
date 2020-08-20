@@ -40,8 +40,8 @@ public class AuthenticationController {
         try {
             authenticate(requestBean.getUsername(), requestBean.getPassword());
             responseBean.setToken(jwtUtil.createToken(requestBean.getUsername(),"user",null));
-            UserResponseBean byUserName = userService.getUserDetailByUserName(requestBean.getUsername());
-            responseBean.setUserId(byUserName.getUser().getUserId());
+            UserResponseBean userData = userService.getUserDetailByUserName(requestBean.getUsername());
+            responseBean.setUserId(userData.getUser().getUserId());
             responseBean.setRouter("application");
 
         } catch (BadCredentialsException bce) {

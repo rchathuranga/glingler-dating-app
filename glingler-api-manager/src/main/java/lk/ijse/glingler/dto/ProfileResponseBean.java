@@ -8,6 +8,8 @@ import java.util.List;
 public class ProfileResponseBean extends AbstractResponseBean{
 
     private int userId;
+    private String token;
+    private String router;
     private List<ProfileDTO> data;
 
     @Override

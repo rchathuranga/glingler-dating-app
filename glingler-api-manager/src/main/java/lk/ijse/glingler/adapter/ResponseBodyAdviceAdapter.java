@@ -18,10 +18,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import javax.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class ResponseBodyAdviceAdapter implements ResponseBodyAdvice<Object> {
 
     private final Logger LOGGER = LogManager.getLogger(ResponseBodyAdviceAdapter.class.getName());
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -41,8 +46,11 @@ public class ResponseBodyAdviceAdapter implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ExceptionResponseBean> handleMyException(Exception ex) {
+        ex.printStackTrace();
         LOGGER.debug("Enter to Exception Handler in Response Body Advice Adapter - {}",ex.getMessage());
-
+        System.out.println("xxxxxxxxxx");
+        System.out.println(httpServletRequest);
+        System.out.println("xxxxxxxxxx");
         ExceptionResponseBean responseBean = new ExceptionResponseBean();
         responseBean.setExceptionMessage(ex.getMessage());
         responseBean.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR);
@@ -50,6 +58,5 @@ public class ResponseBodyAdviceAdapter implements ResponseBodyAdvice<Object> {
 
         LOGGER.debug("Process Handling Exception Success");
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
-
     }
 }
