@@ -15,7 +15,7 @@ export class ProfileDTO {
     public location,
     public lookingFor,
     public status,
-    public matchCount,
+    public matchedCount,
   ) {
   }
 }

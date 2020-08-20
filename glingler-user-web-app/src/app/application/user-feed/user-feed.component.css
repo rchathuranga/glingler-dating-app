@@ -108,39 +108,12 @@
 /*-------------------------------------------------------------------------------------------------------------------*/
 
 .content-container{
+  background: red;
   width: 100%;
-  height: 400px;
+  height: 450px;
   /*background-color: aqua;*/
 }
 
-.content{
-  width: 80%;
-  height: 100%;
-  margin: 0 auto;
-  /*background-color: #aeaeae;*/
-}
-
-.content-header{
-  width: 80%;
-  height: 70px;
-  background-color: white;
-  border-radius: 10px;
-  margin: 10px auto;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  padding: 10px;
-}
-
-.content-body{
-  position: relative;
-  top: -30px;
-  width: 100%;
-  height: 300px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 20px 17px #ededed;
-}
-
-/*------------------------------------------------------------------------------------------*/
 
 #content-container {
   z-index: 1;
