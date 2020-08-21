@@ -8,7 +8,6 @@ import lk.ijse.glingler.dto.ProfileRequestBean;
 import lk.ijse.glingler.dto.ProfileResponseBean;
 import lk.ijse.glingler.model.CommonUser;
 import lk.ijse.glingler.model.Filter;
-import lk.ijse.glingler.model.Match;
 import lk.ijse.glingler.model.Profile;
 import lk.ijse.glingler.api.repository.UserRepository;
 import lk.ijse.glingler.api.service.ProfileService;
@@ -71,7 +70,8 @@ public class ProfileServiceImpl implements ProfileService {
             profileDTO.setAgeRangeStart(filters.getAgeRangeStart());
             profileDTO.setAgeRangeEnd(filters.getAgeRangeEnd());
 
-            profileDTO.setMatchedCount(3);
+            int matchCount = matchRepository.countMatchesByProfileIdOrMatchProfileIdAndStatus(userProfile, userProfile, StatusCode.STATUS_MATCH_LAST);
+            profileDTO.setMatchedCount(matchCount);
 
             LOGGER.debug("Process Getting Profile Details by UserId Success");
             responseBean.setData(Collections.singletonList(profileDTO));
@@ -111,6 +111,12 @@ public class ProfileServiceImpl implements ProfileService {
         }
 
         return responseBean;
+    }
+
+    @Override
+    @Transactional
+    public void getMatchingProfiles() throws Exception {
+
     }
 
     @Override
