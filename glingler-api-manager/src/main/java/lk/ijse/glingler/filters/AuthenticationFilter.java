@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.sun.jmx.snmp.ThreadContext.contains;
+
 @Component
 @WebFilter
 public class AuthenticationFilter extends OncePerRequestFilter {
@@ -50,15 +52,20 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestTokenHeader = request.getHeader("Authorization");
 
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-            boolean isValidToken = jwtUtil.checkValidity(requestTokenHeader);
-            if(isValidToken) {
-                String userName = jwtUtil.getUserName(requestTokenHeader);
-                jwtUtil.createToken(userName, SysConfig.APP_TYPE_USER, response);
-                springAuthentication(request, userName);
-                request.setAttribute("username",userName);
+        String url = request.getRequestURI();
+        if(url.contains(SysConfig.APP_TYPE_ADMIN) | url.contains(SysConfig.APP_TYPE_USER) | url.contains("/auth/sign-in")){
+            if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+                boolean isValidToken = jwtUtil.checkValidity(requestTokenHeader);
+                if(isValidToken) {
+                    String userName = jwtUtil.getUserName(requestTokenHeader);
+                    jwtUtil.createToken(userName, SysConfig.APP_TYPE_USER, response);
+                    springAuthentication(request, userName);
+                    request.setAttribute("username",userName);
+                }
             }
+            filterChain.doFilter(request, response);
+        }else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Application Type Requested");
         }
-        filterChain.doFilter(request, response);
     }
 }

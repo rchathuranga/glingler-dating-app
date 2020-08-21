@@ -74,7 +74,6 @@ public class ProfileController {
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
-
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfileResponseBean> createProfile(@PathVariable("appType") String appType, @RequestBody ProfileRequestBean profileRequestBean) {
         LOGGER.debug("Enter to Create User Profile Process : {}", appType);
@@ -95,7 +94,7 @@ public class ProfileController {
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
-    @PutMapping(value = "update-filters", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update-filters", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfileResponseBean> updateFilterDetails(@PathVariable("appType") String appType, @RequestBody ProfileRequestBean profileRequestBean){
         String username = httpServletRequest.getAttribute("username").toString();
         LOGGER.debug("Enter to Update Profile Filters Process : {}", appType);
