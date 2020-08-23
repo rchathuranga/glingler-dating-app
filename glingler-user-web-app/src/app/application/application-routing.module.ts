@@ -9,10 +9,10 @@ const routes: Routes = [
     path: '',
     component: MainAppComponent,
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: 'feed'
-      // },
+      {
+        path: '',
+        redirectTo: 'feed'
+      },
       {
         path: 'feed',
         component: UserFeedComponent,

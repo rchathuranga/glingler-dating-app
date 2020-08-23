@@ -24,7 +24,7 @@ public class JwtUtil {
         //set current date
         instance.setTime(today);
         //add 10 minits to the current time
-        instance.add(Calendar.MINUTE, 10);
+        instance.add(Calendar.HOUR, 12);
         //token expire time
         Date exTime = instance.getTime();
 

@@ -6,22 +6,15 @@ import {ResponseDTO} from '../../dto/response-dto';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {
+export class FilterService {
+
   baseUrl = environment.glingler_api_base_url;
 
   constructor(private http: HttpClient) {
   }
 
-
-
-
-  createUserProfile(userDetails) {
-    console.log('user details profile service 36', userDetails);
-    return this.http.post<ResponseDTO>(this.baseUrl + 'user/profile', userDetails);
+  updateProfileFilter(data) {
+    return this.http.put<ResponseDTO>(this.baseUrl + 'user/profile/update-filters',data);
   }
 
-
-  getProfileData() {
-    return this.http.get<ResponseDTO>(this.baseUrl + 'user/profile');
-  }
 }

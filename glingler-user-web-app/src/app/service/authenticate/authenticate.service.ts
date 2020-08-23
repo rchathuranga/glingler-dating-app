@@ -17,17 +17,7 @@ export class AuthenticateService {
   }
 
   authenticate(user: { username, password }) {
-    this.http.post<ResponseDTO>(this.baseUrl + 'auth/sign-in', user).subscribe(
-      res => {
-        localStorage.setItem(this.TOKEN_KEY, res.token)
-        this.router.navigate(['/' + res.router]);
-      },
-      err => {
-        console.log(err);
-        this.logout();
-      }
-    );
-    // return (username === 'root' && password === 'ijse');
+    return this.http.post<ResponseDTO>(this.baseUrl + 'auth/sign-in', user);
   }
 
   isUserLogged(): boolean {

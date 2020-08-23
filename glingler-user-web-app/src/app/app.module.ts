@@ -22,12 +22,14 @@ import {MatSelectModule} from '@angular/material/select';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthGuard} from './guard/auth.guard';
 import {TokenInterceptor} from './interceptor/token.interceptor';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignUpComponent,
+    FilterComponent,
   ],
   imports: [
     HttpClientModule,

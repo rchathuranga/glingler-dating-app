@@ -1,6 +1,7 @@
 
 .router-active{
-  background-color: #f5dafb;
+  background-color: #eaeaea;
+  transition: .5s color;
 }
 
 #header {

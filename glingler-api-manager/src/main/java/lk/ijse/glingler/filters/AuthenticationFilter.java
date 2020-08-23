@@ -1,5 +1,7 @@
 package lk.ijse.glingler.filters;
 
+import lk.ijse.glingler.api.repository.ProfileRepository;
+import lk.ijse.glingler.model.Profile;
 import lk.ijse.glingler.security.JwtUtil;
 import lk.ijse.glingler.api.service.UserService;
 import lk.ijse.glingler.util.SysConfig;
@@ -33,6 +35,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ProfileRepository profileRepository;
+
     private void springAuthentication(HttpServletRequest request, String username){
         if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails = userService.loadUserByUsername(username);
@@ -54,6 +59,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         String url = request.getRequestURI();
         if(url.contains(SysConfig.APP_TYPE_ADMIN) | url.contains(SysConfig.APP_TYPE_USER) | url.contains("/auth/sign-in")){
+
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
                 boolean isValidToken = jwtUtil.checkValidity(requestTokenHeader);
                 if(isValidToken) {
@@ -61,6 +67,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                     jwtUtil.createToken(userName, SysConfig.APP_TYPE_USER, response);
                     springAuthentication(request, userName);
                     request.setAttribute("username",userName);
+
+                    Profile profile = profileRepository.getProfileByUsername(userName);
+                    request.setAttribute("userProfiles",profile);
+
+
+
                 }
             }
             filterChain.doFilter(request, response);

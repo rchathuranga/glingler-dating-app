@@ -1,0 +1,64 @@
+<section id="container">
+  <div class="background"></div>
+  <div class="content-box-wrapper">
+    <div class="content-box">
+      <div class="box-interest">
+        <div class="box-inner-header">
+          <p>Your are looking for</p>
+        </div>
+        <div class="box-inner-body">
+          <div class="interest">
+            <div class="interest-img">
+              <img
+                alt=""
+                height="100%" src="https://www.pngitem.com/pimgs/m/4-42408_vector-art-design-men-fashion-vector-art-illustration.png">
+            </div>
+            <div class="interest-name">
+              <h4>MEN</h4>
+            </div>
+          </div>
+          <div class="interest">
+            <div class="interest-img">
+              <img alt="" height="100%" src="https://en.pimg.jp/046/571/203/1/46571203.jpg">
+            </div>
+            <div class="interest-name">
+              <h4>WOMEN</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="box-age-range">
+        <div class="box-inner-header">
+          <p>Age Range</p>
+        </div>
+        <div class="box-inner-body">
+          <div class="age-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Age Range Start</mat-label>
+              <input matInput name="startAgeRange" value="">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="age-input">
+            <mat-form-field appearance="outline">
+              <mat-label>Age Range End</mat-label>
+              <input matInput name="startAgeEnd" value="">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="btn-continue">
+            <button (click)="btnContinueClick()" color="accent" mat-raised-button>Continue to Profile</button>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>

@@ -23,6 +23,7 @@ export class UserFeedComponent implements OnInit {
   matchCount = 0;
 
   showStories = true;
+  index: any = [1, 3, 4, 5, 6, 7];
 
   constructor(private profileService: ProfileService) {
 

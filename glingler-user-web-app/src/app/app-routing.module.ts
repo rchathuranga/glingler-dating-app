@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
 import {AuthGuard} from './guard/auth.guard';
+import {FilterComponent} from './filter/filter.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,10 @@ const routes: Routes = [
     component: SignUpComponent
   },
   {
+    path: 'filter',
+    component: FilterComponent
+  },
+  {
     path: 'application',
     loadChildren: () => import('./application/application.module').then(module => module.ApplicationModule),
     canActivate: [AuthGuard]
@@ -27,7 +32,6 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin-app/admin-app.module').then(module => module.AdminAppModule),
-    canActivate: [AuthGuard]
   },
   // {
   //   path: '**',

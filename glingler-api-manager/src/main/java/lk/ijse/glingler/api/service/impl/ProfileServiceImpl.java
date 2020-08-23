@@ -115,12 +115,6 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional
-    public void getMatchingProfiles() throws Exception {
-
-    }
-
-    @Override
-    @Transactional
     public ProfileResponseBean createProfile(ProfileRequestBean profileRequestBean) throws Exception {
         LOGGER.debug("Enter to Create User Profile in Profile Service");
         ProfileResponseBean responseBean = new ProfileResponseBean();
@@ -156,25 +150,6 @@ public class ProfileServiceImpl implements ProfileService {
 
             if (null != profile) {
 
-                Filter filter = new Filter();
-                filter.setProfile(profile);
-
-                LocalDate birthDay = new Date(profile.getBirthday().getTime()).toLocalDate();
-                LocalDate today = LocalDate.now();
-                Period diff = Period.between(birthDay, today);
-
-                filter.setAge(diff.getYears());
-                //filter.setInterestedOn(SysConfig.USER_LOOKING_FOR_MEN);
-                filter.setInterestedOn("WOMEN");
-                filter.setLocationLatitude("3245");
-                filter.setLocationLongitude("43655");
-                filter.setAgeRangeStart(18);
-                filter.setAgeRangeEnd(45);
-                filter.setDistance(0.0);
-
-                LOGGER.debug("Saving Profile Filter Details | Filter : {}", filter);
-                Filter save = filterRepository.save(filter);
-
                 LOGGER.debug("Process Creating Profile Success");
                 responseBean.setUserId(commonUser.getUserId());
                 responseBean.setResponseCode(ResponseCode.SUCCESS);
@@ -196,7 +171,8 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public ProfileResponseBean updateFilterDetails(String username, ProfileRequestBean profileRequestBean) throws Exception {
+    @Transactional
+    public ProfileResponseBean updateFilterDetails(String username, Profile userProfil, ProfileRequestBean profileRequestBean) throws Exception {
         LOGGER.debug("Enter to Update Profile Filters in Profile Service");
         ProfileResponseBean responseBean = new ProfileResponseBean();
 
@@ -220,9 +196,9 @@ public class ProfileServiceImpl implements ProfileService {
         filter.setDistance(0.0);
 
         LOGGER.debug("Saving Profile Filter Details | Filter : {}", filter);
-        Filter save = filterRepository.save(filter);
+        filter = filterRepository.save(filter);
 
-        if (null != save) {
+        if (null != filter) {
 
             LOGGER.debug("Process Updating Profile Filter Success");
             responseBean.setResponseCode(ResponseCode.SUCCESS);
@@ -236,5 +212,11 @@ public class ProfileServiceImpl implements ProfileService {
 
 
         return responseBean;
+    }
+
+    @Override
+    @Transactional
+    public void getMatchingProfiles() throws Exception {
+
     }
 }

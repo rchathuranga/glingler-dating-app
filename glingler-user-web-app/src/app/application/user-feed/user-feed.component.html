@@ -22,7 +22,7 @@
             <div class="tab-content">
 
               <article class="tab-profile-detail">
-                <div class="profile-bio"> <h3>BIO</h3>{{bio}}</div>
+                <div class="profile-bio"><h3>BIO</h3>{{bio}}</div>
 
                 <mat-divider class="divider"></mat-divider>
 
@@ -58,10 +58,10 @@
                   </div>
                   <div class="detail-card-option"></div>
                   <div class="detail-card-value">
-                    <h4  #tooltip="matTooltip"
-                         matTooltip="Info about the action"
-                         [matTooltipPosition]="'above'"
-                         matTooltipHideDelay="500">{{location}}</h4>
+                    <h4 #tooltip="matTooltip"
+                        [matTooltipPosition]="'above'"
+                        matTooltip="Info about the action"
+                        matTooltipHideDelay="500">{{location}}</h4>
                   </div>
                 </div>
 
@@ -75,7 +75,9 @@
 
           <mat-tab>
             <ng-template mat-tab-label>
-              <mat-icon class="example-tab-icon" matBadgeColor="accent" matBadge="{{matchCount}}" matBadgeOverlap="true" matBadgeSize="small">favorite_border</mat-icon>
+              <mat-icon class="example-tab-icon" matBadge="{{matchCount}}" matBadgeColor="accent" matBadgeOverlap="true"
+                        matBadgeSize="small">favorite_border
+              </mat-icon>
             </ng-template>
             <div class="tab-content">
 
@@ -131,8 +133,6 @@
     </section>
 
 
-
-
     <section id="feed-container">
 
       <section id="feed">
@@ -153,7 +153,8 @@
             <div class="story-box">
               <div class="story">
                 <div class="story-inner">
-                  <img src="https://i.pinimg.com/originals/d0/f4/fc/d0f4fc818a35285642ba057436fc8720.jpg" alt="" width="100%">
+                  <img alt="" src="https://i.pinimg.com/originals/d0/f4/fc/d0f4fc818a35285642ba057436fc8720.jpg"
+                       width="100%">
                 </div>
               </div>
               <p class="story-username">ileana_offi..</p>
@@ -161,7 +162,8 @@
             <div class="story-box">
               <div class="story">
                 <div class="story-inner">
-                  <img src="https://i.pinimg.com/originals/d0/f4/fc/d0f4fc818a35285642ba057436fc8720.jpg" alt="" width="100%">
+                  <img alt="" src="https://i.pinimg.com/originals/d0/f4/fc/d0f4fc818a35285642ba057436fc8720.jpg"
+                       width="100%">
                 </div>
               </div>
             </div>
@@ -169,8 +171,31 @@
           </section>
         </section>
 
-        <section class="content-container">
-
+        <section class="match-profile-container">
+          <div class="match-profile-card">
+            <div class="match-card-body">
+              <img
+                alt=""
+                height="100%" src="https://images.unsplash.com/photo-1583452208101-7c1cc44c4132?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" width="100%">
+            </div>
+            <div class="match-card-footer">
+              <div class="match-card-btn">
+                <button type="button">
+                  <i class="far fa-grin-hearts"></i>
+                </button>
+              </div>
+              <div class="match-card-btn">
+                <button type="button">
+                  <i class="fas fa-fire-alt"></i>
+                </button>
+              </div>
+              <div class="match-card-btn">
+                <button type="button">
+                  <i class="fas fa-heart-broken"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </section>
       </section>
 
@@ -178,10 +203,7 @@
       <script src="assets/storiesjs/storiesjs.min.js"></script>
 
 
-
     </section>
-
-
 
 
   </section>

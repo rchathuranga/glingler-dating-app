@@ -32,19 +32,21 @@ export class SignUpComponent implements OnInit {
 
   async btnCreateAccount(form: NgForm) {
 
-    const id = Math.random().toString(36).substring(2);
-    this.ref = this.afStorage.ref('user/' + id);
-    this.task = this.ref.put(this.imageFile);
+    if (this.imageFile !== undefined) {
+      const id = Math.random().toString(36).substring(2);
+      this.ref = this.afStorage.ref('user/' + id);
+      this.task = this.ref.put(this.imageFile);
 
-    await this.task.snapshotChanges().pipe(
-      finalize(() => {
-        this.ref.getDownloadURL().subscribe(url => {
-          this.imageUrl = url;
-        });
-      })
-    ).subscribe();
+      await this.task.snapshotChanges().pipe(
+        finalize(() => {
+          this.ref.getDownloadURL().subscribe(url => {
+            this.imageUrl = url;
+          });
+        })
+      ).subscribe();
+    }
     this.createUserAccount(form.value, this.imageUrl);
-
+    this.router.navigate(['filter']);
   }
 
   private createUserAccount(value, imageUrl) {
