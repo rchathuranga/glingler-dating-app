@@ -7,4 +7,5 @@ import lk.ijse.glingler.dto.ProfileResponseBean;
 public interface MatchService {
     public MatchResponseBean match(String username, MatchRequestBean matchRequestBean) throws Exception;
     public ProfileResponseBean getProfilesForMatch(int profileId) throws Exception;
+    public MatchResponseBean rejectMatchProfile(MatchRequestBean matchRequestBean) throws Exception;
 }

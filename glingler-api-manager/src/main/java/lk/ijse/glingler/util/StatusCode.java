@@ -9,6 +9,7 @@ public class StatusCode {
 
     public static final String STATUS_MATCH_FIRST = "MTF";
     public static final String STATUS_MATCH_LAST = "MTL";
+    public static final String STATUS_MATCH_REJECTED = "MRT";
 
     private StatusCode() {
     }

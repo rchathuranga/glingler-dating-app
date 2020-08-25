@@ -8,10 +8,7 @@ import lk.ijse.glingler.dto.MatchRequestBean;
 import lk.ijse.glingler.dto.MatchResponseBean;
 import lk.ijse.glingler.dto.ProfileDTO;
 import lk.ijse.glingler.dto.ProfileResponseBean;
-import lk.ijse.glingler.model.CommonUser;
-import lk.ijse.glingler.model.Filter;
-import lk.ijse.glingler.model.Match;
-import lk.ijse.glingler.model.Profile;
+import lk.ijse.glingler.model.*;
 import lk.ijse.glingler.util.ResponseCode;
 import lk.ijse.glingler.util.StatusCode;
 import lk.ijse.glingler.util.SysConfig;
@@ -111,15 +108,54 @@ public class MatchServiceImpl implements MatchService {
         );
 
         System.out.println();
-        System.out.println("list : "+list);
+        System.out.println("list : " + list);
         System.out.println();
 
-        List<ProfileDTO> dataList = modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {}.getType());
+        List<ProfileDTO> dataList = modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
+        }.getType());
 
 
         responseBean.setResponseCode(ResponseCode.SUCCESS);
         responseBean.setResponseError("");
         responseBean.setData(dataList);
+        return responseBean;
+    }
+
+    @Override
+    public MatchResponseBean rejectMatchProfile(MatchRequestBean matchRequestBean) throws Exception {
+        LOGGER.debug("Enter to Reject Match Profile in Match Service");
+        MatchResponseBean responseBean = new MatchResponseBean();
+
+        LOGGER.debug("Validation Profiles");
+        Profile userProfile = profileRepository.getProfileByProfileId(matchRequestBean.getUserProfileId());
+        Profile matchProfile = profileRepository.getProfileByProfileId(matchRequestBean.getMatchProfileId());
+
+
+        if (userProfile != null && matchProfile != null) {
+            Match match = new Match();
+            match.setProfileId(userProfile);
+            match.setMatchProfileId(matchProfile);
+            match.setStatus(StatusCode.STATUS_MATCH_REJECTED);
+
+            LOGGER.debug("Saving Reject Match Profile");
+            match = matchRepository.save(match);
+            if (match != null) {
+
+                LOGGER.debug("Process Rejecting Match Profile Success");
+                responseBean.setResponseCode(ResponseCode.SUCCESS);
+                responseBean.setResponseError("");
+            } else {
+
+                LOGGER.debug("Process Rejecting Match Profile Failed");
+                responseBean.setResponseCode(ResponseCode.FAILED);
+                responseBean.setResponseError("Unable to Save the Match Details");
+            }
+        } else {
+
+            LOGGER.debug("Process Rejecting Match Profile Failed Due to Invalid Profiles");
+            responseBean.setResponseCode(ResponseCode.FAILED);
+            responseBean.setResponseError("Invalid Profiles");
+        }
         return responseBean;
     }
 }
