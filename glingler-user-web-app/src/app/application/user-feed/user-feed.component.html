@@ -170,27 +170,26 @@
 
           </section>
         </section>
-
         <section class="match-profile-container">
           <div class="match-profile-card">
             <div class="match-card-body">
               <img
                 alt=""
-                height="100%" src="https://images.unsplash.com/photo-1583452208101-7c1cc44c4132?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" width="100%">
+                height="100%" src="https://www.inspirationde.com/media/2016/02/forbidden-planet-1456649354k48ng.jpg" width="100%">
             </div>
             <div class="match-card-footer">
               <div class="match-card-btn">
-                <button type="button">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor"  (click)="btnLikeClickEvent()">
                   <i class="far fa-grin-hearts"></i>
                 </button>
               </div>
               <div class="match-card-btn">
-                <button type="button">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent()">
                   <i class="fas fa-fire-alt"></i>
                 </button>
               </div>
               <div class="match-card-btn">
-                <button type="button">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent()">
                   <i class="fas fa-heart-broken"></i>
                 </button>
               </div>

@@ -312,6 +312,8 @@
 }
 
 .match-profile-card {
+  margin: 0;
+
   position: absolute;
   top: 0;
   bottom: 0;
@@ -348,6 +350,7 @@
 }
 
 .match-card-btn button {
+  border-radius: 8px;
   background: transparent;
   border: none;
   width: 90%;
@@ -357,6 +360,7 @@
 .match-card-btn button i {
   color: #EC058E;
   font-size: 35px;
+  text-shadow: 0 0 8px #f46283;
 }
 
 .match-card-btn button:hover i {

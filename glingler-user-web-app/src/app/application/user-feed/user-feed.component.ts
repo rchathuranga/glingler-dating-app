@@ -25,6 +25,9 @@ export class UserFeedComponent implements OnInit {
   showStories = true;
   index: any = [1, 3, 4, 5, 6, 7];
 
+  btnRippleColor = 'rgba(255,255,255,0.22)';
+  matchArray: [0, 0, 0, 0, 0];
+
   constructor(private profileService: ProfileService) {
 
     profileService.getProfileData().subscribe(res => {
@@ -51,4 +54,16 @@ export class UserFeedComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  btnLikeClickEvent() {
+    // alert('like');
+  }
+
+  btnSuperLikeClickEvent() {
+    // alert('SuperLike');
+  }
+
+
+  btnRejectClickEvent() {
+    // alert('rejected');
+  }
 }
