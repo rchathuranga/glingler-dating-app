@@ -16,6 +16,7 @@ public class CommonUser {
     private String mobileNo;
     private Byte isVerified;
     private Integer systemUserTypeId;
+    private Profile profile;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -106,6 +107,15 @@ public class CommonUser {
     }
     public void setSystemUserTypeId(Integer systemUserTypeId) {
         this.systemUserTypeId = systemUserTypeId;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    public Profile getProfile() {
+        return profile;
+    }
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     @Override

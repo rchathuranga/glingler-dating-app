@@ -9,6 +9,7 @@ public class ResponseCode {
     public static final int PROFILE_NOT_FOUND = 1006;
 
     public static final int INTERNAL_SERVER_ERROR = 500;
+    public static final int MATCH_FAIL = 1007;
 
 
     private ResponseCode() {

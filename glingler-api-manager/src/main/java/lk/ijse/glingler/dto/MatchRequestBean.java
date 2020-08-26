@@ -6,4 +6,5 @@ import lombok.Data;
 public class MatchRequestBean {
     private int userProfileId;
     private int matchProfileId;
+    private int actionType;
 }

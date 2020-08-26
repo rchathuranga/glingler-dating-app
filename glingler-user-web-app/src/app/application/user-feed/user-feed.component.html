@@ -170,7 +170,9 @@
 
           </section>
         </section>
+
         <section class="match-profile-container">
+          <ng-container *ngFor="let matchProfile of matchArray">
           <div class="match-profile-card">
             <div class="match-card-body">
               <img
@@ -179,27 +181,26 @@
             </div>
             <div class="match-card-footer">
               <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor"  (click)="btnLikeClickEvent()">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor"  (click)="btnLikeClickEvent(matchProfile)">
                   <i class="far fa-grin-hearts"></i>
                 </button>
               </div>
               <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent()">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent(matchProfile)">
                   <i class="fas fa-fire-alt"></i>
                 </button>
               </div>
               <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent()">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent(matchProfile)">
                   <i class="fas fa-heart-broken"></i>
                 </button>
               </div>
             </div>
           </div>
+          </ng-container>
         </section>
       </section>
 
-      <script src="assets/storiesjs/myScript.js"></script>
-      <script src="assets/storiesjs/storiesjs.min.js"></script>
 
 
     </section>
@@ -207,5 +208,3 @@
 
   </section>
 </section>
-
-

@@ -4,6 +4,7 @@ import lk.ijse.glingler.api.repository.FilterRepository;
 import lk.ijse.glingler.api.repository.MatchRepository;
 import lk.ijse.glingler.api.repository.ProfileRepository;
 import lk.ijse.glingler.api.repository.UserRepository;
+import lk.ijse.glingler.api.service.MatchService;
 import lk.ijse.glingler.dto.MatchRequestBean;
 import lk.ijse.glingler.dto.MatchResponseBean;
 import lk.ijse.glingler.dto.ProfileDTO;
@@ -18,8 +19,11 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -43,57 +47,6 @@ public class MatchServiceImpl implements MatchService {
     private ModelMapper modelMapper;
 
     @Override
-    public MatchResponseBean match(String username, MatchRequestBean matchRequestBean) {
-        LOGGER.debug("Enter to Match Process in Match Service | Username : {}", username);
-        MatchResponseBean responseBean = new MatchResponseBean();
-
-        LOGGER.debug("Validating the User Profile - {}", matchRequestBean.getUserProfileId());
-        Profile profile = profileRepository.getProfileByProfileId(matchRequestBean.getUserProfileId());
-
-        LOGGER.debug("Validating the matching Profile - {}", matchRequestBean.getMatchProfileId());
-        Profile matchedProfile = profileRepository.getProfileByProfileId(matchRequestBean.getMatchProfileId());
-
-        LOGGER.debug("Validating the matching process - {}", matchRequestBean.getMatchProfileId());
-        int isBeforeMatched = matchRepository.countMatchesByProfileIdAndMatchProfileIdAndStatus(matchedProfile, profile, StatusCode.STATUS_MATCH_FIRST);
-        String status;
-
-        if (isBeforeMatched == 0) {
-            status = StatusCode.STATUS_MATCH_FIRST;
-        } else if (isBeforeMatched == 1) {
-            status = StatusCode.STATUS_MATCH_LAST;
-        } else {
-
-            LOGGER.debug("Process Already Complete");
-            responseBean.setResponseCode(ResponseCode.FAILED);
-            responseBean.setResponseError("Process Already Complete");
-            return responseBean;
-        }
-
-        Match match = new Match();
-        match.setProfileId(profile);
-        match.setMatchProfileId(matchedProfile);
-        match.setStatus(status);
-        match.setCreateTime(new Timestamp(System.currentTimeMillis()));
-
-        LOGGER.debug("Saving Matching Details");
-        match = matchRepository.save(match);
-
-        if (match != null) {
-
-            LOGGER.debug("Processing Matching Success");
-            responseBean.setResponseCode(ResponseCode.SUCCESS);
-            responseBean.setResponseError("");
-        } else {
-
-            LOGGER.debug("Processing Matching Failed");
-            responseBean.setResponseCode(ResponseCode.FAILED);
-            responseBean.setResponseError("Process Matching Failed");
-        }
-
-        return responseBean;
-    }
-
-    @Override
     public ProfileResponseBean getProfilesForMatch(int profileId) throws Exception {
         ProfileResponseBean responseBean = new ProfileResponseBean();
 
@@ -101,11 +54,26 @@ public class MatchServiceImpl implements MatchService {
         profile.setProfileId(profileId);
         Filter filter = filterRepository.getFilterByProfile(profile);
 
-        List<Profile> list = profileRepository.getAllProfilesBySexAndAgeAfterAndAgeBefore(
+        List<String> statusList = new ArrayList<>();
+        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
+        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
+
+        List<Profile> list = profileRepository.getProfilesForMatch(
                 filter.getInterestedOn(),
                 filter.getAgeRangeStart(),
-                filter.getAgeRangeEnd()
+                filter.getAgeRangeEnd(),
+                profileId,
+                statusList
         );
+
+        List<Profile> list2 = profileRepository.getAllProfilesBySexAndAgeAfterAndAgeBeforeAndNotInMatch(
+                filter.getInterestedOn(),
+                filter.getAgeRangeStart(),
+                filter.getAgeRangeEnd(),
+                profileId
+        );
+
+        list.addAll(list2);
 
         System.out.println();
         System.out.println("list : " + list);
@@ -122,39 +90,77 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public MatchResponseBean rejectMatchProfile(MatchRequestBean matchRequestBean) throws Exception {
-        LOGGER.debug("Enter to Reject Match Profile in Match Service");
+    @Transactional
+    public MatchResponseBean matchReaction(MatchRequestBean matchRequestBean) throws Exception {
+        LOGGER.debug("Enter to Match Reaction Process in Match Service");
         MatchResponseBean responseBean = new MatchResponseBean();
 
-        LOGGER.debug("Validation Profiles");
-        Profile userProfile = profileRepository.getProfileByProfileId(matchRequestBean.getUserProfileId());
-        Profile matchProfile = profileRepository.getProfileByProfileId(matchRequestBean.getMatchProfileId());
+        Profile profile = profileRepository.getProfileByProfileId(matchRequestBean.getUserProfileId());
+        Profile matchedProfile = profileRepository.getProfileByProfileId(matchRequestBean.getMatchProfileId());
 
+        LOGGER.debug("Validating the User Profile - {} And Matching Profile - {}", matchRequestBean.getUserProfileId(), matchRequestBean.getMatchProfileId());
+        if (profile != null && matchedProfile != null) {
 
-        if (userProfile != null && matchProfile != null) {
+            LOGGER.debug("Getting Previous Match Details Related to Profile");
+            Match previousMatch = matchRepository.getMatchByProfileIdAndMatchProfileId(matchedProfile, profile);
+
+            int actionType = matchRequestBean.getActionType();
             Match match = new Match();
-            match.setProfileId(userProfile);
-            match.setMatchProfileId(matchProfile);
-            match.setStatus(StatusCode.STATUS_MATCH_REJECTED);
+            match.setProfileId(profile);
+            match.setMatchProfileId(matchedProfile);
 
-            LOGGER.debug("Saving Reject Match Profile");
+            LOGGER.debug("Processing Match React Profiles to Action - {}", matchRequestBean.getActionType());
+            if (actionType == SysConfig.MATCH_REACT_TYPE_SUPER_LIKE) {
+
+                if (previousMatch != null && StatusCode.MATCH_REACT_TYPE_REJECT.equalsIgnoreCase(previousMatch.getStatus())) {
+
+                    responseBean.setResponseCode(ResponseCode.MATCH_FAIL);
+                    responseBean.setResponseError("User Profile Already Rejected");
+                    return responseBean;
+
+                } else {
+                    match.setStatus(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);//todo send push
+                }
+
+            } else if (actionType == SysConfig.MATCH_REACT_TYPE_LIKE) {
+
+                if (previousMatch == null) {
+                    match.setStatus(StatusCode.MATCH_REACT_TYPE_LIKE);
+
+                } else if (previousMatch.getStatus().equalsIgnoreCase(StatusCode.MATCH_REACT_TYPE_LIKE)) {
+                    match.setStatus(StatusCode.MATCH_REACT_TYPE_MATCHED);
+
+                } else {
+                    responseBean.setResponseCode(ResponseCode.MATCH_FAIL);
+                    responseBean.setResponseError("User Profile Already Matched Or Rejected");
+                    return responseBean;
+
+                }
+
+            } else if (actionType == SysConfig.MATCH_REACT_TYPE_REJECTED) {
+                match.setStatus(StatusCode.MATCH_REACT_TYPE_REJECT);
+            }
+
+
+            System.out.println("Status : " + match.getStatus());
+
+            match.setCreateTime(new Timestamp(System.currentTimeMillis()));
+
+            LOGGER.debug("Saving Matching Details");
             match = matchRepository.save(match);
+
             if (match != null) {
 
-                LOGGER.debug("Process Rejecting Match Profile Success");
+                LOGGER.debug("Processing Matching Success");
                 responseBean.setResponseCode(ResponseCode.SUCCESS);
                 responseBean.setResponseError("");
             } else {
 
-                LOGGER.debug("Process Rejecting Match Profile Failed");
+                LOGGER.debug("Processing Matching Failed");
                 responseBean.setResponseCode(ResponseCode.FAILED);
-                responseBean.setResponseError("Unable to Save the Match Details");
+                responseBean.setResponseError("Process Matching Failed");
             }
-        } else {
 
-            LOGGER.debug("Process Rejecting Match Profile Failed Due to Invalid Profiles");
-            responseBean.setResponseCode(ResponseCode.FAILED);
-            responseBean.setResponseError("Invalid Profiles");
         }
         return responseBean;
     }

@@ -26,7 +26,7 @@ export class UserFeedComponent implements OnInit {
   index: any = [1, 3, 4, 5, 6, 7];
 
   btnRippleColor = 'rgba(255,255,255,0.22)';
-  matchArray: [0, 0, 0, 0, 0];
+  matchArray: any[] = [1, 2, 3, 4, 5];
 
   constructor(private profileService: ProfileService) {
 
@@ -54,16 +54,23 @@ export class UserFeedComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  btnLikeClickEvent() {
+  btnLikeClickEvent(matchProfile) {
     // alert('like');
+    this.removeProfile();
   }
 
-  btnSuperLikeClickEvent() {
+  btnSuperLikeClickEvent(matchProfile) {
     // alert('SuperLike');
+    this.removeProfile();
   }
 
 
-  btnRejectClickEvent() {
+  btnRejectClickEvent(matchProfile) {
     // alert('rejected');
+    this.removeProfile();
+  }
+
+  private removeProfile(){
+    this.matchArray.shift();
   }
 }

@@ -70,7 +70,7 @@ public class ProfileServiceImpl implements ProfileService {
             profileDTO.setAgeRangeStart(filters.getAgeRangeStart());
             profileDTO.setAgeRangeEnd(filters.getAgeRangeEnd());
 
-            int matchCount = matchRepository.countMatchesByProfileIdOrMatchProfileIdAndStatus(userProfile, userProfile, StatusCode.STATUS_MATCH_LAST);
+            int matchCount = matchRepository.countMatchesByProfileIdOrMatchProfileIdAndStatus(userProfile, userProfile, StatusCode.MATCH_REACT_TYPE_LIKE);
             profileDTO.setMatchedCount(matchCount);
 
             LOGGER.debug("Process Getting Profile Details by UserId Success");
@@ -128,15 +128,17 @@ public class ProfileServiceImpl implements ProfileService {
 
         LOGGER.debug("Saving User Details | User : {}", commonUser);
         commonUser = userRepository.saveAndFlush(commonUser);
-        System.out.println();
-        System.out.println("commonUser : " + commonUser);
-        System.out.println();
+
         if (null != commonUser) {
+            LocalDate birthDay = new Date(profileRequestBean.getBirthday().getTime()).toLocalDate();
+            LocalDate today = LocalDate.now();
+            Period diff = Period.between(birthDay, today);
 
             Profile profile = new Profile();
             profile.setFirstName(profileRequestBean.getFirstName());
             profile.setLastName(profileRequestBean.getLastName());
             profile.setBio("");
+            profile.setAge(diff.getYears());
             profile.setSex(profileRequestBean.getGender());
             profile.setBirthday(new Timestamp(profileRequestBean.getBirthday().getTime()));
             profile.setImageUrl(profileRequestBean.getImageUrl());

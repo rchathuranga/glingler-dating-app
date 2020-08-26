@@ -1,10 +1,12 @@
 package lk.ijse.glingler.api.controller;
 
-import lk.ijse.glingler.api.service.impl.MatchService;
+import lk.ijse.glingler.api.service.MatchService;
 import lk.ijse.glingler.api.service.impl.ProfileServiceImpl;
 import lk.ijse.glingler.dto.MatchRequestBean;
 import lk.ijse.glingler.dto.MatchResponseBean;
 import lk.ijse.glingler.dto.ProfileResponseBean;
+import lk.ijse.glingler.model.CommonUser;
+import lk.ijse.glingler.model.Profile;
 import lk.ijse.glingler.util.ResponseCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,32 +31,30 @@ public class MatchesController {
     @Autowired
     private MatchService matchService;
 
-    @PostMapping(value = "/profiles", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MatchResponseBean> matchProfiles(@PathVariable(value = "appType") String appType, @RequestBody MatchRequestBean matchRequestBean) {
-        String username = httpServletRequest.getAttribute("username").toString();
-        LOGGER.debug("Enter to Process Matching Profiles | Username : {} | AppType : {}", username, appType);
+    @PostMapping(value = "/react", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MatchResponseBean> matchReaction(@PathVariable(value = "appType") String appType, @RequestBody MatchRequestBean matchRequestBean) {
+        LOGGER.debug("Enter to Process Match React Profiles | AppType : {}", appType);
         MatchResponseBean responseBean = new MatchResponseBean();
         try {
-            responseBean = matchService.match(username, matchRequestBean);
+            responseBean = matchService.matchReaction(matchRequestBean);
         } catch (Exception e) {
             e.printStackTrace();
-            LOGGER.debug("Error While Processing Matching");
+            LOGGER.debug("Error While Processing Match React");
             responseBean.setResponseCode(ResponseCode.EXCEPTION);
             responseBean.setResponseError("Error in Process");
         }
 
-        LOGGER.debug("Processing Matching Profiles Finished");
+        LOGGER.debug("Processing Match React Profiles Finished");
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/profiles/{profileId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfileResponseBean> getProfilesForMatch(@PathVariable(value = "appType") String appType,@PathVariable("profileId") int profileId) {
-
-//        String username = httpServletRequest.getAttribute("username").toString();
+    @GetMapping(value = "/profiles", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileResponseBean> getProfilesForMatch(@PathVariable(value = "appType") String appType) {
+        Profile profile = (Profile) httpServletRequest.getAttribute("userProfiles");
         LOGGER.debug("Enter to Process Matching Profiles | AppType : {}", appType);
         ProfileResponseBean responseBean = new ProfileResponseBean();
         try {
-            responseBean = matchService.getProfilesForMatch(profileId);
+            responseBean = matchService.getProfilesForMatch(profile.getProfileId());
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.debug("Error While Processing Matching");

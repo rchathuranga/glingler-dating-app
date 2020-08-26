@@ -8,4 +8,6 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 
     public int countMatchesByProfileIdOrMatchProfileIdAndStatus(Profile profile, Profile matchProfile, String status);
     public int countMatchesByProfileIdAndMatchProfileIdAndStatus(Profile profile, Profile matchProfile, String status);
+
+    public Match getMatchByProfileIdAndMatchProfileId(Profile profile, Profile matchProfile);
 }
