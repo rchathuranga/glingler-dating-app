@@ -24,4 +24,8 @@ export class ProfileService {
   getProfileData() {
     return this.http.get<ResponseDTO>(this.baseUrl + 'user/profile');
   }
+
+  getMatchProfiles() {
+    return this.http.get<ResponseDTO>(this.baseUrl + 'user/matches/profiles');
+  }
 }

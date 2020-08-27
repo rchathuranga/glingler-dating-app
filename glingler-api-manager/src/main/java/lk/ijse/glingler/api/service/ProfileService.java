@@ -9,5 +9,4 @@ public interface ProfileService {
     public ProfileResponseBean updateFilterDetails(String username, Profile userProfile, ProfileRequestBean profileRequestBean) throws Exception;
     public ProfileResponseBean getUserProfileDetails(String username) throws Exception;
     public ProfileResponseBean getProfileDetails() throws Exception;
-    public void getMatchingProfiles() throws Exception;
 }

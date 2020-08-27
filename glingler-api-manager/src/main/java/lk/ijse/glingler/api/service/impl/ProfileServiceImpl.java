@@ -70,7 +70,7 @@ public class ProfileServiceImpl implements ProfileService {
             profileDTO.setAgeRangeStart(filters.getAgeRangeStart());
             profileDTO.setAgeRangeEnd(filters.getAgeRangeEnd());
 
-            int matchCount = matchRepository.countMatchesByProfileIdOrMatchProfileIdAndStatus(userProfile, userProfile, StatusCode.MATCH_REACT_TYPE_LIKE);
+            int matchCount = matchRepository.countMatchesByMatchProfileIdAndStatus(userProfile, StatusCode.MATCH_REACT_TYPE_LIKE);
             profileDTO.setMatchedCount(matchCount);
 
             LOGGER.debug("Process Getting Profile Details by UserId Success");
@@ -214,11 +214,5 @@ public class ProfileServiceImpl implements ProfileService {
 
 
         return responseBean;
-    }
-
-    @Override
-    @Transactional
-    public void getMatchingProfiles() throws Exception {
-
     }
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '../../../service/profile/profile.service';
 import {ProfileDTO} from '../../../dto/profile-d-t-o';
+import {MatchService} from '../../../service/match/match.service';
 
 @Component({
   selector: 'app-profile-side-nav',
@@ -18,10 +19,13 @@ export class ProfileSideNavComponent implements OnInit {
   lookingFor = 'Girls';
   location = 'Horana, Pokunuwita';
   matchCount = 0;
-  tabLoadTimes: Date[] = [];
-  tr = true;
 
-  constructor(private profileService: ProfileService) {
+  matchedProfile: ProfileDTO[] = [];
+
+
+  isTabViewed = false;
+
+  constructor(private profileService: ProfileService, private matchService: MatchService) {
     profileService.getProfileData().subscribe(res => {
         console.log(res);
         if (res.data.length > 0) {
@@ -43,10 +47,15 @@ export class ProfileSideNavComponent implements OnInit {
       });
   }
 
-  getTimeLoaded(index: number) {
-    if (this.tr) {
-      alert('here');
-      this.tr = false;
+  onTabViewed() {
+    if (!this.isTabViewed) {
+      this.isTabViewed = true;
+
+      this.matchService.getMatchedProfiles().subscribe(res => {
+        this.matchedProfile = res.data;
+      }, error => {
+        console.log(error);
+      });
     }
   }
 

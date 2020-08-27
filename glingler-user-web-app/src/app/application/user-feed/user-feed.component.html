@@ -44,31 +44,35 @@
           </section>
         </section>
         <section class="match-profile-container">
-          <div class="match-profile-card">
-            <div class="match-card-body">
-              <img
-                alt=""
-                height="100%" src="https://www.inspirationde.com/media/2016/02/forbidden-planet-1456649354k48ng.jpg"
-                width="100%">
+          <ng-container *ngFor="let matchProfile of matchProfileList">
+            <div class="match-profile-card" [@CardAnimation]>
+              <div class="match-card-body">
+                <p>{{matchProfile.firstName + " " + matchProfile.lastName}}</p>
+                <img
+                  alt=""
+                  src="{{matchProfile.imageUrl}}"
+                  width="100%">
+              </div>
+              <div class="match-card-footer">
+                <div class="match-card-btn">
+                  <button (click)="btnLikeClickEvent(matchProfile)" [matRippleColor]="btnRippleColor" matRipple
+                          type="button">
+                    <i class="far fa-grin-hearts"></i>
+                  </button>
+                </div>
+                <div class="match-card-btn">
+                  <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent()">
+                    <i class="fas fa-fire-alt"></i>
+                  </button>
+                </div>
+                <div class="match-card-btn">
+                  <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent()">
+                    <i class="fas fa-heart-broken"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="match-card-footer">
-              <div class="match-card-btn">
-                <button (click)="btnLikeClickEvent()" [matRippleColor]="btnRippleColor" matRipple type="button">
-                  <i class="far fa-grin-hearts"></i>
-                </button>
-              </div>
-              <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent()">
-                  <i class="fas fa-fire-alt"></i>
-                </button>
-              </div>
-              <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent()">
-                  <i class="fas fa-heart-broken"></i>
-                </button>
-              </div>
-            </div>
-          </div>
+          </ng-container>
         </section>
       </section>
 

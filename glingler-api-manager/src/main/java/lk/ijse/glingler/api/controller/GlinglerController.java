@@ -16,16 +16,4 @@ public class GlinglerController {
         return appMsg + " | " + ((appType.equalsIgnoreCase(SysConfig.APP_TYPE_ADMIN)) ? SysConfig.APP_TYPE_ADMIN : SysConfig.APP_TYPE_USER).toUpperCase();
     }
 
-    @Autowired
-    private ProfileService profileService;
-    @GetMapping("/test")
-    public String test(@PathVariable("appType") String appType){
-        try {
-            profileService.getMatchingProfiles();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "test";
-    }
-
 }

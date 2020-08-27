@@ -164,4 +164,28 @@ public class MatchServiceImpl implements MatchService {
         }
         return responseBean;
     }
+
+    @Override
+    public ProfileResponseBean getMatchedProfiles(int profileId) throws Exception {
+        ProfileResponseBean responseBean = new ProfileResponseBean();
+        Profile profile = new Profile();
+        profile.setProfileId(profileId);
+
+        List<Profile> list = matchRepository.getAllMatchesByProfileIdOrMatchProfileIdAndStatus(profile, profile, StatusCode.MATCH_REACT_TYPE_LIKE);
+
+        Profile removed = null;
+        for (Profile prof : list) {
+            if (prof.getProfileId() == profileId) {
+                removed = prof;
+                break;
+            }
+        }
+        list.remove(removed);
+
+        responseBean.setData(modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
+        }.getType()));
+        responseBean.setResponseCode(ResponseCode.SUCCESS);
+        responseBean.setResponseError("");
+        return responseBean;
+    }
 }

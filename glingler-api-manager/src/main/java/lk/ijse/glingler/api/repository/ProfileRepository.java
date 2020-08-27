@@ -14,7 +14,7 @@ public interface ProfileRepository extends JpaRepository<Profile, Integer> {
 
     public Profile getProfileByProfileId(int profileId);
 
-    @Query("SELECT p from Profile p WHERE p.sex=:sex AND p.age>:ageBefore AND p.age<:ageAfter AND NOT p.profileId =:profileId AND p NOT IN (SELECT m.profileId FROM Match  m)")
+    @Query("SELECT p from Profile p WHERE p.sex=:sex AND p.age>:ageBefore AND p.age<:ageAfter AND NOT p.profileId =:profileId AND (p NOT IN (SELECT m.profileId FROM Match  m) or (p NOT IN (SELECT m.matchProfileId FROM Match  m)))")
     public List<Profile> getAllProfilesBySexAndAgeAfterAndAgeBeforeAndNotInMatch(@Param("sex") String sex,@Param("ageBefore") int ageBefore,@Param("ageAfter") int ageAfter,@Param("profileId") int profileId);
 
     @Query("select p from Profile p, Match m where p.sex=:sex and p.age>:ageBefore and p.age<:ageAfter  and p.profileId=m.profileId.profileId AND NOT p.profileId =:profileId  and not m.status in (:statusList)")

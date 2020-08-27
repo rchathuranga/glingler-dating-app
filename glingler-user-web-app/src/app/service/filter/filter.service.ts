@@ -14,7 +14,7 @@ export class FilterService {
   }
 
   updateProfileFilter(data) {
-    return this.http.put<ResponseDTO>(this.baseUrl + 'user/profile/update-filters',data);
+    return this.http.put<ResponseDTO>(this.baseUrl + 'user/profile/update-filters', data);
   }
 
 }

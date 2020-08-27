@@ -56,7 +56,7 @@
               <div class="detail-card-value">
                 <h4 #tooltip="matTooltip"
                     [matTooltipPosition]="'above'"
-                    matTooltip="Info about the action"
+                    matTooltip="Address"
                     matTooltipHideDelay="500">{{location}}</h4>
               </div>
             </div>
@@ -76,42 +76,15 @@
           </mat-icon>
         </ng-template>
         <ng-template class="tab-content" matTabContent>
-          {{getTimeLoaded(0)}}
+          {{onTabViewed()}}
           <div class="tab-match-content">
             <mat-grid-list cols="3" rowHeight="3:4">
-              <mat-grid-tile class="match-card-container">
-                <div class="match-card">
+              <mat-grid-tile class="match-card-container" *ngFor="let matched of matchedProfile">
+                <div class="match-card" #too="matTooltip"
+                     matTooltip="{{matched.firstName}}"
+                     matTooltipHideDelay="500">
                   <div class="match-card-pic">
-                    <img
-                      alt=""
-                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
-                  </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile class="match-card-container">
-                <div class="match-card">
-                  <div class="match-card-pic">
-                    <img
-                      alt=""
-                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
-                  </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile class="match-card-container">
-                <div class="match-card">
-                  <div class="match-card-pic">
-                    <img
-                      alt=""
-                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
-                  </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile class="match-card-container">
-                <div class="match-card">
-                  <div class="match-card-pic">
-                    <img
-                      alt=""
-                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                    <img alt="" width="100%" src="{{matched.imageUrl}}">
                   </div>
                 </div>
               </mat-grid-tile>

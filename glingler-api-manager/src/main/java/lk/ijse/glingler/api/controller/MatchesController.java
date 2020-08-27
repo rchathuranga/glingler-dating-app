@@ -66,4 +66,18 @@ public class MatchesController {
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
+
+    @GetMapping(value = "/matched", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProfileResponseBean> getMatchedProfiles(@PathVariable String appType) {
+        Profile profile = (Profile) httpServletRequest.getAttribute("userProfiles");
+        ProfileResponseBean responseBean = new ProfileResponseBean();
+
+        try {
+            responseBean = matchService.getMatchedProfiles(profile.getProfileId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(responseBean, HttpStatus.OK);
+    }
 }
