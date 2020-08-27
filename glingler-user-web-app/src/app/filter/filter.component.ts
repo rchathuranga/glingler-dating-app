@@ -11,7 +11,7 @@ export class FilterComponent implements OnInit {
 
   ageRangeStart: number;
   ageRangeEnd: number;
-  interestOn: boolean;
+  isInterestOnMen = true;
 
   constructor(private filterService: FilterService, private router: Router) {
   }
@@ -48,7 +48,7 @@ export class FilterComponent implements OnInit {
     const data = {
       ageRangeStart: 18,
       ageRangeEnd: 24,
-      lookInFor: 'WOMEN'
+      lookInFor: (this.isInterestOnMen) ? 'MEN' : 'WOMEN'
     };
 
     this.getLocationData(data);

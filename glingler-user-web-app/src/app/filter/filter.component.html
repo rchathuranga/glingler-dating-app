@@ -2,27 +2,28 @@
   <div class="background"></div>
   <div class="content-box-wrapper">
     <div class="content-box">
+
       <div class="box-interest">
         <div class="box-inner-header">
           <p>Your are looking for</p>
         </div>
         <div class="box-inner-body">
-          <div class="interest">
+          <div (click)="isInterestOnMen=true" [ngClass]="(isInterestOnMen)?'interest-select':{backgroundColor: 'yellow'}" class="interest">
             <div class="interest-img">
               <img
                 alt=""
                 height="100%" src="https://www.pngitem.com/pimgs/m/4-42408_vector-art-design-men-fashion-vector-art-illustration.png">
             </div>
             <div class="interest-name">
-              <h4>MEN</h4>
+              <h4 class="mat-display-1">MEN</h4>
             </div>
           </div>
-          <div class="interest">
+          <div (click)="isInterestOnMen=false" [ngClass]="(!isInterestOnMen)?'interest-select': null" class="interest">
             <div class="interest-img">
-              <img alt="" height="100%" src="https://en.pimg.jp/046/571/203/1/46571203.jpg">
+              <img alt="" height="100%" src="https://media.istockphoto.com/vectors/portrait-of-a-sad-asian-girl-schoolgirl-avatar-face-of-a-child-vector-id1179590104?b=1&k=6&m=1179590104&s=612x612&h=-vB1Ch2LFGu8iX1QHhCpquRATyunHYRg6ciuIM67Ccs=">
             </div>
             <div class="interest-name">
-              <h4>WOMEN</h4>
+              <h4 class="mat-display-1">WOMEN</h4>
             </div>
           </div>
         </div>

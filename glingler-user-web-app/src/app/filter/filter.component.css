@@ -23,6 +23,11 @@
   height: 50%;
 }
 
+.interest-select{
+  /*background: rebeccapurple;*/
+  border: 4px solid #3f51b5 !important;
+}
+
 
 .box-inner-header {
   width: 100%;
@@ -42,9 +47,9 @@ p {
   height: calc(100% - 60px);
 }
 
-.box-interest:nth-child(2){
+/*.box-interest:nth-child(2){
   background: red!important;
-}
+}*/
 
 .box-interest .box-inner-body {
   display: flex;
@@ -53,6 +58,7 @@ p {
 }
 
 .interest {
+  position: relative;
   width: 160px;
   height: 200px;
   border-radius: 8px;
@@ -60,18 +66,41 @@ p {
 
   box-shadow: 0 0 7px 1px #43434330;
   cursor: pointer;
+  border: 4px solid transparent;
+  transition: border .2s;
 }
 
 .interest-img {
   overflow: hidden;
   width: 100%;
-  height: calc(100% - 25px);
+  height: calc(100%);
 
   display: grid;
   place-items: center;
 
   background: white;
 
+}
+
+.interest-name{
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  /*height: 30px;*/
+  position: absolute;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.mat-display-1{
+  height: max-content!important;
+  margin: 0;
+  padding: 0;
+  height: max-content;
+  font-size: 20px;
+  font-family: Roboto;
+  font-weight: bolder;
 }
 
 .age-input {
