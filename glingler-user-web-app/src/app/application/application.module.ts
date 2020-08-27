@@ -18,10 +18,11 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ChatComponent } from './chat/chat.component';
+import {ProfileSideNavComponent} from './user-feed/profile-side-nav/profile-side-nav.component';
 
 
 @NgModule({
-  declarations: [MainAppComponent, UserFeedComponent, ChatComponent],
+  declarations: [MainAppComponent, UserFeedComponent, ChatComponent, ProfileSideNavComponent],
   imports: [
     RouterModule,
     CommonModule,

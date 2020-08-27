@@ -1,135 +1,7 @@
 <section id="content-container">
   <section id="content">
-
-
     <section id="side-profile">
-      <div class="profile-pic-wrapper">
-        <div class="profile-pic-inner-wrapper">
-          <img alt="ProfileDto Picture" src="{{imageUrl}}" width="100%">
-        </div>
-      </div>
-      <div class="profile-name-wrapper">
-        <h1>{{firstName}} {{lastName}}</h1>
-      </div>
-      <mat-divider class="divider"></mat-divider>
-      <section class="profile-tab-container">
-
-        <mat-tab-group [color]="'primary'">
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon class="example-tab-icon">account_circle</mat-icon>
-            </ng-template>
-            <div class="tab-content">
-
-              <article class="tab-profile-detail">
-                <div class="profile-bio"><h3>BIO</h3>{{bio}}</div>
-
-                <mat-divider class="divider"></mat-divider>
-
-                <div class="detail-card">
-                  <div class="detail-card-key">
-                    <h4>Age</h4>
-                  </div>
-                  <div class="detail-card-option"></div>
-                  <div class="detail-card-value">
-                    <h4>{{age}}</h4>
-                  </div>
-                </div>
-
-                <mat-divider class="divider"></mat-divider>
-
-
-                <div class="detail-card">
-                  <div class="detail-card-key">
-                    <h4>Looking for</h4>
-                  </div>
-                  <div class="detail-card-option"></div>
-                  <div class="detail-card-value">
-                    <h4>{{lookingFor}}</h4>
-                  </div>
-                </div>
-
-                <mat-divider class="divider"></mat-divider>
-
-
-                <div class="detail-card">
-                  <div class="detail-card-key">
-                    <h4>Location</h4>
-                  </div>
-                  <div class="detail-card-option"></div>
-                  <div class="detail-card-value">
-                    <h4 #tooltip="matTooltip"
-                        [matTooltipPosition]="'above'"
-                        matTooltip="Info about the action"
-                        matTooltipHideDelay="500">{{location}}</h4>
-                  </div>
-                </div>
-
-                <mat-divider class="divider"></mat-divider>
-
-
-              </article>
-
-            </div>
-          </mat-tab>
-
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <mat-icon class="example-tab-icon" matBadge="{{matchCount}}" matBadgeColor="accent" matBadgeOverlap="true"
-                        matBadgeSize="small">favorite_border
-              </mat-icon>
-            </ng-template>
-            <div class="tab-content">
-
-              <div class="tab-match-content">
-                <mat-grid-list cols="3" rowHeight="3:4">
-                  <mat-grid-tile class="match-card-container">
-                    <div class="match-card">
-                      <div class="match-card-pic">
-                        <img
-                          src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                          alt="" height="100%">
-                      </div>
-                    </div>
-                  </mat-grid-tile>
-                  <mat-grid-tile class="match-card-container">
-                    <div class="match-card">
-                      <div class="match-card-pic">
-                        <img
-                          src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                          alt="" height="100%">
-                      </div>
-                    </div>
-                  </mat-grid-tile>
-                  <mat-grid-tile class="match-card-container">
-                    <div class="match-card">
-                      <div class="match-card-pic">
-                        <img
-                          src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                          alt="" height="100%">
-                      </div>
-                    </div>
-                  </mat-grid-tile>
-                  <mat-grid-tile class="match-card-container">
-                    <div class="match-card">
-                      <div class="match-card-pic">
-                        <img
-                          src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                          alt="" height="100%">
-                      </div>
-                    </div>
-                  </mat-grid-tile>
-                </mat-grid-list>
-
-              </div>
-
-            </div>
-          </mat-tab>
-
-        </mat-tab-group>
-
-
-      </section>
+      <app-profile-side-nav></app-profile-side-nav>
     </section>
 
 
@@ -137,17 +9,18 @@
 
       <section id="feed">
 
-        <div class="notification-card" *ngIf="notificationMsg.length > 0">
+        <div *ngIf="notificationMsg.length > 0" [@inOutAnimation] class="notification-card">
           <div>{{notificationMsg}}</div>
           <div matRipple
                [matRippleCentered]="true"
-               [matRippleUnbounded]="false" class="notification-card-close-btn">
+               (click)="notificationMsg=''" [matRippleUnbounded]="false"
+               class="notification-card-close-btn">
             <mat-icon>close</mat-icon>
           </div>
         </div>
 
 
-        <section *ngIf="showStories" id="story-container">
+        <section *ngIf="showStories" [@inOutAnimation] id="story-container">
           <section class="story-wrapper">
             <div class="thumbwrapper"></div>
             <div class="story-box">
@@ -170,37 +43,34 @@
 
           </section>
         </section>
-
         <section class="match-profile-container">
-          <ng-container *ngFor="let matchProfile of matchArray">
           <div class="match-profile-card">
             <div class="match-card-body">
               <img
                 alt=""
-                height="100%" src="https://www.inspirationde.com/media/2016/02/forbidden-planet-1456649354k48ng.jpg" width="100%">
+                height="100%" src="https://www.inspirationde.com/media/2016/02/forbidden-planet-1456649354k48ng.jpg"
+                width="100%">
             </div>
             <div class="match-card-footer">
               <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor"  (click)="btnLikeClickEvent(matchProfile)">
+                <button (click)="btnLikeClickEvent()" [matRippleColor]="btnRippleColor" matRipple type="button">
                   <i class="far fa-grin-hearts"></i>
                 </button>
               </div>
               <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent(matchProfile)">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent()">
                   <i class="fas fa-fire-alt"></i>
                 </button>
               </div>
               <div class="match-card-btn">
-                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent(matchProfile)">
+                <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent()">
                   <i class="fas fa-heart-broken"></i>
                 </button>
               </div>
             </div>
           </div>
-          </ng-container>
         </section>
       </section>
-
 
 
     </section>
@@ -208,3 +78,5 @@
 
   </section>
 </section>
+
+

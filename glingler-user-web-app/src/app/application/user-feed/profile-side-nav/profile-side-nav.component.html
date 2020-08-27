@@ -1,0 +1,129 @@
+<section id="side-profile">
+  <div class="profile-pic-wrapper">
+    <div class="profile-pic-inner-wrapper">
+      <img alt="ProfileDto Picture" src="{{imageUrl}}" width="100%">
+    </div>
+  </div>
+  <div class="profile-name-wrapper">
+    <h1>{{firstName}} {{lastName}}</h1>
+  </div>
+  <mat-divider class="divider"></mat-divider>
+  <section class="profile-tab-container">
+
+    <mat-tab-group color="accent" mat-align-tabs="center">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon">account_circle</mat-icon>
+        </ng-template>
+        <div class="tab-content">
+
+          <article class="tab-profile-detail">
+            <div class="profile-bio"><h3>BIO</h3>{{bio}}</div>
+
+            <mat-divider class="divider"></mat-divider>
+
+            <div class="detail-card">
+              <div class="detail-card-key">
+                <h4>Age</h4>
+              </div>
+              <div class="detail-card-option"></div>
+              <div class="detail-card-value">
+                <h4>{{age}}</h4>
+              </div>
+            </div>
+
+            <mat-divider class="divider"></mat-divider>
+
+
+            <div class="detail-card">
+              <div class="detail-card-key">
+                <h4>Looking for</h4>
+              </div>
+              <div class="detail-card-option"></div>
+              <div class="detail-card-value">
+                <h4>{{lookingFor}}</h4>
+              </div>
+            </div>
+
+            <mat-divider class="divider"></mat-divider>
+
+
+            <div class="detail-card">
+              <div class="detail-card-key">
+                <h4>Location</h4>
+              </div>
+              <div class="detail-card-option"></div>
+              <div class="detail-card-value">
+                <h4 #tooltip="matTooltip"
+                    [matTooltipPosition]="'above'"
+                    matTooltip="Info about the action"
+                    matTooltipHideDelay="500">{{location}}</h4>
+              </div>
+            </div>
+
+            <mat-divider class="divider"></mat-divider>
+
+
+          </article>
+
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="example-tab-icon" matBadge="{{matchCount}}" matBadgeColor="accent" matBadgeOverlap="true"
+                    matBadgeSize="small">favorite_border
+          </mat-icon>
+        </ng-template>
+        <ng-template class="tab-content" matTabContent>
+          {{getTimeLoaded(0)}}
+          <div class="tab-match-content">
+            <mat-grid-list cols="3" rowHeight="3:4">
+              <mat-grid-tile class="match-card-container">
+                <div class="match-card">
+                  <div class="match-card-pic">
+                    <img
+                      alt=""
+                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                  </div>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile class="match-card-container">
+                <div class="match-card">
+                  <div class="match-card-pic">
+                    <img
+                      alt=""
+                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                  </div>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile class="match-card-container">
+                <div class="match-card">
+                  <div class="match-card-pic">
+                    <img
+                      alt=""
+                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                  </div>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile class="match-card-container">
+                <div class="match-card">
+                  <div class="match-card-pic">
+                    <img
+                      alt=""
+                      height="100%" src="https://images.pexels.com/photos/3410361/pexels-photo-3410361.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+                  </div>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+
+          </div>
+
+        </ng-template>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+  </section>
+</section>
