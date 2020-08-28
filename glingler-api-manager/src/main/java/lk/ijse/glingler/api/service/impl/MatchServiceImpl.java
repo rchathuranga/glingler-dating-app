@@ -171,7 +171,11 @@ public class MatchServiceImpl implements MatchService {
         Profile profile = new Profile();
         profile.setProfileId(profileId);
 
-        List<Profile> list = matchRepository.getAllMatchesByProfileIdOrMatchProfileIdAndStatus(profile, profile, StatusCode.MATCH_REACT_TYPE_LIKE);
+        List<String> statusList = new ArrayList<>();
+        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
+        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
+
+        List<Profile> list = matchRepository.getAllMatchesByProfileIdOrMatchProfileIdAndStatus(profile, profile, statusList);
 
         Profile removed = null;
         for (Profile prof : list) {

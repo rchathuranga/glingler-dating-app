@@ -15,6 +15,6 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 
     public Match getMatchByProfileIdAndMatchProfileId(Profile profile, Profile matchProfile);
 
-    @Query("SELECT p FROM Profile p, Match m where p.profileId=m.profileId.profileId and (m.profileId=:profile or m.matchProfileId=:matchProfileId) and m.status=:status")
-    public List<Profile> getAllMatchesByProfileIdOrMatchProfileIdAndStatus(@Param("profile") Profile profile,@Param("matchProfileId") Profile matchProfile,@Param("status") String status);
+    @Query("SELECT p FROM Profile p, Match m where p.profileId=m.profileId.profileId and (m.profileId=:profile or m.matchProfileId=:matchProfileId) and m.status in (:status)")
+    public List<Profile> getAllMatchesByProfileIdOrMatchProfileIdAndStatus(@Param("profile") Profile profile,@Param("matchProfileId") Profile matchProfile,@Param("status") List<String> status);
 }
