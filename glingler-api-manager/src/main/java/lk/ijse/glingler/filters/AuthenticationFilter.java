@@ -8,6 +8,7 @@ import lk.ijse.glingler.util.SysConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -69,9 +70,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                     request.setAttribute("username",userName);
 
                     Profile profile = profileRepository.getProfileByUsername(userName);
+                    if (profile == null) response.sendError(HttpStatus.UNAUTHORIZED.value());
                     request.setAttribute("userProfiles",profile);
-
-
 
                 }
             }

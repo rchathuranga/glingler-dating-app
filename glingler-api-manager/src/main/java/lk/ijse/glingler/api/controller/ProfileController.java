@@ -75,7 +75,7 @@ public class ProfileController {
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfileResponseBean> createProfile(@PathVariable("appType") String appType, @RequestBody ProfileRequestBean profileRequestBean) {
         LOGGER.debug("Enter to Create User Profile Process : {}", appType);
         ProfileResponseBean responseBean = new ProfileResponseBean();

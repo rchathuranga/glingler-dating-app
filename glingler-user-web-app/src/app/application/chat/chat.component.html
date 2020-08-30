@@ -1,1 +1,70 @@
-<p>chat works!</p>
+<section id="content-container">
+  <section id="content">
+    <section id="side-profiles">
+      <div class="search-container">
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Search</mat-label>
+          <input matInput>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="profiles-container">
+        <ng-container *ngFor="let profile of profiles">
+          <div class="profile-card" mat-ripple>
+            <div class="profile-card-img">
+              <div class="profile-pic">
+                <img alt="" src="https://classeventie.classiebit.com//upload/users/images/1537003256339.png"
+                     width="100%">
+              </div>
+            </div>
+            <div class="profile-card-body">
+              <p class="p-c-name">Ravindu Chathuranga</p>
+              <div class="active-wrapper">
+                <div class="active-status"></div>
+                <p class="p-c-active">Active</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+
+    <section id="chat-container">
+      <div class="chat-wrapper">
+        <div class="chat-header">
+          <div class="chat-name"><p>Ravindu Chathuranga</p></div>
+          <div class="chat-head"></div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div #scrollMe class="chat-body">
+          <ng-container *ngFor="let chat of chats">
+            <div class="{{chat.c}}">
+              <div class="color-bar"></div>
+              <div class="chat-msg">
+                <p>{{chat.m}}</p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="chat-footer">
+          <div class="input-wrapper">
+            <mat-form-field class="chat-input" color="accent">
+              <mat-label>Message</mat-label>
+              <input #message (keydown)="inputKeyEvent($event)" autocomplete="off" matInput maxlength="256" placeholder="Type something here...">
+            </mat-form-field>
+          </div>
+          <div class="button-wrapper">
+            <button (click)="btnSendClickEvent()" color="accent" mat-raised-button>
+              <i class="fab fa-telegram-plane"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </section>
+</section>

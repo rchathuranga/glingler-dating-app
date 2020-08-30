@@ -15,6 +15,12 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 
     public Match getMatchByProfileIdAndMatchProfileId(Profile profile, Profile matchProfile);
 
-    @Query("SELECT p FROM Profile p, Match m where p.profileId=m.profileId.profileId and (m.profileId=:profile or m.matchProfileId=:matchProfileId) and m.status in (:status)")
-    public List<Profile> getAllMatchesByProfileIdOrMatchProfileIdAndStatus(@Param("profile") Profile profile,@Param("matchProfileId") Profile matchProfile,@Param("status") List<String> status);
+//    @Query("SELECT p FROM Profile p, Match m where p.profileId=m.profileId.profileId and (m.profileId=:profile or m.matchProfileId=:matchProfileId) and m.status in (:status)")
+//    public List<Profile> getAllMatchesByProfileIdOrMatchProfileIdAndStatus(@Param("profile") Profile profile,@Param("matchProfileId") Profile matchProfile,@Param("status") List<String> status);
+
+    @Query("select p from Match m, Profile p  where p.profileId=m.profileId.profileId and not p.profileId=:profileId")
+    public List<Profile> getProfilesForMatch(@Param("profileId") int profile);
+
+    @Query("select p FROM Profile p WHERE p.profileId NOT IN (SELECT m.profileId FROM Match m)")
+    public List<Profile> getProfilesForMatchNotLinked();
 }

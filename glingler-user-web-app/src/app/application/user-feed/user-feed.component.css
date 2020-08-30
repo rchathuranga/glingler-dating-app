@@ -119,19 +119,27 @@
 #content-container {
   z-index: 1;
   width: 100%;
-  min-height: max-content;
-  /*height: calc(100% - 60px);*/
-  /*max-height: max-content;*/
+  height: calc(100vh - 60px);
+
+  position: relative;
   background-color: #f5f7fa;
 
 }
 
 #content {
-  margin: 0 auto;
-  width: 80%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  width: 1240px;
   height: 100%;
   display: flex;
+  background: #fff;
 }
+
 
 #side-profile {
   width: 28%;

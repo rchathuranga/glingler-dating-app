@@ -46,7 +46,6 @@ export class SignUpComponent implements OnInit {
       ).subscribe();
     }
     this.createUserAccount(form.value, this.imageUrl);
-    this.router.navigate(['filter']);
   }
 
   private createUserAccount(value, imageUrl) {
@@ -60,8 +59,6 @@ export class SignUpComponent implements OnInit {
 
     this.profileService.createUserProfile(data).subscribe(
       res => {
-        console.log(res);
-
         if (res.responseCode === 1000) {
           localStorage.setItem(environment.glingler_token_key, res.token);
           this.router.navigate(['/' + res.router]);

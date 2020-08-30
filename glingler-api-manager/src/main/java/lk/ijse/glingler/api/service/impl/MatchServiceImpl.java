@@ -1,9 +1,6 @@
 package lk.ijse.glingler.api.service.impl;
 
-import lk.ijse.glingler.api.repository.FilterRepository;
-import lk.ijse.glingler.api.repository.MatchRepository;
-import lk.ijse.glingler.api.repository.ProfileRepository;
-import lk.ijse.glingler.api.repository.UserRepository;
+import lk.ijse.glingler.api.repository.*;
 import lk.ijse.glingler.api.service.MatchService;
 import lk.ijse.glingler.dto.MatchRequestBean;
 import lk.ijse.glingler.dto.MatchResponseBean;
@@ -44,6 +41,9 @@ public class MatchServiceImpl implements MatchService {
     private FilterRepository filterRepository;
 
     @Autowired
+    private MatchedRepository matchedRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Override
@@ -58,20 +58,24 @@ public class MatchServiceImpl implements MatchService {
         statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
         statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
 
-        List<Profile> list = profileRepository.getProfilesForMatch(
-                filter.getInterestedOn(),
-                filter.getAgeRangeStart(),
-                filter.getAgeRangeEnd(),
-                profileId,
-                statusList
-        );
+//        List<Profile> list = profileRepository.getProfilesForMatch(
+//                filter.getInterestedOn(),
+//                filter.getAgeRangeStart(),
+//                filter.getAgeRangeEnd(),
+//                profileId,
+//                statusList
+//        );
+//
+//        List<Profile> list2 = profileRepository.getAllProfilesBySexAndAgeAfterAndAgeBeforeAndNotInMatch(
+//                filter.getInterestedOn(),
+//                filter.getAgeRangeStart(),
+//                filter.getAgeRangeEnd(),
+//                profileId
+//        );
 
-        List<Profile> list2 = profileRepository.getAllProfilesBySexAndAgeAfterAndAgeBeforeAndNotInMatch(
-                filter.getInterestedOn(),
-                filter.getAgeRangeStart(),
-                filter.getAgeRangeEnd(),
-                profileId
-        );
+        List<Profile> list = matchRepository.getProfilesForMatch(profile.getProfileId());
+        List<Profile> list2 = matchRepository.getProfilesForMatchNotLinked();
+
 
         list.addAll(list2);
 
@@ -128,7 +132,19 @@ public class MatchServiceImpl implements MatchService {
                     match.setStatus(StatusCode.MATCH_REACT_TYPE_LIKE);
 
                 } else if (previousMatch.getStatus().equalsIgnoreCase(StatusCode.MATCH_REACT_TYPE_LIKE)) {
-                    match.setStatus(StatusCode.MATCH_REACT_TYPE_MATCHED);
+                    match.setStatus(StatusCode.MATCH_REACT_TYPE_LIKE);
+
+                    Matched matched = new Matched();
+                    matched.setProfileId(profile);
+                    matched.setMatchProfileId(matchedProfile);
+                    matched.setStatus(StatusCode.MATCH_REACT_TYPE_MATCHED);
+
+                    matched = matchedRepository.save(matched);
+                    if (matched != null) {
+                        System.out.println("success");
+                    } else {
+                        System.out.println("failed");
+                    }
 
                 } else {
                     responseBean.setResponseCode(ResponseCode.MATCH_FAIL);
@@ -167,24 +183,35 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public ProfileResponseBean getMatchedProfiles(int profileId) throws Exception {
+        System.out.println();
+        System.out.println(profileId);
+        System.out.println();
         ProfileResponseBean responseBean = new ProfileResponseBean();
         Profile profile = new Profile();
         profile.setProfileId(profileId);
 
-        List<String> statusList = new ArrayList<>();
-        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
-        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
+//        List<String> statusList = new ArrayList<>();
+//        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
+//        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
 
-        List<Profile> list = matchRepository.getAllMatchesByProfileIdOrMatchProfileIdAndStatus(profile, profile, statusList);
+//        List<Profile> list = matchRepository.getAllMatchesByProfileIdOrMatchProfileIdAndStatus(profile, profile, statusList);
 
-        Profile removed = null;
+        List<Profile> list = new ArrayList<>();
+
+        List<Matched> matchedList = matchedRepository.getAllMatchedByProfileIdOrMatchProfileIdAndStatus(profile, profile, StatusCode.MATCH_REACT_TYPE_MATCHED);
+        for (Matched matched : matchedList) {
+            list.add(matched.getProfileId());
+            list.add(matched.getMatchProfileId());
+        }
+
+
+        List<Profile> removedList = new ArrayList<>();
         for (Profile prof : list) {
             if (prof.getProfileId() == profileId) {
-                removed = prof;
-                break;
+                removedList.add(prof);
             }
         }
-        list.remove(removed);
+        list.removeAll(removedList);
 
         responseBean.setData(modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
         }.getType()));
