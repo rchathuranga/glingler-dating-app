@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -45,53 +44,6 @@ public class MatchServiceImpl implements MatchService {
 
     @Autowired
     private ModelMapper modelMapper;
-
-    @Override
-    public ProfileResponseBean getProfilesForMatch(int profileId) throws Exception {
-        ProfileResponseBean responseBean = new ProfileResponseBean();
-
-        Profile profile = new Profile();
-        profile.setProfileId(profileId);
-        Filter filter = filterRepository.getFilterByProfile(profile);
-
-        List<String> statusList = new ArrayList<>();
-        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
-        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
-
-//        List<Profile> list = profileRepository.getProfilesForMatch(
-//                filter.getInterestedOn(),
-//                filter.getAgeRangeStart(),
-//                filter.getAgeRangeEnd(),
-//                profileId,
-//                statusList
-//        );
-//
-//        List<Profile> list2 = profileRepository.getAllProfilesBySexAndAgeAfterAndAgeBeforeAndNotInMatch(
-//                filter.getInterestedOn(),
-//                filter.getAgeRangeStart(),
-//                filter.getAgeRangeEnd(),
-//                profileId
-//        );
-
-        List<Profile> list = matchRepository.getProfilesForMatch(profile.getProfileId());
-        List<Profile> list2 = matchRepository.getProfilesForMatchNotLinked();
-
-
-        list.addAll(list2);
-
-        System.out.println();
-        System.out.println("list : " + list);
-        System.out.println();
-
-        List<ProfileDTO> dataList = modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
-        }.getType());
-
-
-        responseBean.setResponseCode(ResponseCode.SUCCESS);
-        responseBean.setResponseError("");
-        responseBean.setData(dataList);
-        return responseBean;
-    }
 
     @Override
     @Transactional
@@ -182,29 +134,69 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public ProfileResponseBean getProfilesForMatch(int profileId) throws Exception {
+        ProfileResponseBean responseBean = new ProfileResponseBean();
+
+        Profile profile = new Profile();
+        profile.setProfileId(profileId);
+        Filter filter = filterRepository.getFilterByProfile(profile);
+
+        List<String> statusList = new ArrayList<>();
+        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
+        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
+
+//        List<Profile> list = profileRepository.getProfilesForMatch(
+//                filter.getInterestedOn(),
+//                filter.getAgeRangeStart(),
+//                filter.getAgeRangeEnd(),
+//                profileId,
+//                statusList
+//        );
+//
+//        List<Profile> list2 = profileRepository.getAllProfilesBySexAndAgeAfterAndAgeBeforeAndNotInMatch(
+//                filter.getInterestedOn(),
+//                filter.getAgeRangeStart(),
+//                filter.getAgeRangeEnd(),
+//                profileId
+//        );
+
+        List<Profile> list = matchRepository.getProfilesForMatch(profile.getProfileId(),filter.getInterestedOn(),filter.getAgeRangeStart(),filter.getAgeRangeEnd());
+        List<Profile> list2 = matchRepository.getProfilesForMatchNotLinked(filter.getInterestedOn(),filter.getAgeRangeStart(),filter.getAgeRangeEnd());
+
+
+        list.addAll(list2);
+
+        System.out.println();
+        System.out.println("list : " + list);
+        System.out.println();
+
+        List<ProfileDTO> dataList = modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
+        }.getType());
+
+
+        responseBean.setResponseCode(ResponseCode.SUCCESS);
+        responseBean.setResponseError("");
+        responseBean.setData(dataList);
+        return responseBean;
+    }
+
+    @Override
     public ProfileResponseBean getMatchedProfiles(int profileId) throws Exception {
-        System.out.println();
-        System.out.println(profileId);
-        System.out.println();
+        LOGGER.debug("Enter to Get Matched Profile Process in Match Service | Profile Id - {}", profileId);
         ProfileResponseBean responseBean = new ProfileResponseBean();
         Profile profile = new Profile();
         profile.setProfileId(profileId);
 
-//        List<String> statusList = new ArrayList<>();
-//        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
-//        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
-
-//        List<Profile> list = matchRepository.getAllMatchesByProfileIdOrMatchProfileIdAndStatus(profile, profile, statusList);
-
         List<Profile> list = new ArrayList<>();
 
+        LOGGER.debug("Removing the requesting profile from the Matched List");
         List<Matched> matchedList = matchedRepository.getAllMatchedByProfileIdOrMatchProfileIdAndStatus(profile, profile, StatusCode.MATCH_REACT_TYPE_MATCHED);
         for (Matched matched : matchedList) {
             list.add(matched.getProfileId());
             list.add(matched.getMatchProfileId());
         }
 
-
+        LOGGER.debug("Removing the requesting profile from the Matched List");
         List<Profile> removedList = new ArrayList<>();
         for (Profile prof : list) {
             if (prof.getProfileId() == profileId) {
@@ -213,8 +205,8 @@ public class MatchServiceImpl implements MatchService {
         }
         list.removeAll(removedList);
 
-        responseBean.setData(modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
-        }.getType()));
+        LOGGER.debug("Getting Matched Profile Process Success");
+        responseBean.setData(modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {}.getType()));
         responseBean.setResponseCode(ResponseCode.SUCCESS);
         responseBean.setResponseError("");
         return responseBean;

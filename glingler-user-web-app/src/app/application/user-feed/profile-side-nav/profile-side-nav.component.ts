@@ -30,6 +30,7 @@ export class ProfileSideNavComponent implements OnInit {
         console.log(res);
         if (res.data.length > 0) {
           const data: ProfileDTO = res.data[0];
+          localStorage.setItem('profileId', data.profileId);
 
           this.imageUrl = data.imageUrl;
           this.firstName = data.firstName;

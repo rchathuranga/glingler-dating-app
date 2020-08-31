@@ -70,14 +70,19 @@ public class MatchesController {
     @GetMapping(value = "/matched", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfileResponseBean> getMatchedProfiles(@PathVariable String appType) {
         Profile profile = (Profile) httpServletRequest.getAttribute("userProfiles");
+        LOGGER.debug("Enter to Process Matching Profiles | AppType : {}", appType);
         ProfileResponseBean responseBean = new ProfileResponseBean();
 
         try {
             responseBean = matchService.getMatchedProfiles(profile.getProfileId());
         } catch (Exception e) {
             e.printStackTrace();
+            LOGGER.debug("Error While Getting Matched Profiles");
+            responseBean.setResponseCode(ResponseCode.EXCEPTION);
+            responseBean.setResponseError("Error in Process");
         }
 
+        LOGGER.debug("Getting Matched Profiles Finished");
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 }

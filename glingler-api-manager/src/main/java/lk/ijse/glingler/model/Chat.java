@@ -8,6 +8,8 @@ import java.util.Objects;
 @Table(name = "chat")
 public class Chat {
     private int chatId;
+    private Matched matchedId;
+    private int chatSendProfileId;
     private String message;
     private Timestamp createdTime;
 
@@ -19,6 +21,24 @@ public class Chat {
     }
     public void setChatId(int chatId) {
         this.chatId = chatId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "match_id", referencedColumnName = "matched_id")
+    public Matched getMatchedId() {
+        return matchedId;
+    }
+    public void setMatchedId(Matched matchedId) {
+        this.matchedId = matchedId;
+    }
+
+    @Basic
+    @Column(name = "chat_send_profile_id")
+    public int getChatSendProfileId() {
+        return chatSendProfileId;
+    }
+    public void setChatSendProfileId(int chatSendProfileId) {
+        this.chatSendProfileId = chatSendProfileId;
     }
 
     @Basic
@@ -58,6 +78,7 @@ public class Chat {
     public String toString() {
         return "Chat{" +
                 "chatId=" + chatId +
+                ", matchedId=" + matchedId +
                 ", message='" + message + '\'' +
                 ", createdTime=" + createdTime +
                 '}';

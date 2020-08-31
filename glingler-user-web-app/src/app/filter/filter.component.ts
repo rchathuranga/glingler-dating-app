@@ -20,28 +20,31 @@ export class FilterComponent implements OnInit {
   }
 
   getLocationData(data) {
-    if (navigator.geolocation) {
-      console.log('it is supported');
-      navigator.geolocation.getCurrentPosition(position => {
+    // if (navigator.geolocation) {
+    //   console.log('it is supported');
+    //   navigator.geolocation.getCurrentPosition(position => {
+    //
+    //     const userFilters = {
+    //       ...data,
+    //       ...{longitude: position.coords.longitude},
+    //       latitude: position.coords.latitude
+    //     };
+    //
+    //
+    //   });
+    // } else {
+    //   console.log('geo location not supported');
+    // }
 
-        const userFilters = {
-          ...data,
-          ...{longitude: position.coords.longitude},
-          latitude: position.coords.latitude
-        };
 
-        this.filterService.updateProfileFilter(userFilters).subscribe(
-          res => {
-            if (res.responseCode === 1000) {
-              this.router.navigate(['/application']);
-            }
-          }, error => {
+    this.filterService.updateProfileFilter(data).subscribe(
+      res => {
+        if (res.responseCode === 1000) {
+          this.router.navigate(['/application']);
+        }
+      }, error => {
 
-          });
       });
-    } else {
-      console.log('geo location not supported');
-    }
   }
 
   btnContinueClick() {

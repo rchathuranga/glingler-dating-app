@@ -11,15 +11,15 @@
       <mat-divider></mat-divider>
       <div class="profiles-container">
         <ng-container *ngFor="let profile of profiles">
-          <div class="profile-card" mat-ripple>
+          <div class="profile-card" mat-ripple (click)="profileCardClickEvent(profile)">
             <div class="profile-card-img">
               <div class="profile-pic">
-                <img alt="" src="https://classeventie.classiebit.com//upload/users/images/1537003256339.png"
+                <img alt="" src="{{profile.imageUrl}}"
                      width="100%">
               </div>
             </div>
             <div class="profile-card-body">
-              <p class="p-c-name">Ravindu Chathuranga</p>
+              <p class="p-c-name">{{profile.firstName +" "+ profile.lastName}}</p>
               <div class="active-wrapper">
                 <div class="active-status"></div>
                 <p class="p-c-active">Active</p>
@@ -33,17 +33,17 @@
     <section id="chat-container">
       <div class="chat-wrapper">
         <div class="chat-header">
-          <div class="chat-name"><p>Ravindu Chathuranga</p></div>
+          <div class="chat-name"><p>{{activeChat.firstName +" "+ activeChat.lastName}}</p></div>
           <div class="chat-head"></div>
         </div>
         <mat-divider></mat-divider>
 
         <div #scrollMe class="chat-body">
           <ng-container *ngFor="let chat of chats">
-            <div class="{{chat.c}}">
+            <div class="{{chat.chatClass}}">
               <div class="color-bar"></div>
               <div class="chat-msg">
-                <p>{{chat.m}}</p>
+                <p>{{chat.message}}</p>
               </div>
             </div>
           </ng-container>
