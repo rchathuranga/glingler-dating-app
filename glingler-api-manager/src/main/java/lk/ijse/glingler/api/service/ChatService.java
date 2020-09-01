@@ -5,5 +5,7 @@ import lk.ijse.glingler.dto.ChatResponseBean;
 import lk.ijse.glingler.dto.ProfileResponseBean;
 
 public interface ChatService {
-    public ChatResponseBean getChatProfiles(ChatRequestBean chatRequestBean);
+    public ChatResponseBean getChatByProfile(ChatRequestBean chatRequestBean) throws Exception;
+    public ChatResponseBean getChatProfile(int userProfileId) throws Exception;
+    public ChatResponseBean saveChat(ChatRequestBean chatRequestBean);
 }

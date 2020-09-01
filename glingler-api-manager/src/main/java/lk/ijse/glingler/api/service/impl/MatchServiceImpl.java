@@ -160,8 +160,8 @@ public class MatchServiceImpl implements MatchService {
 //                profileId
 //        );
 
-        List<Profile> list = matchRepository.getProfilesForMatch(profile.getProfileId(),filter.getInterestedOn(),filter.getAgeRangeStart(),filter.getAgeRangeEnd());
-        List<Profile> list2 = matchRepository.getProfilesForMatchNotLinked(filter.getInterestedOn(),filter.getAgeRangeStart(),filter.getAgeRangeEnd());
+        List<Profile> list = matchRepository.getProfilesForMatch(profile.getProfileId(), filter.getInterestedOn(), filter.getAgeRangeStart(), filter.getAgeRangeEnd());
+        List<Profile> list2 = matchRepository.getProfilesForMatchNotLinked(filter.getInterestedOn(), filter.getAgeRangeStart(), filter.getAgeRangeEnd());
 
 
         list.addAll(list2);
@@ -188,27 +188,49 @@ public class MatchServiceImpl implements MatchService {
         profile.setProfileId(profileId);
 
         List<Profile> list = new ArrayList<>();
+        List<ProfileDTO> profileDTOList = new ArrayList<>();
 
         LOGGER.debug("Removing the requesting profile from the Matched List");
         List<Matched> matchedList = matchedRepository.getAllMatchedByProfileIdOrMatchProfileIdAndStatus(profile, profile, StatusCode.MATCH_REACT_TYPE_MATCHED);
+        System.out.println();
+        System.out.println(matchedList.size());
+        System.out.println();
         for (Matched matched : matchedList) {
-            list.add(matched.getProfileId());
-            list.add(matched.getMatchProfileId());
+            ProfileDTO profileDTO = loadProfileToDTO(matched.getProfileId());
+            profileDTO.setMatchedIdWithUser(matched.getMatchedId());
+            ProfileDTO matchedDTO = loadProfileToDTO(matched.getMatchProfileId());
+            matchedDTO.setMatchedIdWithUser(matched.getMatchedId());
+
+            profileDTOList.add(profileDTO);
+            profileDTOList.add(matchedDTO);
         }
 
         LOGGER.debug("Removing the requesting profile from the Matched List");
-        List<Profile> removedList = new ArrayList<>();
-        for (Profile prof : list) {
+        List<ProfileDTO> removedList = new ArrayList<>();
+        for (ProfileDTO prof : profileDTOList) {
             if (prof.getProfileId() == profileId) {
                 removedList.add(prof);
             }
         }
-        list.removeAll(removedList);
+        profileDTOList.removeAll(removedList);
 
         LOGGER.debug("Getting Matched Profile Process Success");
-        responseBean.setData(modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {}.getType()));
+        responseBean.setData(profileDTOList);
         responseBean.setResponseCode(ResponseCode.SUCCESS);
         responseBean.setResponseError("");
         return responseBean;
+    }
+
+    private ProfileDTO loadProfileToDTO(Profile profile){
+        ProfileDTO profileDTO = new ProfileDTO();
+        profileDTO.setProfileId(profile.getProfileId());
+        profileDTO.setFirstName(profile.getFirstName());
+        profileDTO.setLastName(profile.getLastName());
+        profileDTO.setBio(profile.getBio());
+        profileDTO.setSex(profile.getSex());
+        profileDTO.setAge(profile.getAge());
+        profileDTO.setBirthDay(profile.getBirthday().toString());
+        profileDTO.setImageUrl(profile.getImageUrl());
+        return profileDTO;
     }
 }

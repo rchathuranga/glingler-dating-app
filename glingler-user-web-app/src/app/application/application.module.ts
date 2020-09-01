@@ -19,11 +19,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ChatComponent } from './chat/chat.component';
 import {ProfileSideNavComponent} from './user-feed/profile-side-nav/profile-side-nav.component';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
 
 
 @NgModule({
   declarations: [MainAppComponent, UserFeedComponent, ChatComponent, ProfileSideNavComponent],
   imports: [
+    AngularFireDatabaseModule,
     RouterModule,
     CommonModule,
     ApplicationRoutingModule,

@@ -8,4 +8,5 @@ public class ChatDTO {
     private int matchedId;
     private int sendProfileId;
     private String message;
+    private long createdTime;
 }

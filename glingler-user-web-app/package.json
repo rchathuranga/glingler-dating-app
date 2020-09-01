@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o --host 192.168.1.45",
+    "start": "ng serve -o",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
     "angularfire2": "^5.4.2",
-    "firebase": "^7.18.0",
+    "firebase": "^7.19.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "web-animations-js": "^2.3.2",

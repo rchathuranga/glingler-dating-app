@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AngularFireModule} from '@angular/fire';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -46,6 +47,7 @@ import { FilterComponent } from './filter/filter.component';
       measurementId: 'G-TPG6LLKKY0'
     }),
     AngularFireStorageModule,
+    AngularFireDatabaseModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,

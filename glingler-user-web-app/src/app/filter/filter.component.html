@@ -8,7 +8,7 @@
           <p>Your are looking for</p>
         </div>
         <div class="box-inner-body">
-          <div (click)="isInterestOnMen=true" [ngClass]="(isInterestOnMen)?'interest-select':{backgroundColor: 'yellow'}" class="interest">
+          <div (click)="isInterestOnMen=true" (keypress)="interestMaleKeyPress($event)" [ngClass]="(isInterestOnMen)?'interest-select':{backgroundColor: 'yellow'}" class="interest" tabindex="0">
             <div class="interest-img">
               <img
                 alt=""
@@ -18,7 +18,7 @@
               <h4 class="mat-display-1">MEN</h4>
             </div>
           </div>
-          <div (click)="isInterestOnMen=false" [ngClass]="(!isInterestOnMen)?'interest-select': null" class="interest">
+          <div (click)="isInterestOnMen=false" (keypress)="interestFemaleKeyPress($event)" [ngClass]="(!isInterestOnMen)?'interest-select': null" class="interest" tabindex="0">
             <div class="interest-img">
               <img alt="" height="100%" src="https://media.istockphoto.com/vectors/portrait-of-a-sad-asian-girl-schoolgirl-avatar-face-of-a-child-vector-id1179590104?b=1&k=6&m=1179590104&s=612x612&h=-vB1Ch2LFGu8iX1QHhCpquRATyunHYRg6ciuIM67Ccs=">
             </div>
@@ -36,27 +36,22 @@
         </div>
         <div class="box-inner-body">
           <div class="age-input">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" color="accent">
               <mat-label>Age Range Start</mat-label>
-              <input matInput name="startAgeRange" value="">
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <input #ageStart matInput min="16" name="startAgeRange" type="number" value="">
+              <mat-icon matSuffix>motion_photos_on</mat-icon>
             </mat-form-field>
           </div>
           <div class="age-input">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" color="accent">
               <mat-label>Age Range End</mat-label>
-              <input matInput name="startAgeEnd" value="">
-              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-              <mat-hint>Hint</mat-hint>
+              <input #ageEnd matInput max="60" min="16" name="startAgeEnd" type="number" value="">
+              <mat-icon matSuffix>motion_photos_on</mat-icon>
             </mat-form-field>
           </div>
-
-          <div class="btn-continue">
-            <button (click)="btnContinueClick()" color="accent" mat-raised-button>Continue to Profile</button>
-          </div>
-
-
+        </div>
+        <div class="btn-continue">
+          <button (click)="btnContinueClick()" color="accent" mat-raised-button>Continue to Profile</button>
         </div>
       </div>
     </div>

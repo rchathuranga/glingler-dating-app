@@ -32,6 +32,8 @@ export class ProfileSideNavComponent implements OnInit {
           const data: ProfileDTO = res.data[0];
           localStorage.setItem('profileId', data.profileId);
 
+          this.profileService.getFirebaseDBRef(data.profileId).set('ACTIVE');
+
           this.imageUrl = data.imageUrl;
           this.firstName = data.firstName;
           this.lastName = data.lastName;

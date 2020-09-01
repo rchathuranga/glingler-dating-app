@@ -3,8 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {ResponseDTO} from '../../dto/response-dto';
 import {Router} from '@angular/router';
 import {environment} from '../../../environments/environment';
-import {UserDTO} from '../../dto/user-dto';
-
 @Injectable({
   providedIn: 'root'
 })

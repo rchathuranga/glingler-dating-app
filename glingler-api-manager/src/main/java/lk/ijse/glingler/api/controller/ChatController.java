@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/api/v1/{appType}/chat")
@@ -25,7 +24,7 @@ public class ChatController {
     private ChatService chatService;
 
     @GetMapping(value = "/msg/{odId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ChatResponseBean> getChatProfiles(@PathVariable("appType") String appType,@PathVariable("odId") Integer odId) {
+    public ResponseEntity<ChatResponseBean> getChatProfiles(@PathVariable("appType") String appType, @PathVariable("odId") Integer odId) {
         ChatResponseBean responseBean = new ChatResponseBean();
 
         Profile userProfile = (Profile) httpServletRequest.getAttribute("userProfiles");
@@ -34,9 +33,34 @@ public class ChatController {
         chatRequestBean.setUserProfileId(userProfile.getProfileId());
         chatRequestBean.setMatchProfileId(odId);
 
-        responseBean = chatService.getChatProfiles(chatRequestBean);
+        try {
+            responseBean = chatService.getChatByProfile(chatRequestBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/profiles", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ChatResponseBean> getChatProfiles(@PathVariable("appType") String appType) {
+        ChatResponseBean responseBean = new ChatResponseBean();
+        Profile userProfile = (Profile) httpServletRequest.getAttribute("userProfiles");
+        try {
+            responseBean = chatService.getChatProfile(userProfile.getProfileId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity(responseBean, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/saveChat", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ChatResponseBean> saveChats(@PathVariable("appType") String appType, @RequestBody ChatRequestBean chatRequestBean) {
+        ChatResponseBean responseBean = new ChatResponseBean();
+
+        responseBean = chatService.saveChat(chatRequestBean);
+
+        return new ResponseEntity<>(responseBean, HttpStatus.OK);
+    }
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProfileDTO {
-    private String profileId;
+    private int profileId;
     private String firstName;
     private String lastName;
     private String bio;
@@ -19,4 +19,5 @@ public class ProfileDTO {
     private Integer ageRangeEnd;
 
     private int matchedCount;
+    private int matchedIdWithUser;
 }

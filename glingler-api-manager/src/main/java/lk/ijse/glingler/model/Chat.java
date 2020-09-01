@@ -24,7 +24,7 @@ public class Chat {
     }
 
     @ManyToOne
-    @JoinColumn(name = "match_id", referencedColumnName = "matched_id")
+    @JoinColumn(name = "matched_id", referencedColumnName = "matched_id")
     public Matched getMatchedId() {
         return matchedId;
     }

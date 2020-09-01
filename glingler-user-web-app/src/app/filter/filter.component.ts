@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FilterService} from '../service/filter/filter.service';
 import {Router} from '@angular/router';
 
@@ -9,8 +9,8 @@ import {Router} from '@angular/router';
 })
 export class FilterComponent implements OnInit {
 
-  ageRangeStart: number;
-  ageRangeEnd: number;
+  @ViewChild('ageStart') ageRangeStart;
+  @ViewChild('ageEnd') ageRangeEnd;
   isInterestOnMen = true;
 
   constructor(private filterService: FilterService, private router: Router) {
@@ -49,11 +49,19 @@ export class FilterComponent implements OnInit {
 
   btnContinueClick() {
     const data = {
-      ageRangeStart: 18,
-      ageRangeEnd: 24,
+      ageRangeStart: this.ageRangeStart.nativeElement.value,
+      ageRangeEnd: this.ageRangeEnd.nativeElement.value,
       lookInFor: (this.isInterestOnMen) ? 'MEN' : 'WOMEN'
     };
-
+    console.log(data);
     this.getLocationData(data);
+  }
+
+  interestFemaleKeyPress($event: KeyboardEvent) {
+    this.isInterestOnMen = false;
+  }
+
+  interestMaleKeyPress($event: KeyboardEvent) {
+    this.isInterestOnMen = true;
   }
 }

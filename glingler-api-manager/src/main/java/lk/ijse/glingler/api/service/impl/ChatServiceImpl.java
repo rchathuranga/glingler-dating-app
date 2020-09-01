@@ -15,6 +15,7 @@ import lk.ijse.glingler.util.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ChatServiceImpl implements ChatService {
     private MatchedRepository matchedRepository;
 
     @Override
-    public ChatResponseBean getChatProfiles(ChatRequestBean chatRequestBean) {
+    public ChatResponseBean getChatByProfile(ChatRequestBean chatRequestBean) throws Exception {
         ChatResponseBean responseBean = new ChatResponseBean();
         Profile profile = new Profile();
         Profile matchedProfile = new Profile();
@@ -55,6 +56,47 @@ public class ChatServiceImpl implements ChatService {
         responseBean.setData(chatDTOS);
         responseBean.setResponseCode(ResponseCode.SUCCESS);
         responseBean.setResponseError("");
+        return responseBean;
+    }
+
+    @Override
+    public ChatResponseBean getChatProfile(int userProfileId) throws Exception {
+        Profile userProfile = new Profile();
+        userProfile.setProfileId(userProfileId);
+
+        List<Matched> list = matchedRepository.getAllMatchedByProfileIdOrMatchProfileIdAndStatus(userProfile, userProfile, StatusCode.MATCH_REACT_TYPE_MATCHED);
+
+
+        return null;
+    }
+
+    @Override
+    public ChatResponseBean saveChat(ChatRequestBean chatRequestBean) {
+        ChatResponseBean responseBean = new ChatResponseBean();
+
+        List<Chat> chatList = new ArrayList<>();
+        int matchedId = chatRequestBean.getMatchedId();
+
+        List<ChatDTO> chatDTOS = chatRequestBean.getChats();
+        chatDTOS.forEach(chatDTO -> {
+            Chat chat = new Chat();
+            chat.setChatSendProfileId(chatDTO.getSendProfileId());
+            Matched matched = new Matched();
+            matched.setMatchedId(matchedId);
+            chat.setMatchedId(matched);
+            chat.setMessage(chatDTO.getMessage());
+            chat.setCreatedTime(new Timestamp(chatDTO.getCreatedTime()));
+            chatList.add(chat);
+        });
+
+        if (chatRepository.saveAll(chatList).size() == chatList.size()) {
+            responseBean.setResponseCode(ResponseCode.SUCCESS);
+            responseBean.setResponseError("");
+        } else {
+            responseBean.setResponseCode(ResponseCode.FAILED);
+            responseBean.setResponseError("Failed");
+        }
+
         return responseBean;
     }
 }

@@ -4,6 +4,6 @@ export class ChatDTO {
     public matchedId?: number,
     public sendProfileId?: number,
     public message?: string,
-    public chatClass?: string){
+    public createdTime?: string){
   }
 }

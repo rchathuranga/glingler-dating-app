@@ -5,7 +5,7 @@
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Search</mat-label>
           <input matInput>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-icon matSuffix>person_search</mat-icon>
         </mat-form-field>
       </div>
       <mat-divider></mat-divider>
@@ -20,7 +20,7 @@
             </div>
             <div class="profile-card-body">
               <p class="p-c-name">{{profile.firstName +" "+ profile.lastName}}</p>
-              <div class="active-wrapper">
+              <div *ngIf="true" class="active-wrapper">
                 <div class="active-status"></div>
                 <p class="p-c-active">Active</p>
               </div>
@@ -40,7 +40,7 @@
 
         <div #scrollMe class="chat-body">
           <ng-container *ngFor="let chat of chats">
-            <div class="{{chat.chatClass}}">
+            <div [classList]="(chat.sendProfileId===profileId)?'my-msg':'her-msg'">
               <div class="color-bar"></div>
               <div class="chat-msg">
                 <p>{{chat.message}}</p>
