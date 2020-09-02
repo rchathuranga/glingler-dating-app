@@ -15,6 +15,7 @@ import lk.ijse.glingler.util.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,14 +72,14 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ChatResponseBean saveChat(ChatRequestBean chatRequestBean) {
+    public ChatResponseBean saveChat(ChatRequestBean chatRequestBean) throws Exception{
         ChatResponseBean responseBean = new ChatResponseBean();
 
         List<Chat> chatList = new ArrayList<>();
         int matchedId = chatRequestBean.getMatchedId();
 
         List<ChatDTO> chatDTOS = chatRequestBean.getChats();
-        chatDTOS.forEach(chatDTO -> {
+        for (ChatDTO chatDTO: chatDTOS) {
             Chat chat = new Chat();
             chat.setChatSendProfileId(chatDTO.getSendProfileId());
             Matched matched = new Matched();
@@ -87,7 +88,7 @@ public class ChatServiceImpl implements ChatService {
             chat.setMessage(chatDTO.getMessage());
             chat.setCreatedTime(new Timestamp(chatDTO.getCreatedTime()));
             chatList.add(chat);
-        });
+        }
 
         if (chatRepository.saveAll(chatList).size() == chatList.size()) {
             responseBean.setResponseCode(ResponseCode.SUCCESS);

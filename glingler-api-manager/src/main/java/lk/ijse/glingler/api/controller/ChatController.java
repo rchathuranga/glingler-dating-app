@@ -52,14 +52,18 @@ public class ChatController {
             e.printStackTrace();
         }
 
-        return new ResponseEntity(responseBean, HttpStatus.OK);
+        return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
     @PostMapping(value = "/saveChat", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ChatResponseBean> saveChats(@PathVariable("appType") String appType, @RequestBody ChatRequestBean chatRequestBean) {
         ChatResponseBean responseBean = new ChatResponseBean();
 
-        responseBean = chatService.saveChat(chatRequestBean);
+        try {
+            responseBean = chatService.saveChat(chatRequestBean);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }

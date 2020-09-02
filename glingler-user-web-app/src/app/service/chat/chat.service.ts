@@ -20,7 +20,7 @@ export class ChatService {
   }
 
   getChatMessages(opId) {
-    return this.httpClient.get<ResponseDTO>(this.baseUrl + 'user/chat/msg/' + opId);
+    return this.httpClient.get<ResponseDTO>(this.baseUrl + 'user/chat/msg/' + opId).toPromise();
   }
 
   getFireDBMatchRef(matchedId): AngularFireList<ChatDTO> {
