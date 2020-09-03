@@ -35,12 +35,15 @@ public class AuthenticationController {
 
     @PostMapping("/sign-in")
     public ResponseEntity<SignInResponseBean> signIn(@RequestBody SignInRequestBean requestBean) {
+        LOGGER.debug("Enter to User Authentication Profiles");
         SignInResponseBean responseBean = new SignInResponseBean();
 
         try {
             authenticate(requestBean.getUsername(), requestBean.getPassword());
             responseBean.setToken(jwtUtil.createToken(requestBean.getUsername(),"user",null));
             UserResponseBean userData = userService.getUserDetailByUserName(requestBean.getUsername());
+
+            LOGGER.debug("User Authentication Success");
             responseBean.setUserId(userData.getUser().getUserId());
             responseBean.setRouter("application");
 

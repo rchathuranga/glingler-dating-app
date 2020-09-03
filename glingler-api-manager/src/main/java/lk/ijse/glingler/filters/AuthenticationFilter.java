@@ -39,8 +39,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private ProfileRepository profileRepository;
 
-    private void springAuthentication(HttpServletRequest request, String username){
-        if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
+    private void springAuthentication(HttpServletRequest request, String username) {
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken
@@ -59,24 +59,26 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String requestTokenHeader = request.getHeader("Authorization");
 
         String url = request.getRequestURI();
-        if(url.contains(SysConfig.APP_TYPE_ADMIN) | url.contains(SysConfig.APP_TYPE_USER) | url.contains("/auth/sign-in")){
+        if (url.contains(SysConfig.APP_TYPE_ADMIN) | url.contains(SysConfig.APP_TYPE_USER) | url.contains("/auth/sign-in")) {
 
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
                 boolean isValidToken = jwtUtil.checkValidity(requestTokenHeader);
-                if(isValidToken) {
+                if (isValidToken) {
                     String userName = jwtUtil.getUserName(requestTokenHeader);
+                    if (userName == null || userName.equalsIgnoreCase(""))
+                        response.sendError(HttpStatus.UNAUTHORIZED.value());
                     jwtUtil.createToken(userName, SysConfig.APP_TYPE_USER, response);
                     springAuthentication(request, userName);
-                    request.setAttribute("username",userName);
+                    request.setAttribute("username", userName);
 
                     Profile profile = profileRepository.getProfileByUsername(userName);
                     if (profile == null) response.sendError(HttpStatus.UNAUTHORIZED.value());
-                    request.setAttribute("userProfiles",profile);
+                    request.setAttribute("userProfiles", profile);
 
                 }
             }
             filterChain.doFilter(request, response);
-        }else {
+        } else {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Application Type Requested");
         }
     }

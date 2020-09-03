@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 public class MatchesController {
 
-    private final Logger LOGGER = LogManager.getLogger(ProfileServiceImpl.class.getName());
+    private final Logger LOGGER = LogManager.getLogger(MatchesController.class.getName());
 
     @Autowired
     private HttpServletRequest httpServletRequest;
@@ -76,7 +76,6 @@ public class MatchesController {
         try {
             responseBean = matchService.getMatchedProfiles(profile.getProfileId());
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.debug("Error While Getting Matched Profiles");
             responseBean.setResponseCode(ResponseCode.EXCEPTION);
             responseBean.setResponseError("Error in Process");

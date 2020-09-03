@@ -25,15 +25,6 @@ public class ResponseBodyAdviceAdapter implements ResponseBodyAdvice<Object> {
 
     private final Logger LOGGER = LogManager.getLogger(ResponseBodyAdviceAdapter.class.getName());
 
-    @Autowired
-    private HttpServletRequest httpServletRequest;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private UserService userService;
-
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
         return true;
@@ -46,16 +37,11 @@ public class ResponseBodyAdviceAdapter implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ExceptionResponseBean> handleMyException(Exception ex) {
-        ex.printStackTrace();
         LOGGER.debug("Enter to Exception Handler in Response Body Advice Adapter - {}",ex.getMessage());
-        System.out.println("xxxxxxxxxx");
-        System.out.println(httpServletRequest);
-        System.out.println("xxxxxxxxxx");
         ExceptionResponseBean responseBean = new ExceptionResponseBean();
         responseBean.setExceptionMessage(ex.getMessage());
         responseBean.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR);
         responseBean.setResponseError("Exception Generated While Processing");
-
         LOGGER.debug("Process Handling Exception Success");
         return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }

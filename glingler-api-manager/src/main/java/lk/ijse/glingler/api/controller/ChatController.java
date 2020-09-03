@@ -4,6 +4,8 @@ import lk.ijse.glingler.api.service.ChatService;
 import lk.ijse.glingler.dto.ChatRequestBean;
 import lk.ijse.glingler.dto.ChatResponseBean;
 import lk.ijse.glingler.model.Profile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 public class ChatController {
 
+    private static final Logger LOGGER = LogManager.getLogger(ChatController.class.getName());
+
     @Autowired
     private HttpServletRequest httpServletRequest;
 
@@ -25,6 +29,7 @@ public class ChatController {
 
     @GetMapping(value = "/msg/{odId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ChatResponseBean> getChatProfiles(@PathVariable("appType") String appType, @PathVariable("odId") Integer odId) {
+        LOGGER.debug("Enter to Get Chat Profiles in Chat Controller | AppType - {}",appType);
         ChatResponseBean responseBean = new ChatResponseBean();
 
         Profile userProfile = (Profile) httpServletRequest.getAttribute("userProfiles");
