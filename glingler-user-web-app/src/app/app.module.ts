@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFireStorageModule} from '@angular/fire/storage';
+import {AngularFireMessagingModule} from '@angular/fire/messaging';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -24,6 +25,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthGuard} from './guard/auth.guard';
 import {TokenInterceptor} from './interceptor/token.interceptor';
 import { FilterComponent } from './filter/filter.component';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -36,17 +38,9 @@ import { FilterComponent } from './filter/filter.component';
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp({
-      apiKey: 'AIzaSyCx3Hcbb9SGvMlrPp8M1uKgB8g1KShtmxI',
-      authDomain: 'glingler-2a90b.firebaseapp.com',
-      databaseURL: 'https://glingler-2a90b.firebaseio.com',
-      projectId: 'glingler-2a90b',
-      storageBucket: 'glingler-2a90b.appspot.com',
-      messagingSenderId: '1016024450731',
-      appId: '1:1016024450731:web:1d4f66391135534527d9ee',
-      measurementId: 'G-TPG6LLKKY0'
-    }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
+    AngularFireMessagingModule,
     AngularFireDatabaseModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

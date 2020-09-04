@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.profiles = res.data;
       if (this.profiles[0] !== undefined) {
         this.activeChat = this.profiles[0];
+        // this.profileCardClickEvent(this.activeChat);
       }
     }, error => {
       console.log(error);
@@ -55,7 +56,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.sendMsg(this.input.nativeElement.value);
   }
 
-  profileCardClickEvent(profile: ProfileDTO) {
+  async profileCardClickEvent(profile: ProfileDTO) {
     this.activeChat = profile;
     this.prevMatchedId = this.matchedId;
     this.matchedId = profile.matchedIdWithUser;
@@ -69,23 +70,26 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.fireChats = [];
     this.serverChats = [];
 
-    this.chatService.getChatMessages(this.activeChat.profileId).subscribe(res => {
+    await this.chatService.getChatMessages(this.activeChat.profileId).then(res => {
       this.serverChats = res.data;
-
-      this.chatService.getFireDBMatchRef(this.matchedId).snapshotChanges(['child_added']).subscribe(resp => {
-        this.fireChats = [];
-        resp.forEach(value => {
-          const data: ChatDTO = value.payload.toJSON();
-          this.fireChats.push(data);
-        });
-
-        this.chats = this.serverChats.concat(this.fireChats);
-        console.log(this.chats);
-      }, err => {
-        alert(err);
-      });
-    }, error => {
+      this.chats = this.serverChats;
+      if (this.serverChats == null) {
+        this.serverChats = [];
+      }
+    }).catch(error => {
       console.log(error);
+    });
+
+    this.chatService.getFireDBMatchRef(this.matchedId).snapshotChanges(['child_added', 'child_removed']).subscribe(resp => {
+      this.fireChats = [];
+      resp.forEach(value => {
+        const data: ChatDTO = value.payload.toJSON();
+        this.fireChats.push(data);
+        this.chats = this.serverChats.concat(this.fireChats);
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+      });
+    }, err => {
+      alert(err);
     });
   }
 

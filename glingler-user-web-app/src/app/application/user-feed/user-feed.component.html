@@ -44,31 +44,51 @@
           </section>
         </section>
         <section class="match-profile-container">
-          <ng-container *ngFor="let matchProfile of matchProfileList">
+          <ng-container *ngFor="let matchProfile of matchProfileList; index as i">
             <div class="match-profile-card" [@CardAnimation]>
               <div class="match-card-body">
-                <p>{{matchProfile.firstName + " " + matchProfile.lastName}}</p>
                 <img
                   alt=""
                   src="{{matchProfile.imageUrl}}"
-                  width="100%">
+                width="100%">
               </div>
               <div class="match-card-footer">
+                <p class="match-card-name">{{matchProfile.firstName + " " + matchProfile.lastName}}</p>
+                <div class="match-card-btn-container">
                 <div class="match-card-btn">
-                  <button (click)="btnLikeClickEvent(matchProfile)" [matRippleColor]="btnRippleColor" matRipple
+                  <button (click)="btnLikeClickEvent(matchProfile,i)"
+                          [matRippleColor]="btnRippleColor" matRipple
+				          #tooltip="matTooltip"
+                          [matTooltipPosition]="'below'"
+                          matTooltip="Like"
+                          matTooltipHideDelay="200"
                           type="button">
                     <i class="far fa-grin-hearts"></i>
                   </button>
                 </div>
                 <div class="match-card-btn">
-                  <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnSuperLikeClickEvent()">
+                  <button type="button"
+                          matRipple
+                          [matRippleColor]="btnRippleColor"
+                          (click)="btnSuperLikeClickEvent(matchProfile,i)"
+				          #tooltip="matTooltip"
+                          [matTooltipPosition]="'below'"
+                          matTooltip="Super Like"
+                          matTooltipHideDelay="200">
                     <i class="fas fa-fire-alt"></i>
                   </button>
                 </div>
                 <div class="match-card-btn">
-                  <button type="button" matRipple [matRippleColor]="btnRippleColor" (click)="btnRejectClickEvent()">
+                  <button type="button" matRipple
+                          [matRippleColor]="btnRippleColor"
+                          (click)="btnRejectClickEvent(matchProfile,i)"
+				          #tooltip="matTooltip"
+                          [matTooltipPosition]="'below'"
+                          matTooltip="Reject"
+                          matTooltipHideDelay="200">
                     <i class="fas fa-heart-broken"></i>
                   </button>
+                </div>
                 </div>
               </div>
             </div>
