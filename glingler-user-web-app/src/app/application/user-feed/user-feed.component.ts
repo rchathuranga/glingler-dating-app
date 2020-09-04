@@ -64,7 +64,7 @@ export class UserFeedComponent implements OnInit {
 
   }
 
-  btnLikeClickEvent(matchProfile: ProfileDTO) {
+  btnLikeClickEvent(matchProfile: ProfileDTO, index: number) {
     const data = {
       userProfileId: localStorage.getItem('profileId'),
       matchProfileId: matchProfile.profileId,
@@ -73,6 +73,7 @@ export class UserFeedComponent implements OnInit {
 
     this.matchService.matchReaction(data).subscribe(res => {
       this.notificationMsg = '' + res.responseCode;
+      this.matchProfileList.splice(index, 1);
     }, error => {
       this.notificationMsg = error.toString();
     });
@@ -80,15 +81,40 @@ export class UserFeedComponent implements OnInit {
     // this.notificationMsg = '';
   }
 
-  btnSuperLikeClickEvent() {
+  btnSuperLikeClickEvent(matchProfile: ProfileDTO, index: number) {
+    const data = {
+      userProfileId: localStorage.getItem('profileId'),
+      matchProfileId: matchProfile.profileId,
+      actionType: 1
+    };
+
+    this.matchService.matchReaction(data).subscribe(res => {
+      this.notificationMsg = '' + res.responseCode;
+      this.matchProfileList.splice(index, 1);
+    }, error => {
+      this.notificationMsg = error.toString();
+    });
     // alert('SuperLike');
     this.notificationMsg = 'Hello';
     this.matchProfileList.pop();
   }
 
 
-  btnRejectClickEvent() {
+  btnRejectClickEvent(matchProfile: ProfileDTO, index: number) {
+    const data = {
+      userProfileId: localStorage.getItem('profileId'),
+      matchProfileId: matchProfile.profileId,
+      actionType: 3
+    };
+
+    this.matchService.matchReaction(data).subscribe(res => {
+      this.notificationMsg = '' + res.responseCode;
+      this.matchProfileList.splice(index, 1);
+    }, error => {
+      this.notificationMsg = error.toString();
+    });
+
     // alert('rejected');
-    this.showStories = !this.showStories;
+    // this.showStories = !this.showStories;
   }
 }
