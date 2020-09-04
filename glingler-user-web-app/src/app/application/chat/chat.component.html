@@ -19,8 +19,8 @@
               </div>
             </div>
             <div class="profile-card-body">
-              <p class="p-c-name">{{profile.firstName +" "+ profile.lastName}}</p>
-              <div *ngIf="true" class="active-wrapper">
+              <p class="p-c-name">{{profile.firstName + " " + profile.lastName}}</p>
+              <div *ngIf="profile.isActive" class="active-wrapper">
                 <div class="active-status"></div>
                 <p class="p-c-active">Active</p>
               </div>
@@ -33,18 +33,19 @@
     <section id="chat-container">
       <div class="chat-wrapper">
         <div class="chat-header">
-          <div class="chat-name"><p>{{activeChat.firstName +" "+ activeChat.lastName}}</p></div>
+          <div class="chat-name"><p>{{activeChat.firstName + " " + activeChat.lastName}}</p></div>
           <div class="chat-head"></div>
         </div>
         <mat-divider></mat-divider>
 
         <div #scrollMe class="chat-body">
           <ng-container *ngFor="let chat of chats">
-            <div [classList]="(chat.sendProfileId===profileId)?'my-msg':'her-msg'">
+            <div [classList]="(chat.sendProfileId===profileId)?'my-msg':'her-msg'" class="msg">
               <div class="color-bar"></div>
               <div class="chat-msg">
                 <p>{{chat.message}}</p>
               </div>
+              <p class="chat-time">{{ chat.createdTime | date:'shortTime' }}</p>
             </div>
           </ng-container>
         </div>
@@ -53,7 +54,8 @@
           <div class="input-wrapper">
             <mat-form-field class="chat-input" color="accent">
               <mat-label>Message</mat-label>
-              <input #message (keydown)="inputKeyEvent($event)" autocomplete="off" matInput maxlength="256" placeholder="Type something here...">
+              <input #message (keydown)="inputKeyEvent($event)" autocomplete="off" matInput maxlength="256"
+                     placeholder="Type something here...">
             </mat-form-field>
           </div>
           <div class="button-wrapper">

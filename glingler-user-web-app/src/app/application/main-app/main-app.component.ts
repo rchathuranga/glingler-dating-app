@@ -14,19 +14,10 @@ export interface ExampleTab {
   styleUrls: ['./main-app.component.css']
 })
 export class MainAppComponent implements OnInit {
-  asyncTabs: Observable<ExampleTab[]>;
 
   constructor(private authService: AuthenticateService, private profileService: ProfileService) {
-
-    this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
-      setTimeout(() => {
-        observer.next([
-          {label: 'First', content: 'Content 1'},
-          {label: 'Second', content: 'Content 2'},
-          {label: 'Third', content: 'Content 3'},
-        ]);
-      }, 1000);
-    });
+    const profileId = +(localStorage.getItem('profileId'));
+    profileService.getFirebaseDBRef(profileId).set('ACTIVE');
   }
 
   ngOnInit(): void {
@@ -34,7 +25,7 @@ export class MainAppComponent implements OnInit {
 
   logout() {
     const profileId = +(localStorage.getItem('profileId'));
-    this.profileService.getFirebaseDBRef(profileId).remove();
+    this.profileService.getFirebaseDBRef(profileId).set('DEACT');
     this.authService.logout();
   }
 }

@@ -1,26 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PushService} from './service/push/push.service';
 import {BehaviorSubject} from 'rxjs';
+import {ProfileService} from './service/profile/profile.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title: BehaviorSubject<null> | string = 'glingler-user-web-app';
 
-  constructor(private pushService: PushService) {
+  constructor(private pushService: PushService, private profileService: ProfileService) {
     this.pushService.requestPermission();
     this.pushService.receiveMessage();
     this.title = this.pushService.currentMessage;
-
-    console.log('title');
-    console.log(this.title);
   }
 
   ngOnInit(): void {
-    console.log('title');
-    console.log(this.title);
   }
+
+  ngOnDestroy(): void {
+    const profileId = +(localStorage.getItem('profileId'));
+    this.profileService.getFirebaseDBRef(profileId).set('DEACT');
+  }
+
 }

@@ -66,14 +66,12 @@
           <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
         </mat-form-field>
 
-
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Choose a date</mat-label>
-          <input matInput name="birthday" ngModel>
-          <mat-datepicker-toggle matSuffix></mat-datepicker-toggle>
-          <!--          <mat-datepicker #picker></mat-datepicker>-->
+          <input [matDatepicker]="picker" matInput name="birthday" ngModel>
+          <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #picker [startAt]="minDate"></mat-datepicker>
         </mat-form-field>
-
 
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Enter your password</mat-label>

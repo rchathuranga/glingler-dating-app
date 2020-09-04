@@ -20,6 +20,7 @@ export class SignUpComponent implements OnInit {
 
   passwordHide = true;
   profileImgHide = true;
+  minDate: Date = new Date(1990, 0, 1);
 
   constructor(private formBuilder: FormBuilder,
               private afStorage: AngularFireStorage,

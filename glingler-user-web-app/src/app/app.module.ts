@@ -18,7 +18,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
-import {MatRippleModule} from '@angular/material/core';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -26,6 +26,7 @@ import {AuthGuard} from './guard/auth.guard';
 import {TokenInterceptor} from './interceptor/token.interceptor';
 import { FilterComponent } from './filter/filter.component';
 import {environment} from '../environments/environment';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,8 @@ import {environment} from '../environments/environment';
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
+    MatNativeDateModule,
+    // ServiceWorkerModule.register('/ngsw-worker.js', { enabled:  environment.production }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     AngularFireMessagingModule,

@@ -136,46 +136,34 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public ProfileResponseBean getProfilesForMatch(int profileId) throws Exception {
         ProfileResponseBean responseBean = new ProfileResponseBean();
+        List<ProfileDTO> dataList = new ArrayList<>();
 
         Profile profile = new Profile();
         profile.setProfileId(profileId);
         Filter filter = filterRepository.getFilterByProfile(profile);
 
-        List<String> statusList = new ArrayList<>();
-        statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
-        statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
+        if (filter != null) {
 
-//        List<Profile> list = profileRepository.getProfilesForMatch(
-//                filter.getInterestedOn(),
-//                filter.getAgeRangeStart(),
-//                filter.getAgeRangeEnd(),
-//                profileId,
-//                statusList
-//        );
-//
-//        List<Profile> list2 = profileRepository.getAllProfilesBySexAndAgeAfterAndAgeBeforeAndNotInMatch(
-//                filter.getInterestedOn(),
-//                filter.getAgeRangeStart(),
-//                filter.getAgeRangeEnd(),
-//                profileId
-//        );
-
-        List<Profile> list = matchRepository.getProfilesForMatch(profile.getProfileId(), filter.getInterestedOn(), filter.getAgeRangeStart(), filter.getAgeRangeEnd());
-        List<Profile> list2 = matchRepository.getProfilesForMatchNotLinked(filter.getInterestedOn(), filter.getAgeRangeStart(), filter.getAgeRangeEnd());
+            List<String> statusList = new ArrayList<>();
+            statusList.add(StatusCode.MATCH_REACT_TYPE_SUPER_LIKE);
+            statusList.add(StatusCode.MATCH_REACT_TYPE_MATCHED);
 
 
-        list.addAll(list2);
-
-        System.out.println();
-        System.out.println("list : " + list);
-        System.out.println();
-
-        List<ProfileDTO> dataList = modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
-        }.getType());
+            List<Profile> list = matchRepository.getProfilesForMatch(profile.getProfileId(), filter.getInterestedOn(), filter.getAgeRangeStart(), filter.getAgeRangeEnd());
+            List<Profile> list2 = matchRepository.getProfilesForMatchNotLinked(filter.getInterestedOn(), filter.getAgeRangeStart(), filter.getAgeRangeEnd());
 
 
-        responseBean.setResponseCode(ResponseCode.SUCCESS);
-        responseBean.setResponseError("");
+            list.addAll(list2);
+
+            dataList = modelMapper.map(list, new TypeToken<List<ProfileDTO>>() {
+            }.getType());
+
+            responseBean.setResponseCode(ResponseCode.SUCCESS);
+            responseBean.setResponseError("");
+        }else {
+            responseBean.setResponseCode(ResponseCode.USER_NOT_FOUND);
+            responseBean.setResponseError("No Filter Details Found to the Profile");
+        }
         responseBean.setData(dataList);
         return responseBean;
     }

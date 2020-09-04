@@ -19,7 +19,6 @@ export class ProfileService {
   }
 
   createUserProfile(userDetails) {
-    console.log('user details profile service 36', userDetails);
     return this.http.post<ResponseDTO>(this.baseUrl + 'user/profile/create', userDetails);
   }
 

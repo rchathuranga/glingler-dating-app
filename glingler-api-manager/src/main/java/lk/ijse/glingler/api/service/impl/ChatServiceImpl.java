@@ -50,6 +50,7 @@ public class ChatServiceImpl implements ChatService {
             chatDTO.setMatchedId(chat.getMatchedId().getMatchedId());
             chatDTO.setMessage(chat.getMessage());
             chatDTO.setSendProfileId(chat.getChatSendProfileId());
+            chatDTO.setCreatedTime(chat.getCreatedTime().getTime());
 
             chatDTOS.add(chatDTO);
         });

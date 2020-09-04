@@ -92,6 +92,7 @@ input{
   width: 55px;
   height: 55px;
   border-radius: 100%;
+  overflow: hidden;
   display: grid;
   place-items: center;
 }
@@ -227,11 +228,25 @@ input{
 .my-msg {
   margin: 5px 0;
   position: relative;
+  display: flex;
+  transition: background-color .3s;
+  border-radius: 0 10px 10px 0;
 }
 
 .her-msg {
+  display: flex;
   margin: 5px 0;
   position: relative;
+  transition: background-color .3s;
+  border-radius: 0 10px 10px 0;
+}
+
+.my-msg:hover{
+  background: rgba(63, 81, 181, 0.11);
+}
+
+.her-msg:hover{
+  background: rgba(236, 5, 142, 0.11);
 }
 
 .my-msg > .color-bar {
@@ -274,4 +289,10 @@ input{
 .chat-body::-webkit-scrollbar-thumb {
   background-color: #EC058E;
   border-radius: 10px;
+}
+
+.chat-time {
+  font-size: 12px;
+  color: #afafaf;
+  margin: 0;
 }

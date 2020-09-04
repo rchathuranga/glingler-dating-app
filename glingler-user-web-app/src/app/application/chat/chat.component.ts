@@ -30,15 +30,21 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.profiles = res.data;
       if (this.profiles[0] !== undefined) {
         this.activeChat = this.profiles[0];
-        // this.profileCardClickEvent(this.activeChat);
+        this.profileCardClickEvent(this.activeChat);
       }
+
+      this.profiles.forEach(prof => {
+        this.functionIsActive(prof);
+      });
     }, error => {
       console.log(error);
     });
   }
 
-  functionIsActive() {
-    // this.chatService.getFireDBActiveRef()
+  functionIsActive(profile: ProfileDTO) {
+    this.chatService.getFireDBActiveRef(profile.profileId).snapshotChanges().subscribe(resp => {
+      profile.isActive = resp.payload.toJSON() === 'ACTIVE';
+    });
     // todo set active status to profile
   }
 
@@ -98,7 +104,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   private sendMsg(value: string) {
-    if (value === '') {
+    if (value === '' || this.matchedId === 0) {
+      this.input.nativeElement.value = '';
       return;
     }
 
