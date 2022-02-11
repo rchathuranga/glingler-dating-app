@@ -23,10 +23,12 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import { ProfileComponent } from './profile/profile.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ExplorerComponent } from './explorer/explorer.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
-  declarations: [MainAppComponent, UserFeedComponent, ChatComponent, ProfileSideNavComponent, ProfileComponent],
+  declarations: [MainAppComponent, UserFeedComponent, ChatComponent, ProfileSideNavComponent, ProfileComponent, ExplorerComponent],
   imports: [
     AngularFireDatabaseModule,
     RouterModule,
@@ -47,7 +49,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatMenuModule,
     MatGridListModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FormsModule
   ]
 })
 export class ApplicationModule {

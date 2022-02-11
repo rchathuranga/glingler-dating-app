@@ -1,0 +1,85 @@
+#content-container {
+  z-index: 1;
+  width: 100%;
+  height: calc(100vh - 60px);
+
+  position: relative;
+  background-color: #f5f7fa;
+
+}
+
+#content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  width: 1240px;
+  height: 100%;
+  display: flex;
+  background: #fff;
+}
+
+
+.card-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 200px;
+  padding: 0 10%;
+  /*background-color: red;*/
+  overflow-y: auto;
+}
+
+.post-card {
+  width: 100%;
+  height: fit-content;
+  margin: 20px 0 20px 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  animation: fadeInAnimation ease 1s
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    margin: 200px 0 20px 0;
+  }
+  100% {
+    margin: 20px 0 20px 0;
+  }
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.my-example-header-image {
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/glingler-2a90b.appspot.com/o/user%2F52ch3gdjp4r?alt=media&token=f4b336e5-9500-4975-a609-913458cd0b0b');
+  background-size: cover;
+}
+
+.post-card-image-container {
+  width: 100%;
+  /*height: 200px;*/
+  /*background-color: red;*/
+}
+
+mat-grid-tile {
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.input-wrapper{
+  width: 100%;
+  padding: 15px 0 0 0;
+}
+
+.input-wrapper mat-form-field{
+  width: 100%;
+}
+
+.on-post-item-container {
+  width: 100%;
+  padding: 15px 10px 0 10px;
+}

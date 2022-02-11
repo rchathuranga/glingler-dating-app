@@ -4,6 +4,7 @@ import {MainAppComponent} from './main-app/main-app.component';
 import {UserFeedComponent} from './user-feed/user-feed.component';
 import {ChatComponent} from './chat/chat.component';
 import {ProfileComponent} from './profile/profile.component';
+import {ExplorerComponent} from './explorer/explorer.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'feed'
+        redirectTo: 'explorer'
       },
       {
         path: 'feed',
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'explorer',
+        component: ExplorerComponent,
       }
     ]
   }

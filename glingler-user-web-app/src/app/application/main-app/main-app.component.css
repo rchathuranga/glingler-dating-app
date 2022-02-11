@@ -4,6 +4,10 @@
   transition: .5s color;
 }
 
+.router-active i{
+  color: #F00592;
+}
+
 #header {
   width: 100%;
   height: 60px;
