@@ -20,10 +20,13 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { ChatComponent } from './chat/chat.component';
 import {ProfileSideNavComponent} from './user-feed/profile-side-nav/profile-side-nav.component';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
+import { ProfileComponent } from './profile/profile.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
-  declarations: [MainAppComponent, UserFeedComponent, ChatComponent, ProfileSideNavComponent],
+  declarations: [MainAppComponent, UserFeedComponent, ChatComponent, ProfileSideNavComponent, ProfileComponent],
   imports: [
     AngularFireDatabaseModule,
     RouterModule,
@@ -42,7 +45,9 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
     MatInputModule,
     MatBadgeModule,
     MatMenuModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ]
 })
 export class ApplicationModule {

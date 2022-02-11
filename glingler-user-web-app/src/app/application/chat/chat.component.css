@@ -87,7 +87,7 @@ input{
   place-items: center;
 }
 
-.profile-pic{
+.profile-pic {
   /*background: #EC058E;*/
   width: 55px;
   height: 55px;
@@ -95,6 +95,8 @@ input{
   overflow: hidden;
   display: grid;
   place-items: center;
+  align-items: center;
+
 }
 
 .profile-pic> img{
@@ -129,7 +131,8 @@ input{
   width: 10px;
   height: 10px;
   border-radius: 100%;
-  background: #11FFBD;
+  /*background: #11FFBD;*/
+  background: #6bbf59;
 }
 
 #chat-container{
@@ -225,18 +228,26 @@ input{
   color: #fff;
 }
 
-.my-msg {
-  margin: 5px 0;
+.msg{
+  margin: 3px 0;
   position: relative;
   display: flex;
   transition: background-color .3s;
-  border-radius: 0 10px 10px 0;
+  border-radius: 10px 0 0 10px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  padding: 2px 10px;
+}
+
+.my-msg {
+  transition: background-color .3s;
+  border-radius: 10px 0 0 10px;
 }
 
 .her-msg {
-  display: flex;
-  margin: 5px 0;
-  position: relative;
   transition: background-color .3s;
   border-radius: 0 10px 10px 0;
 }
@@ -249,16 +260,16 @@ input{
   background: rgba(236, 5, 142, 0.11);
 }
 
-.my-msg > .color-bar {
+.my-msg  .color-bar {
   width: 5px;
   height: 100%;
   position: absolute;
-  left: 2px;
+  right: 2px;
   border-radius: 4px;
   background: #3f51b5;
 }
 
-.her-msg > .color-bar {
+.her-msg  .color-bar {
   width: 5px;
   height: 100%;
   position: absolute;
@@ -268,13 +279,13 @@ input{
 }
 
 .chat-msg {
-  width: 80%;
+  /*width: 80%;*/
   margin-left: 10px;
 }
 
 .chat-msg p{
-  margin: 0;
-  font-family: 'Overpass', sans-serif;
+  margin: 0 2px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .chat-body::-webkit-scrollbar {

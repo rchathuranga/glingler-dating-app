@@ -14,6 +14,7 @@ public class Match {
     private Timestamp createTime;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "match_id")
     public int getMatchId() {
         return matchId;

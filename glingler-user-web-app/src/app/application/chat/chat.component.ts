@@ -13,6 +13,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   @ViewChild('message') private input: ElementRef;
 
+  isImagesLoaded = false;
   profiles: ProfileDTO[];
   activeChat: ProfileDTO;
   serverChats: ChatDTO[] = [];
@@ -104,6 +105,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   private sendMsg(value: string) {
+    console.log('msg:', value);
+    console.log('matchedId:', this.matchedId);
     if (value === '' || this.matchedId === 0) {
       this.input.nativeElement.value = '';
       return;
@@ -114,7 +117,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       message: value,
       sendProfileId: this.profileId
     };
-
+    console.log('data:', data);
     this.chatService.getFireDBMatchRef(this.matchedId).push(data);
     this.input.nativeElement.value = '';
     this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;

@@ -114,7 +114,7 @@ public class MatchServiceImpl implements MatchService {
 
             match.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
-            LOGGER.debug("Saving Matching Details");
+            LOGGER.debug("Saving Matching Details - {}", match);
             match = matchRepository.save(match);
 
             if (match != null) {

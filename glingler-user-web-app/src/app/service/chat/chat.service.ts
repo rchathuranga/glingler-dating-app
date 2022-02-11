@@ -24,6 +24,8 @@ export class ChatService {
   }
 
   getFireDBMatchRef(matchedId): AngularFireList<ChatDTO> {
+    console.log('db:', this.db);
+    console.log('matchedId:', matchedId);
     return this.db.list<ChatDTO>('/chats/matched/' + matchedId);
   }
 

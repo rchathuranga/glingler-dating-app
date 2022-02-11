@@ -270,3 +270,11 @@
   display: flex;
   justify-content: space-around;
 }
+
+@media (max-width: 1240px) {
+
+#side-profile{
+  display: none;
+}
+
+}

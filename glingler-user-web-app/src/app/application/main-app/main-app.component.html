@@ -1,6 +1,6 @@
 <section id="header">
   <section class="header-inner">
-    <div class="header-logo">
+    <div class="header-logo" routerLink="application/">
       <h1 class="mat-headline">glingler❤</h1>
     </div>
     <div class="header-container">
@@ -10,13 +10,14 @@
           <i class="far fa-heart"></i>
         </button>
         <button mat-button class="header-btn" routerLink="chat" routerLinkActive="router-active">
-          <i class="fab fa-facebook-messenger" matBadge="2" matBadgeColor="accent"></i>
+<!--          <i class="fab fa-facebook-messenger"></i>-->
+          <i class="far fa-comment-alt"  matBadge="2" matBadgeColor="accent"></i>
         </button>
-        <button mat-button class="header-btn">
+        <button (click)="openDialog()" class="header-btn" mat-button>
 <!--          <i class="fas fa-star"></i>-->
           <i class="far fa-star"></i>
         </button>
-        <button mat-button class="header-btn">
+        <button class="header-btn" mat-button routerLink="profile" routerLinkActive="router-active">
 <!--          <i class="fas fa-user-circle"></i>-->
           <i class="far fa-user-circle"></i>
         </button>
@@ -37,7 +38,7 @@
 
         <mat-menu #settingsMenu="matMenu" xPosition="before">
           <button mat-menu-item (click)="logout()">
-            <mat-icon>eco</mat-icon>
+            <mat-icon>logout</mat-icon>
             <span>Logout</span>
           </button>
         </mat-menu>
@@ -52,7 +53,8 @@
     </div>
   </section>
 </section>
-<div class="router-container">
-  <router-outlet></router-outlet>
+<div [@routeAnimations]="prepareRoute(outlet)" class="router-container">
+  <router-outlet #outlet="outlet"></router-outlet>
 </div>
 <section id="footer"></section>
+

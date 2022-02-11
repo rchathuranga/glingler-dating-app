@@ -27,6 +27,9 @@ import {TokenInterceptor} from './interceptor/token.interceptor';
 import { FilterComponent } from './filter/filter.component';
 import {environment} from '../environments/environment';
 import {ServiceWorkerModule} from '@angular/service-worker';
+import { SmAlertDialogComponent } from './shared/components/sm-alert-dialog/sm-alert-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SmAlertComponent } from './shared/components/sm-alert/sm-alert.component';
 
 @NgModule({
   declarations: [
@@ -34,30 +37,34 @@ import {ServiceWorkerModule} from '@angular/service-worker';
     LoginComponent,
     SignUpComponent,
     FilterComponent,
+    SmAlertDialogComponent,
+    SmAlertComponent,
   ],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    MatNativeDateModule,
-    // ServiceWorkerModule.register('/ngsw-worker.js', { enabled:  environment.production }),
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireStorageModule,
-    AngularFireMessagingModule,
-    AngularFireDatabaseModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatListModule,
-    MatInputModule,
-    MatRippleModule,
-    MatDatepickerModule,
-    MatSelectModule,
-    FormsModule,
-  ],
+    imports: [
+        HttpClientModule,
+        BrowserModule,
+        AppRoutingModule,
+        MatNativeDateModule,
+        // ServiceWorkerModule.register('/ngsw-worker.js', { enabled:  environment.production }),
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireStorageModule,
+        AngularFireMessagingModule,
+        AngularFireDatabaseModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatListModule,
+        MatInputModule,
+        MatRippleModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        FormsModule,
+        MatDialogModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ],
   providers: [AuthenticateService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

@@ -84,7 +84,7 @@ public class Profile {
     }
 
     @Basic
-    @Column(name = "image_url", nullable = true, length = -1)
+    @Column(name = "image_url", nullable = true)
     public String getImageUrl() {
         return imageUrl;
     }

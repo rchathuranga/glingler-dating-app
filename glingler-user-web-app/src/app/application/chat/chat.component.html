@@ -14,8 +14,14 @@
           <div class="profile-card" mat-ripple (click)="profileCardClickEvent(profile)">
             <div class="profile-card-img">
               <div class="profile-pic">
+                <mat-progress-spinner
+                  *ngIf="!profile.isImageLoaded"
+                  [color]="'accent'"
+                  [diameter]="30"
+                  [mode]="'indeterminate'">
+                </mat-progress-spinner>
                 <img alt="" src="{{profile.imageUrl}}"
-                     width="100%">
+                     (load)="profile.isImageLoaded=true" width="100%">
               </div>
             </div>
             <div class="profile-card-body">
@@ -40,7 +46,14 @@
 
         <div #scrollMe class="chat-body">
           <ng-container *ngFor="let chat of chats">
-            <div [classList]="(chat.sendProfileId===profileId)?'my-msg':'her-msg'" class="msg">
+            <div *ngIf="chat.sendProfileId===profileId" class="msg my-msg">
+              <div class="color-bar"></div>
+              <p class="chat-time">{{ chat.createdTime | date:'shortTime' }}</p>
+              <div class="chat-msg">
+                <p>{{chat.message}}</p>
+              </div>
+            </div>
+            <div *ngIf="chat.sendProfileId!==profileId" class="msg her-msg">
               <div class="color-bar"></div>
               <div class="chat-msg">
                 <p>{{chat.message}}</p>

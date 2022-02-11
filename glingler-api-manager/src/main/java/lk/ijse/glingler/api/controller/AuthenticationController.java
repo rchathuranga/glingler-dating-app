@@ -55,7 +55,7 @@ public class AuthenticationController {
             return new ResponseEntity<>(responseBean, HttpStatus.UNAUTHORIZED);
 
         } catch (Exception e) {
-
+e.printStackTrace();
             responseBean.setResponseCode(ResponseCode.EXCEPTION);
             responseBean.setResponseError("Login Failed");
             LOGGER.debug("Exception in Login Process -> {}", e.getMessage());

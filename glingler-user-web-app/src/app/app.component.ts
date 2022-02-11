@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {PushService} from './service/push/push.service';
 import {BehaviorSubject} from 'rxjs';
 import {ProfileService} from './service/profile/profile.service';
@@ -25,4 +25,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.profileService.getFirebaseDBRef(profileId).set('DEACT');
   }
 
+  @HostListener('window:beforeunload', [ '$event' ])
+  beforeUnloadHandler(event) {
+    const profileId = +(localStorage.getItem('profileId'));
+    this.profileService.getFirebaseDBRef(profileId).set('DEACT');
+  }
 }

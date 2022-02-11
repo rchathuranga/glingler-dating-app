@@ -1,7 +1,15 @@
 <section id="side-profile">
   <div class="profile-pic-wrapper">
     <div class="profile-pic-inner-wrapper">
-      <img alt="ProfileDto Picture" src="{{imageUrl}}" width="100%">
+      <div>
+        <mat-progress-spinner
+          *ngIf="!isImageLoaded"
+          [color]="'accent'"
+          [diameter]="40"
+          [mode]="'indeterminate'">
+        </mat-progress-spinner>
+      </div>
+      <img (load)="isImageLoaded=true" alt="" src="{{imageUrl}}" width="100%">
     </div>
   </div>
   <div class="profile-name-wrapper">
