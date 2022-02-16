@@ -22,12 +22,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     const profileId = +(localStorage.getItem('profileId'));
-    this.profileService.getFirebaseDBRef(profileId).set('DEACT');
+    this.profileService.getFirebaseDBRef(profileId).set({
+      status: 'DEACT',
+      LIA_TIME: new Date().getTime(),
+    });
   }
 
   @HostListener('window:beforeunload', [ '$event' ])
   beforeUnloadHandler(event) {
     const profileId = +(localStorage.getItem('profileId'));
-    this.profileService.getFirebaseDBRef(profileId).set('DEACT');
+    this.profileService.getFirebaseDBRef(profileId).set({
+      status: 'DEACT',
+      LIA_TIME: new Date().getTime(),
+    });
   }
 }

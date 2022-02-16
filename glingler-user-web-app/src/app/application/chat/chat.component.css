@@ -78,6 +78,23 @@ input{
   cursor: pointer;
   display: flex;
   overflow: hidden;
+  border: 2px solid #fff;
+
+  animation: fadeInAnimation ease 1s
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    margin-top: 200px
+  }
+  100% {
+    margin-top: 5px
+  }
+}
+
+.profile-card-outline{
+  background-color: #eaeaea;
+  /*border: 2px solid #EC058E;*/
 }
 
 .profile-card-img{
@@ -144,7 +161,7 @@ input{
 
 .chat-wrapper{
   width: 80%;
-  height: 400px;
+  height: 90%;
   margin: auto;
   background: #fff;
   box-shadow: 0 0 3px 0px #cccccc;
@@ -189,6 +206,10 @@ input{
   display: flex;
   flex-direction: column;
   overflow-x: auto;
+}
+
+.chat-body mat-progress-spinner{
+  margin: 0 auto;
 }
 
 .chat-footer{

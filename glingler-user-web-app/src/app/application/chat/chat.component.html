@@ -4,14 +4,14 @@
       <div class="search-container">
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Search</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="chatSearch" (ngModelChange)="searchOnChange($event)">
           <mat-icon matSuffix>person_search</mat-icon>
         </mat-form-field>
       </div>
       <mat-divider></mat-divider>
       <div class="profiles-container">
-        <ng-container *ngFor="let profile of profiles">
-          <div class="profile-card" mat-ripple (click)="profileCardClickEvent(profile)">
+        <ng-container *ngFor="let profile of profilesView">
+          <div class="profile-card" mat-ripple (click)="profileCardClickEvent(profile)" [class]="activeChat.profileId==profile.profileId?'profile-card-outline':''">
             <div class="profile-card-img">
               <div class="profile-pic">
                 <mat-progress-spinner
@@ -30,6 +30,9 @@
                 <div class="active-status"></div>
                 <p class="p-c-active">Active</p>
               </div>
+              <div *ngIf="!profile.isActive" class="active-wrapper">
+                <p class="p-c-active">{{profile.lastActiveTime | date: 'short'}}</p>
+              </div>
             </div>
           </div>
         </ng-container>
@@ -45,10 +48,15 @@
         <mat-divider></mat-divider>
 
         <div #scrollMe class="chat-body">
+          <mat-progress-spinner
+            *ngIf="areChatsLoading"
+            [color]="'accent'"
+            [diameter]="30"
+            [mode]="'indeterminate'"></mat-progress-spinner>
           <ng-container *ngFor="let chat of chats">
             <div *ngIf="chat.sendProfileId===profileId" class="msg my-msg">
               <div class="color-bar"></div>
-              <p class="chat-time">{{ chat.createdTime | date:'shortTime' }}</p>
+              <p class="chat-time">{{ chat.createdTime | date:'short' }}</p>
               <div class="chat-msg">
                 <p>{{chat.message}}</p>
               </div>
@@ -58,7 +66,7 @@
               <div class="chat-msg">
                 <p>{{chat.message}}</p>
               </div>
-              <p class="chat-time">{{ chat.createdTime | date:'shortTime' }}</p>
+              <p class="chat-time">{{ chat.createdTime | date:'short' }}</p>
             </div>
           </ng-container>
         </div>

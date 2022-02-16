@@ -15,13 +15,16 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   isImagesLoaded = false;
   profiles: ProfileDTO[];
+  profilesView: ProfileDTO[];
   activeChat: ProfileDTO;
   serverChats: ChatDTO[] = [];
   fireChats: ChatDTO[] = [];
   chats: ChatDTO[] = [];
+  areChatsLoading = true;
   matchedId: number;
   prevMatchedId: number;
   profileId: number = +(localStorage.getItem('profileId'));
+  chatSearch = '';
 
   constructor(private chatService: ChatService) {
     this.prevMatchedId = 0;
@@ -29,6 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.activeChat = {firstName: '', lastName: ''};
     chatService.getChatProfiles().subscribe(res => {
       this.profiles = res.data;
+      this.profilesView = this.profiles;
       if (this.profiles[0] !== undefined) {
         this.activeChat = this.profiles[0];
         this.profileCardClickEvent(this.activeChat);
@@ -44,7 +48,10 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   functionIsActive(profile: ProfileDTO) {
     this.chatService.getFireDBActiveRef(profile.profileId).snapshotChanges().subscribe(resp => {
-      profile.isActive = resp.payload.toJSON() === 'ACTIVE';
+      const response = resp.payload.toJSON();
+      console.log('resss : ', response);
+      profile.isActive = response['status'] === 'ACTIVE';
+      profile.lastActiveTime = new Date(response['LIA_TIME']);
     });
     // todo set active status to profile
   }
@@ -80,6 +87,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     await this.chatService.getChatMessages(this.activeChat.profileId).then(res => {
       this.serverChats = res.data;
       this.chats = this.serverChats;
+      this.areChatsLoading = false;
       if (this.serverChats == null) {
         this.serverChats = [];
       }
@@ -138,4 +146,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
 
+  searchOnChange(event) {
+    this.profilesView = [];
+    this.profiles.forEach(value => {
+      const firstNameCheck = value.firstName.toLowerCase().startsWith(this.chatSearch);
+      const lastNameCheck = value.lastName.toLowerCase().startsWith(this.chatSearch);
+      if (firstNameCheck || lastNameCheck) {
+        this.profilesView.push(value);
+      }
+    });
+  }
 }

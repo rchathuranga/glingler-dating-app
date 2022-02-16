@@ -9,7 +9,7 @@ export class ExplorerComponent implements OnInit {
   posts: number[] = new Array(5);
   imageFiles: File[] = [];
   imageUrls: any[] = [];
-  myPostTitle = 'sfdsf';
+  myPostTitle = '';
 
   constructor() {
   }

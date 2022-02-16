@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'explorer'
+        redirectTo: 'feed'
       },
       {
         path: 'feed',

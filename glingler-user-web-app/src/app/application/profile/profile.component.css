@@ -1,0 +1,39 @@
+
+#content-container {
+  z-index: 1;
+  width: 100%;
+  height: calc(100vh - 60px);
+
+  position: relative;
+  background-color: #f5f7fa;
+
+}
+
+#content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  width: 1240px;
+  height: 100%;
+  display: flex;
+  background: #fff;
+}
+
+
+#side-profile {
+  width: 28%;
+  min-width: 280px;
+  height: 100%;
+  box-shadow: 0 0 4px #878787;
+  background-color: white;
+}
+
+#feed-container {
+  width: 72%;
+  min-width: 600px;
+  height: 100%;
+}

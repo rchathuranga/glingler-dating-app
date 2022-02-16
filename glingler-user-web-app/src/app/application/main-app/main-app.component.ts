@@ -20,12 +20,22 @@ import {Route, RouterOutlet} from '@angular/router';
 export class MainAppComponent implements OnInit {
 
   private durationInSeconds = 5;
-
+  private profileId: number;
   constructor(private authService: AuthenticateService,
               private profileService: ProfileService,
               public snackBar: MatSnackBar) {
-    const profileId = +(localStorage.getItem('profileId'));
-    profileService.getFirebaseDBRef(profileId).set('ACTIVE');
+    this.profileId = +(localStorage.getItem('profileId'));
+    this.fb().then(value => {});
+  }
+
+  public async fb() {
+    let response;
+    await this.profileService.getFirebaseDBRef(this.profileId).snapshotChanges().subscribe(resp => {
+      response = resp.payload.toJSON();
+    });
+    if (response !== undefined) {
+      await this.profileService.getFirebaseDBRef(this.profileId).set({status: 'ACTIVE', LIA_TIME: response['LIA_TIME']});
+    }
   }
 
   ngOnInit(): void {
@@ -40,7 +50,16 @@ export class MainAppComponent implements OnInit {
 
   logout() {
     const profileId = +(localStorage.getItem('profileId'));
-    this.profileService.getFirebaseDBRef(profileId).set('DEACT');
+    this.profileService.getFirebaseDBRef(profileId).snapshotChanges().subscribe(resp => {
+      const response = resp.payload.toJSON();
+      if (response['status'] === 'ACTIVE') {
+        this.profileService.getFirebaseDBRef(profileId).set({status: 'DEACT', LIA_TIME: new Date().getTime()});
+      }
+    });
+    // this.profileService.getFirebaseDBRef(profileId).set({
+    //   status: 'DEACT',
+    //   LIA_TIME: new Date().getTime(),
+    // });
     this.authService.logout();
   }
 

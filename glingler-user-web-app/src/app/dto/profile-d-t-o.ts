@@ -18,7 +18,8 @@ export class ProfileDTO {
     public matchedCount?,
     public matchedIdWithUser?,
     public isActive?,
-    public isImageLoaded?
+    public isImageLoaded?,
+    public lastActiveTime?
   ) {
   }
 }

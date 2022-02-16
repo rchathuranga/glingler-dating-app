@@ -33,7 +33,7 @@ export class ProfileSideNavComponent implements OnInit {
           const data: ProfileDTO = res.data[0];
           localStorage.setItem('profileId', data.profileId);
 
-          this.profileService.getFirebaseDBRef(data.profileId).set('ACTIVE');
+          this.fb(data.profileId).then(value => {});
 
           this.imageUrl = data.imageUrl;
           this.firstName = data.firstName;
@@ -49,6 +49,17 @@ export class ProfileSideNavComponent implements OnInit {
       error => {
         console.log(error);
       });
+  }
+
+
+  public async fb(profileId) {
+    let response;
+    await this.profileService.getFirebaseDBRef(profileId).snapshotChanges().subscribe(resp => {
+      response = resp.payload.toJSON();
+    });
+    if (response !== undefined) {
+      await this.profileService.getFirebaseDBRef(profileId).set({status: 'ACTIVE',LIA_TIME: response['LIA_TIME']}).then(value => {});
+    }
   }
 
   onTabViewed() {

@@ -9,7 +9,7 @@
         </mat-card-header>
         <mat-card-content>
           <div class="on-post-item-container">
-            <p>{{myPostTitle}}</p>
+            <p style="white-space: pre-wrap;">{{myPostTitle}}</p>
           <div class="image-wrapper">
             <mat-grid-list cols="2" rowHeight="1:1">
               <mat-grid-tile *ngFor="let img of imageUrls">
@@ -20,7 +20,7 @@
           <div class="input-wrapper">
             <mat-form-field appearance="outline" color="accent">
               <mat-label>What's on your mind...?</mat-label>
-              <input matInput name="" placeholder="" [(ngModel)]="myPostTitle">
+              <textarea matInput name="" placeholder="" [(ngModel)]="myPostTitle"></textarea>
               <mat-hint *ngIf="false">Hint</mat-hint>
             </mat-form-field>
           </div>
