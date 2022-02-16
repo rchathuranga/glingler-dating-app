@@ -42,11 +42,11 @@ export class SignUpComponent implements OnInit {
         finalize(() => {
           this.ref.getDownloadURL().subscribe(url => {
             this.imageUrl = url;
+            this.createUserAccount(form.value, this.imageUrl);
           });
         })
       ).subscribe();
     }
-    this.createUserAccount(form.value, this.imageUrl);
   }
 
   private createUserAccount(value, imageUrl) {
