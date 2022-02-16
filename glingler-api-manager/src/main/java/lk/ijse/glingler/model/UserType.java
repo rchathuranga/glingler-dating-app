@@ -4,19 +4,19 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user_types")
-public class UserTypes {
+@Table(name = "user_type")
+public class UserType {
     private int userTypeId;
     private String userTypeCode;
     private String description;
     private String status;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_type_id", nullable = false)
     public int getUserTypeId() {
         return userTypeId;
     }
-
     public void setUserTypeId(int userTypeId) {
         this.userTypeId = userTypeId;
     }
@@ -26,7 +26,6 @@ public class UserTypes {
     public String getUserTypeCode() {
         return userTypeCode;
     }
-
     public void setUserTypeCode(String userTypeCode) {
         this.userTypeCode = userTypeCode;
     }
@@ -36,7 +35,6 @@ public class UserTypes {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -46,7 +44,6 @@ public class UserTypes {
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -55,15 +52,25 @@ public class UserTypes {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserTypes userTypes = (UserTypes) o;
-        return userTypeId == userTypes.userTypeId &&
-                Objects.equals(userTypeCode, userTypes.userTypeCode) &&
-                Objects.equals(description, userTypes.description) &&
-                Objects.equals(status, userTypes.status);
+        UserType userType = (UserType) o;
+        return userTypeId == userType.userTypeId &&
+                Objects.equals(userTypeCode, userType.userTypeCode) &&
+                Objects.equals(description, userType.description) &&
+                Objects.equals(status, userType.status);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(userTypeId, userTypeCode, description, status);
+    }
+
+    @Override
+    public String toString() {
+        return "UserTypes{" +
+                "userTypeId=" + userTypeId +
+                ", userTypeCode='" + userTypeCode + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

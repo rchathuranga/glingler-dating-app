@@ -15,7 +15,7 @@ public class CommonUser {
     private String email;
     private String mobileNo;
     private Byte isVerified;
-    private Integer systemUserTypeId;
+    private UserType userType;
     private Profile profile;
 
     @Id
@@ -100,13 +100,13 @@ public class CommonUser {
         this.isVerified = isVerified;
     }
 
-    @Basic
-    @Column(name = "system_user_type_id")
-    public Integer getSystemUserTypeId() {
-        return systemUserTypeId;
+    @ManyToOne
+    @JoinColumn(name = "user_type_id", referencedColumnName = "user_type_id")
+    public UserType getUserType() {
+        return userType;
     }
-    public void setSystemUserTypeId(Integer systemUserTypeId) {
-        this.systemUserTypeId = systemUserTypeId;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     @OneToOne
@@ -160,7 +160,7 @@ public class CommonUser {
                 ", email='" + email + '\'' +
                 ", mobileNo='" + mobileNo + '\'' +
                 ", isVerified=" + isVerified +
-                ", systemUserTypeId=" + systemUserTypeId +
+                ", systemUserTypeId=" + userType +
                 '}';
     }
 }

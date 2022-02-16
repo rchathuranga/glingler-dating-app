@@ -6,13 +6,12 @@ import lk.ijse.glingler.api.repository.ProfileRepository;
 import lk.ijse.glingler.dto.ProfileDTO;
 import lk.ijse.glingler.dto.ProfileRequestBean;
 import lk.ijse.glingler.dto.ProfileResponseBean;
-import lk.ijse.glingler.model.CommonUser;
-import lk.ijse.glingler.model.Filter;
-import lk.ijse.glingler.model.Profile;
+import lk.ijse.glingler.model.*;
 import lk.ijse.glingler.api.repository.UserRepository;
 import lk.ijse.glingler.api.service.ProfileService;
 import lk.ijse.glingler.util.ResponseCode;
 import lk.ijse.glingler.util.StatusCode;
+import lk.ijse.glingler.util.SysConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
@@ -47,6 +46,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private MatchRepository matchRepository;
+
+    @Autowired
+    private UserTypeRepository userTypeRepository;
 
     @Override
     public ProfileResponseBean getUserProfileDetails(String username) throws Exception {
@@ -125,6 +127,7 @@ public class ProfileServiceImpl implements ProfileService {
         commonUser.setPasswordStatus(StatusCode.STATUS_PASSWORD_ACTIVE);
         commonUser.setUsername(profileRequestBean.getUsername());
         commonUser.setStatus(StatusCode.STATUS_USER_INITIATE);
+        commonUser.setUserType(userTypeRepository.getUserTypeByUserTypeCode(SysConfig.USER_TYPE_PROFILE_USER));
 
         LOGGER.debug("Saving User Details | User : {}", commonUser);
         commonUser = userRepository.saveAndFlush(commonUser);
